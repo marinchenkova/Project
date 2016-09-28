@@ -1,7 +1,8 @@
 package graphicEditor;
 
 /**
- * Created by Валентин on 27.09.2016.
+ * Графический редактор
+ * @author Маринченко В. А.
  */
 public class MainApplication {
 }
