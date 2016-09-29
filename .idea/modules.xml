@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/marinchenko.iml" filepath="$PROJECT_DIR$/.idea/modules/marinchenko.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/marinchenko_main.iml" filepath="$PROJECT_DIR$/.idea/modules/marinchenko_main.iml" group="marinchenko" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/marinchenko_test.iml" filepath="$PROJECT_DIR$/.idea/modules/marinchenko_test.iml" group="marinchenko" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graphicEditor.iml" filepath="$PROJECT_DIR$/.idea/modules/graphicEditor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graphicEditor_main.iml" filepath="$PROJECT_DIR$/.idea/modules/graphicEditor_main.iml" group="graphicEditor" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/graphicEditor_test.iml" filepath="$PROJECT_DIR$/.idea/modules/graphicEditor_test.iml" group="graphicEditor" />
     </modules>
   </component>
 </project>

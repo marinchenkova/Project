@@ -19,6 +19,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="graphicEditor_main" target="1.5" />
+      <module name="graphicEditor_test" target="1.5" />
       <module name="marinchenko_main" target="1.5" />
       <module name="marinchenko_test" target="1.5" />
     </bytecodeTargetLevel>

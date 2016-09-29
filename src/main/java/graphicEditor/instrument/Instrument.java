@@ -1,9 +1,9 @@
 package graphicEditor.instrument;
 
-import graphicEditor.MainApplication;
+import graphicEditor.MainApp;
 
 /**
  * Инструмент
  */
-public class Instrument extends MainApplication{
+public class Instrument extends MainApp {
 }

@@ -1,13 +1,13 @@
 package graphicEditor.desk;
 
-import graphicEditor.MainApplication;
+import graphicEditor.MainApp;
 
 import java.awt.*;
 
 /**
  * Доска
  */
-public class Desk extends MainApplication {
+public class Desk extends MainApp {
     //Конструктор
     public Desk (){
 
