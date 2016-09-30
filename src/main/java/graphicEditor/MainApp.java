@@ -14,7 +14,7 @@ import java.io.IOException;
  * @author Маринченко В. А.
  */
 public class MainApp extends Application {
-
+    //Поля
     private Stage primaryStage;
 
     @Override
@@ -27,17 +27,32 @@ public class MainApp extends Application {
      * Вызов GUI формы
      * @throws IOException
      */
-    public void initFXMLForm() throws IOException{
-        //Загрузка GUI формы
-        Parent rootLayout = FXMLLoader.load(getClass().getResource("/fxml/graphicEditorForm.fxml"));
+    public void initFXMLForm() {
+        try {
+            //Загрузка GUI формы
+            Parent rootLayout = FXMLLoader.load(getClass().getResource
+                    ("/fxml/graphicEditorForm.fxml"));
 
-        //Создание сцены и сообщение GUI формы в сцену
-        primaryStage.setScene(new Scene(rootLayout));
-        primaryStage.show();
+            //Создание сцены и сообщение GUI формы в сцену
+            primaryStage.setScene(new Scene(rootLayout));
+            primaryStage.show();
+            primaryStage.setTitle("New picture");
+        } catch (IOException error){
+            error.printStackTrace();
+        }
+    }
+
+    /**
+     * Возвращение главной сцены
+     * @return
+     */
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public static void main(String[] args) {
         launch(args);
     }
+
 
 }

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicEditor.Controller">
    <children>
       <BorderPane layoutX="43.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -13,10 +16,13 @@
                <children>
                   <HBox>
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-                        <Button layoutX="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-                        <Button layoutX="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-                        <Button layoutX="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+                        <Button fx:id="brushButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button fx:id="fillButton" blendMode="MULTIPLY" graphicTextGap="0.0" layoutX="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+                        <Button fx:id="textButton" layoutX="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+                        <Button fx:id="eraserButton" layoutX="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
                      </children>
                   </HBox>
                </children>

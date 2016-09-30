@@ -6,4 +6,5 @@ import graphicEditor.instrument.Instrument;
  * Ластик
  */
 public class Eraser extends Instrument {
+
 }
