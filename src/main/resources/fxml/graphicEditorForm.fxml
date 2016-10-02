@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
@@ -14,17 +15,49 @@
          <left>
             <Pane prefHeight="340.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox>
+                  <Pane>
                      <children>
-                        <Button fx:id="brushButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+                        <Button fx:id="textButton" layoutX="68.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
+                        <Button fx:id="pipetteButton" layoutX="38.0" layoutY="52.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
+                        <Label alignment="CENTER" maxHeight="24.0" maxWidth="100.0" minHeight="24.0" minWidth="100.0" prefHeight="24.0" prefWidth="100.0" text="Инструменты">
+                           <font>
+                              <Font name="Corbel" size="12.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="zoomButton" layoutX="68.0" layoutY="52.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
+                        <Button fx:id="brushButton" layoutX="8.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
-                           </cursor></Button>
-                        <Button fx:id="fillButton" blendMode="MULTIPLY" graphicTextGap="0.0" layoutX="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-                        <Button fx:id="textButton" layoutX="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-                        <Button fx:id="eraserButton" layoutX="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="eraserButton" layoutX="8.0" layoutY="52.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
+                        <Button fx:id="fillButton" layoutX="38.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
-                  </HBox>
+                  </Pane>
+                  <Pane layoutY="76.0">
+                     <children>
+                        <Label alignment="CENTER" maxHeight="24.0" maxWidth="100.0" minHeight="24.0" minWidth="100.0" prefHeight="24.0" prefWidth="100.0" text="Фигуры">
+                           <font>
+                              <Font name="Corbel" size="12.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="lineButton" layoutX="68.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
+                        <Button fx:id="rectangleButton" layoutX="8.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="ellipseButton" layoutX="38.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </Pane>
                </children>
             </Pane>
          </left>

@@ -1,6 +1,8 @@
 package graphicEditor.instrument;
 
+import graphicEditor.Controller;
 import graphicEditor.MainApp;
+import graphicEditor.instrument.mainInstruments.Brush;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -14,17 +16,22 @@ import javafx.scene.input.MouseEvent;
  */
 public class Instrument extends MainApp {
 
-    //Кнопка инструмента
-    public static class Buttons extends Button {
+    //Классы - наследники
+    protected Brush brush;
 
-        private static Image buttonIcon;
+    //Конструктор
+    public Instrument() {
 
-        //Установка иконки
-        @FXML
-        public static void initIcon(final Button button) {
-            buttonIcon = new Image("/images/buttons/" + button.getId() + ".png");
-            button.setPadding(Insets.EMPTY);
-            button.setGraphic(new ImageView(buttonIcon));
-        }
     }
+
+
+    //Установка иконки на кнопку
+    public static void setIcon(Button button) {
+        Image buttonIcon;
+        buttonIcon = new Image("/images/buttons/" + button.getId() + ".png");
+        button.setPadding(Insets.EMPTY);
+        button.setGraphic(new ImageView(buttonIcon));
+    }
+
 }
+

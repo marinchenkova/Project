@@ -1,5 +1,7 @@
 package graphicEditor;
 
+import graphicEditor.instrument.Instrument;
+import graphicEditor.instrument.mainInstruments.Brush;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -50,9 +52,6 @@ public class MainApp extends Application {
         return primaryStage;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
+    public static void main(String[] args) { launch(args); }
 
 }
