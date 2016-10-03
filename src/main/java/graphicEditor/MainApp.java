@@ -32,8 +32,9 @@ public class MainApp extends Application {
     public void initFXMLForm() {
         try {
             //Загрузка GUI формы
-            Parent rootLayout = FXMLLoader.load(getClass().getResource
+            FXMLLoader loader = new FXMLLoader(getClass().getResource
                     ("/fxml/graphicEditorForm.fxml"));
+            Parent rootLayout = loader.load();
 
             //Создание сцены и сообщение GUI формы в сцену
             primaryStage.setScene(new Scene(rootLayout));

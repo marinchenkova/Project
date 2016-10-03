@@ -18,11 +18,29 @@ import javafx.stage.Stage;
  * Кисть
  */
 public class Brush extends Instrument {
+    /**
+     * Поля
+     */
+    //Класс - контроллер
+    private  Controller controller;
+
+    //Поля для кнопки
+    private  Button brushButton;
+    private Image buttonIcon = new Image("/images/buttons/brushButton.png");
+
 
     //Конструктор
-    public Brush() {
-
+    public Brush(Controller controller) {
+        this.controller = controller;
+        initialize();
     }
+
+    //Инициализация
+    public void initialize(){
+        brushButton = controller.brushButton;
+        setIcon(brushButton, buttonIcon);
+    }
+
 
 
     //Нажатие мыши

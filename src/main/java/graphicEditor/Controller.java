@@ -3,6 +3,7 @@ package graphicEditor;
 import graphicEditor.instrument.Instrument;
 import graphicEditor.instrument.mainInstruments.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 
@@ -11,28 +12,29 @@ import javafx.scene.control.Button;
  * @author Маринченко В. А.
  */
 public class Controller {
+    //Поля
+    private Instrument instrument;
+    private Brush brush;
 
-    public Controller controller;
-
-    //Ссылки на объекты в форме FXML
+    //Ссылки на объекты в FXML
     @FXML
-    private Button brushButton;
+    public  Button brushButton = new Button();
     @FXML
-    private Button fillButton;
+    public Button fillButton = new Button();
     @FXML
-    private Button textButton;
+    public Button textButton = new Button();
     @FXML
-    private Button eraserButton;
+    public Button eraserButton = new Button();
     @FXML
-    private Button pipetteButton;
+    public Button pipetteButton = new Button();
     @FXML
-    private Button zoomButton;
+    public Button zoomButton = new Button();
     @FXML
-    private Button rectangleButton;
+    public Button rectangleButton = new Button();
     @FXML
-    private Button ellipseButton;
+    public Button ellipseButton = new Button();
     @FXML
-    private Button lineButton;
+    public Button lineButton = new Button();
 
 
 
@@ -48,16 +50,7 @@ public class Controller {
      */
     @FXML
     public void initialize() throws Exception {
-        Instrument.setIcon(brushButton);
-        Instrument.setIcon(fillButton);
-        Instrument.setIcon(textButton);
-        Instrument.setIcon(eraserButton);
-        Instrument.setIcon(pipetteButton);
-        Instrument.setIcon(zoomButton);
-        Instrument.setIcon(rectangleButton);
-        Instrument.setIcon(ellipseButton);
-        Instrument.setIcon(lineButton);
-
+        instrument = new Instrument(this);
     }
 
 
