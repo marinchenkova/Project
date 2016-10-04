@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
@@ -9,49 +10,73 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicEditor.Controller">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicEditor.Controller">
    <children>
-      <BorderPane layoutX="43.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane layoutX="43.0" layoutY="48.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <Pane prefHeight="340.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <Pane maxHeight="350.0" maxWidth="72.0" minHeight="350.0" minWidth="72.0" prefHeight="350.0" prefWidth="72.0" BorderPane.alignment="TOP_LEFT">
                <children>
                   <Pane>
                      <children>
-                        <Button fx:id="textButton" layoutX="68.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
-                        <Button fx:id="pipetteButton" layoutX="38.0" layoutY="52.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
-                        <Label alignment="CENTER" maxHeight="24.0" maxWidth="100.0" minHeight="24.0" minWidth="100.0" prefHeight="24.0" prefWidth="100.0" text="Инструменты">
+                        <Label alignment="CENTER" maxHeight="24.0" maxWidth="72.0" minHeight="24.0" minWidth="72.0" prefHeight="24.0" prefWidth="72.0" text="Инструменты">
                            <font>
                               <Font name="Corbel" size="12.0" />
                            </font>
                         </Label>
-                        <Button fx:id="zoomButton" layoutX="68.0" layoutY="52.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
                         <Button fx:id="brushButton" layoutX="8.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="eraserButton" layoutX="8.0" layoutY="52.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
-                        <Button fx:id="fillButton" layoutX="38.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                        <Button fx:id="eraserButton" layoutX="40.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="fillButton" layoutX="8.0" layoutY="56.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="textButton" layoutX="40.0" layoutY="56.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="pipetteButton" layoutX="8.0" layoutY="88.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="zoomButton" layoutX="40.0" layoutY="88.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
                      </children>
                   </Pane>
-                  <Pane layoutY="76.0">
+                  <Pane layoutY="120.0">
                      <children>
-                        <Label alignment="CENTER" maxHeight="24.0" maxWidth="100.0" minHeight="24.0" minWidth="100.0" prefHeight="24.0" prefWidth="100.0" text="Фигуры">
+                        <Label alignment="CENTER" maxHeight="24.0" maxWidth="72.0" minHeight="24.0" minWidth="72.0" prefHeight="24.0" prefWidth="72.0" text="Фигуры">
                            <font>
                               <Font name="Corbel" size="12.0" />
                            </font>
                         </Label>
-                        <Button fx:id="lineButton" layoutX="68.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
                         <Button fx:id="rectangleButton" layoutX="8.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="ellipseButton" layoutX="38.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                        <Button fx:id="ellipseButton" layoutX="40.0" layoutY="24.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="lineButton" layoutX="8.0" layoutY="56.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button fx:id="curveButton" layoutX="40.0" layoutY="56.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -86,9 +111,20 @@
             </MenuBar>
          </top>
          <center>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefViewportHeight="350.0" prefViewportWidth="528.0" prefWidth="528.0" BorderPane.alignment="TOP_LEFT">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                <AnchorPane layoutX="14.0" layoutY="25.0" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0">
+                     <children>
+                        <Canvas fx:id="desk" height="300.0" width="300.0">
+                           <effect>
+                              <Shadow />
+                           </effect>
+                        </Canvas>
+                     </children>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                  </AnchorPane>
               </content>
             </ScrollPane>
          </center>

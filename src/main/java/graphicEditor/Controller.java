@@ -1,9 +1,9 @@
 package graphicEditor;
 
+import graphicEditor.instrument.desk.Desk;
 import graphicEditor.instrument.Instrument;
-import graphicEditor.instrument.mainInstruments.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 
 
@@ -12,11 +12,12 @@ import javafx.scene.control.Button;
  * @author Маринченко В. А.
  */
 public class Controller {
-    //Поля
-    private Instrument instrument;
-    private Brush brush;
-
-    //Ссылки на объекты в FXML
+    /**
+    * Поля
+    */
+    /**
+     * Кнопки
+     */
     @FXML
     public  Button brushButton = new Button();
     @FXML
@@ -36,7 +37,14 @@ public class Controller {
     @FXML
     public Button lineButton = new Button();
 
+    /**
+     * Доска
+     */
+    @FXML
+    public Canvas desk = new Canvas();
 
+    //Классы наследники MainApp
+    public Instrument instrument;
 
     /**
      * Конструктор
@@ -50,6 +58,7 @@ public class Controller {
      */
     @FXML
     public void initialize() throws Exception {
+        //Создание всех объектов приложения
         instrument = new Instrument(this);
     }
 
