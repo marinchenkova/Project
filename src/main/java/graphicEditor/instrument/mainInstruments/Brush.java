@@ -52,6 +52,7 @@ public class Brush extends Instrument {
         deskCanvas = controller.desk;
         brushButton = controller.brushButton;
         setIcon(brushButton, buttonIcon);
+        setCursor(deskCanvas, cursorImage);
         run();
     }
 

@@ -32,7 +32,7 @@ public class Instrument extends MainApp {
     private Pipette pipette;
     private Zoom zoom;
     private Figure figure;
-    public Desk desk;
+    private Desk desk;
 
     //Конструктор
     public Instrument() {
@@ -47,13 +47,14 @@ public class Instrument extends MainApp {
     //Инициализация
     public void initialize(){
         desk = new Desk(controller);
-        figure = new Figure(controller);
         brush = new Brush(controller);
+        eraser = new Eraser(controller);
         fill = new Fill(controller);
         text = new Text(controller);
-        eraser = new Eraser(controller);
         pipette = new Pipette(controller);
         zoom = new Zoom(controller);
+
+        figure = new Figure(controller);
 
     }
 

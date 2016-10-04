@@ -111,21 +111,13 @@
             </MenuBar>
          </top>
          <center>
-            <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefViewportHeight="350.0" prefViewportWidth="528.0" prefWidth="528.0" BorderPane.alignment="TOP_LEFT">
-              <content>
-                <AnchorPane layoutX="14.0" layoutY="25.0" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0">
-                     <children>
-                        <Canvas fx:id="desk" height="300.0" width="300.0">
-                           <effect>
-                              <Shadow />
-                           </effect>
-                        </Canvas>
-                     </children>
-                     <effect>
-                        <Shadow />
-                     </effect>
-                  </AnchorPane>
-              </content>
+            <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefViewportHeight="350.0" prefViewportWidth="528.0" prefWidth="528.0" BorderPane.alignment="CENTER">
+               <effect>
+                  <ColorAdjust brightness="-0.1" />
+               </effect>
+               <content>
+                  <Canvas fx:id="desk" height="300.0" width="400.0" />
+               </content>
             </ScrollPane>
          </center>
       </BorderPane>

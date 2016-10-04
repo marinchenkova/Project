@@ -5,6 +5,9 @@ import graphicEditor.instrument.Instrument;
 import graphicEditor.instrument.figure.figures.Ellipse;
 import graphicEditor.instrument.figure.figures.Line;
 import graphicEditor.instrument.figure.figures.Rectangle;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
+import javafx.scene.image.Image;
 
 /**
  * Фигура
@@ -17,6 +20,8 @@ public class Figure extends Instrument {
     private Rectangle rectangle;
     private Ellipse ellipse;
     private Line line;
+
+    protected Cursor cursorImage = new ImageCursor(new Image("/images/cursors/figureCursor.png"));
 
     //Конструктор
     public Figure() {
