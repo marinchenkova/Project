@@ -77,7 +77,11 @@
             </Pane>
          </left>
          <bottom>
-            <Pane maxHeight="25.0" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+            <Pane maxHeight="25.0" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="coordsLabel" layoutX="85.0" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0" />
+                  <ImageView fx:id="coordsImage" fitHeight="25.0" fitWidth="25.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true" />
+               </children></Pane>
          </bottom>
          <top>
             <MenuBar BorderPane.alignment="CENTER">
@@ -101,12 +105,9 @@
             </MenuBar>
          </top>
          <center>
-            <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="120.0" minWidth="120.0" prefHeight="350.0" prefViewportHeight="350.0" prefViewportWidth="528.0" prefWidth="528.0" BorderPane.alignment="CENTER">
-               <effect>
-                  <ColorAdjust brightness="-0.1" />
-               </effect>
+            <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="120.0" minWidth="120.0" prefHeight="350.0" prefViewportHeight="350.0" prefViewportWidth="528.0" prefWidth="480.0" BorderPane.alignment="CENTER">
                <content>
-                  <Canvas fx:id="desk" height="300.0" width="400.0" />
+                  <Canvas fx:id="desk" height="348.0" width="478.0" />
                </content>
             </ScrollPane>
          </center>

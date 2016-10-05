@@ -53,7 +53,6 @@ public class Instrument extends MainApp {
         text = new Text(controller);
         pipette = new Pipette(controller);
         zoom = new Zoom(controller);
-
         figure = new Figure(controller);
 
     }

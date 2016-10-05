@@ -37,7 +37,7 @@ public class Brush extends Instrument {
     /**
      * Этот объект в FXML
      */
-    private  Button brushButton;
+    private Button brushButton;
     private Image buttonIcon = new Image("/images/buttons/brushButton.png");
     private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/brushCursor.png"));
 

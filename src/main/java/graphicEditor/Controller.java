@@ -5,6 +5,8 @@ import graphicEditor.instrument.Instrument;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 
 /**
@@ -15,6 +17,13 @@ public class Controller {
     /**
     * Поля
     */
+
+    /**
+     * Доска
+     */
+    @FXML
+    public Canvas desk = new Canvas();
+
     /**
      * Кнопки
      */
@@ -38,10 +47,12 @@ public class Controller {
     public Button lineButton = new Button();
 
     /**
-     * Доска
+     * Информация
      */
     @FXML
-    public Canvas desk = new Canvas();
+    public Label coordsLabel = new Label();
+    @FXML
+    public ImageView coordsImage = new ImageView();
 
     //Классы наследники MainApp
     public Instrument instrument;
