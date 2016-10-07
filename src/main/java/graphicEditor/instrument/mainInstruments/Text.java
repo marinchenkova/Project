@@ -24,11 +24,6 @@ public class Text extends Instrument {
     private  Controller controller;
 
     /**
-     * Доска
-     */
-    private Canvas deskCanvas;
-
-    /**
      * Этот объект в FXML
      */
     private Button textButton;
@@ -44,7 +39,7 @@ public class Text extends Instrument {
 
     //Инициализация
     public void initialize(){
-        deskCanvas = controller.desk;
+        deskCanvas = controller.deskCanvas;
         textButton = controller.textButton;
         setIcon(textButton, buttonIcon);
         run();

@@ -107,7 +107,7 @@
          <center>
             <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="120.0" minWidth="120.0" prefHeight="350.0" prefViewportHeight="350.0" prefViewportWidth="528.0" prefWidth="480.0" BorderPane.alignment="CENTER">
                <content>
-                  <Canvas fx:id="desk" height="348.0" width="478.0" />
+                  <Canvas fx:id="deskCanvas" height="348.0" width="478.0" />
                </content>
             </ScrollPane>
          </center>

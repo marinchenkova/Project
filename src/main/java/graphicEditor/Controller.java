@@ -22,7 +22,7 @@ public class Controller {
      * Доска
      */
     @FXML
-    public Canvas desk = new Canvas();
+    public Canvas deskCanvas = new Canvas();
 
     /**
      * Кнопки

@@ -24,11 +24,6 @@ public class Eraser extends Instrument {
     private  Controller controller;
 
     /**
-     * Доска
-     */
-    private Canvas deskCanvas;
-
-    /**
      * Этот объект в FXML
      */
     private Button eraserButton;
@@ -43,7 +38,7 @@ public class Eraser extends Instrument {
 
     //Инициализация
     public void initialize(){
-        deskCanvas = controller.desk;
+        deskCanvas = controller.deskCanvas;
         eraserButton = controller.eraserButton;
         setIcon(eraserButton, buttonIcon);
         run();

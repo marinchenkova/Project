@@ -24,11 +24,6 @@ public class Zoom extends Instrument {
     private  Controller controller;
 
     /**
-     * Доска
-     */
-    private Canvas deskCanvas;
-
-    /**
      * Этот объект в FXML
      */
     private Button zoomButton;
@@ -43,7 +38,7 @@ public class Zoom extends Instrument {
 
     //Инициализация
     public void initialize(){
-        deskCanvas = controller.desk;
+        deskCanvas = controller.deskCanvas;
         zoomButton = controller.zoomButton;
         setIcon(zoomButton, buttonIcon);
         run();

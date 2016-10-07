@@ -24,11 +24,6 @@ public class Fill extends Instrument {
     private  Controller controller;
 
     /**
-     * Доска
-     */
-    private Canvas deskCanvas;
-
-    /**
      * Этот объект в FXML
      */
     private Button fillButton;
@@ -43,7 +38,7 @@ public class Fill extends Instrument {
 
     //Инициализация
     public void initialize(){
-        deskCanvas = controller.desk;
+        deskCanvas = controller.deskCanvas;
         fillButton = controller.fillButton;
         setIcon(fillButton, buttonIcon);
         run();

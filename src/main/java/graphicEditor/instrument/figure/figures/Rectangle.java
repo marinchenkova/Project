@@ -22,11 +22,6 @@ public class Rectangle extends Figure {
     private  Controller controller;
 
     /**
-     * Доска
-     */
-    private Canvas deskCanvas;
-
-    /**
      * Этот объект в FXML
      */
     private Button rectangleButton;
@@ -41,7 +36,7 @@ public class Rectangle extends Figure {
 
     //Инициализация
     public void initialize(){
-        deskCanvas = controller.desk;
+        deskCanvas = controller.deskCanvas;
         rectangleButton = controller.rectangleButton;
         setIcon(rectangleButton, buttonIcon);
         run();

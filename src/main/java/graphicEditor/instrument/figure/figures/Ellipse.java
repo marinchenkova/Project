@@ -22,11 +22,6 @@ public class Ellipse extends Figure {
     private  Controller controller;
 
     /**
-     * Доска
-     */
-    private Canvas deskCanvas;
-
-    /**
      * Этот объект в FXML
      */
     private Button ellipseButton;
@@ -41,7 +36,7 @@ public class Ellipse extends Figure {
 
     //Инициализация
     public void initialize(){
-        deskCanvas = controller.desk;
+        deskCanvas = controller.deskCanvas;
         ellipseButton = controller.ellipseButton;
         setIcon(ellipseButton, buttonIcon);
         run();

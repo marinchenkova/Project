@@ -24,11 +24,6 @@ public class Pipette extends Instrument {
     private  Controller controller;
 
     /**
-     * Доска
-     */
-    private Canvas deskCanvas;
-
-    /**
      * Этот объект в FXML
      */
     private Button pipetteButton;
@@ -44,7 +39,7 @@ public class Pipette extends Instrument {
 
     //Инициализация
     public void initialize(){
-        deskCanvas = controller.desk;
+        deskCanvas = controller.deskCanvas;
         pipetteButton = controller.pipetteButton;
         setIcon(pipetteButton, buttonIcon);
         run();

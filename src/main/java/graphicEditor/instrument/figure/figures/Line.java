@@ -22,11 +22,6 @@ public class Line extends Figure {
     private  Controller controller;
 
     /**
-     * Доска
-     */
-    private Canvas deskCanvas;
-
-    /**
      * Этот объект в FXML
      */
     private Button lineButton;
@@ -41,7 +36,7 @@ public class Line extends Figure {
 
     //Инициализация
     public void initialize(){
-        deskCanvas = controller.desk;
+        deskCanvas = controller.deskCanvas;
         lineButton = controller.lineButton;
         setIcon(lineButton, buttonIcon);
         run();
