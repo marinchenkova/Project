@@ -1,11 +1,8 @@
 package graphicEditor;
 
-import graphicEditor.instrument.Instrument;
-import graphicEditor.instrument.mainInstruments.Brush;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;

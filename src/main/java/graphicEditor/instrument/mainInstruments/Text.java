@@ -4,8 +4,6 @@ import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;

@@ -3,9 +3,7 @@ package graphicEditor.instrument.mainInstruments;
 import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -28,7 +26,7 @@ public class Pipette extends Instrument {
      */
     private Button pipetteButton;
     private Image buttonIcon = new Image("/images/buttons/pipetteButton.png");
-    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/pipetteCursor.png"));
+    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/pipetteCursor.png"), 2, 1);
 
 
     //Конструктор

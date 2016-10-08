@@ -1,12 +1,9 @@
-package graphicEditor.instrument.figure;
+package graphicEditor.instrument.figures;
 
 import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
-import graphicEditor.instrument.figure.figures.Ellipse;
-import graphicEditor.instrument.figure.figures.Line;
-import graphicEditor.instrument.figure.figures.Rectangle;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
+import graphicEditor.instrument.figures.figures.*;
+import javafx.scene.*;
 import javafx.scene.image.Image;
 
 /**
@@ -21,7 +18,7 @@ public class Figure extends Instrument {
     private Ellipse ellipse;
     private Line line;
 
-    protected Cursor cursorImage = new ImageCursor(new Image("/images/cursors/figureCursor.png"));
+    protected static Cursor cursorImage = new ImageCursor(new Image("/images/cursors/figureCursor.png"), 2, 2);
 
     //Конструктор
     public Figure() {

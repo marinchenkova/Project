@@ -3,12 +3,9 @@ package graphicEditor.instrument.desk;
 import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.event.EventHandler;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -38,7 +35,6 @@ public class Desk extends Instrument {
     private double height;
     public Integer x;
     public Integer y;
-
 
 
     //Конструктор
@@ -93,15 +89,15 @@ public class Desk extends Instrument {
         //Нажатие мыши
         deskCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                activeInstrument.mousePressedAction(event, graphicsContext);
+                activeInstrument.instrumentAction(event, graphicsContext);
             }
         });
 
-        //
+        //Мышь двигается с нажатием
         deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 getCoords(event);
-                activeInstrument.mousePressedAction(event, graphicsContext);
+                activeInstrument.instrumentAction(event, graphicsContext);
             }
         });
     }

@@ -3,9 +3,8 @@ package graphicEditor.instrument.mainInstruments;
 import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.*;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -28,7 +27,7 @@ public class Eraser extends Instrument {
      */
     private Button eraserButton;
     private Image buttonIcon = new Image("/images/buttons/eraserButton.png");
-    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/eraserCursor.png"));
+    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/eraserCursor.png"), 2, 2);
 
     //Конструктор
     public Eraser(Controller controller) {
@@ -39,17 +38,34 @@ public class Eraser extends Instrument {
     //Инициализация
     public void initialize(){
         deskCanvas = controller.deskCanvas;
+
         eraserButton = controller.eraserButton;
         setIcon(eraserButton, buttonIcon);
+
         run();
     }
 
     //Выполнение
     public void run(){
+        //Нажатие мыши
         eraserButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 setCursor(deskCanvas, cursorImage);
+                setActiveInstrument();
             }
         });
     }
+
+    //Сделать этот инструмент активным
+    public void setActiveInstrument(){
+        activeInstrument = this;
+    }
+
+    //Применение ластика
+    @Override
+    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
+        graphicsContext.setFill(backgroundColor);
+        graphicsContext.fillRect(event.getX(), event.getY(), 16, 16);
+    }
+
 }

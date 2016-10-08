@@ -3,9 +3,8 @@ package graphicEditor.instrument.mainInstruments;
 import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.*;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -28,7 +27,7 @@ public class Fill extends Instrument {
      */
     private Button fillButton;
     private Image buttonIcon = new Image("/images/buttons/fillButton.png");
-    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/fillCursor.png"));
+    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/fillCursor.png"), 13, 31);
 
     //Конструктор
     public Fill(Controller controller) {
@@ -49,8 +48,24 @@ public class Fill extends Instrument {
         fillButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 setCursor(deskCanvas, cursorImage);
+                setActiveInstrument();
             }
         });
     }
+
+    //Сделать этот инструмент активным
+    public void setActiveInstrument(){
+        activeInstrument = this;
+    }
+
+    //Применение заливки
+    @Override
+    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
+        graphicsContext.setFill(activeColor);
+
+        double x = event.getX();
+        double y = event.getY();
+    }
+
 }
 

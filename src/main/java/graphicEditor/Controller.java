@@ -1,11 +1,9 @@
 package graphicEditor;
 
-import graphicEditor.instrument.desk.Desk;
 import graphicEditor.instrument.Instrument;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 
@@ -72,7 +70,5 @@ public class Controller {
         //Создание всех объектов приложения
         instrument = new Instrument(this);
     }
-
-
 
 }

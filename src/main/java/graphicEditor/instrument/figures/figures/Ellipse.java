@@ -1,17 +1,16 @@
-package graphicEditor.instrument.figure.figures;
+package graphicEditor.instrument.figures.figures;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.figure.Figure;
+import graphicEditor.instrument.figures.Figure;
 import javafx.event.EventHandler;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Прямоугольник
+ * Эллипс
  */
-public class Rectangle extends Figure {
+public class Ellipse extends Figure {
     /**
      * Поля
      */
@@ -24,12 +23,12 @@ public class Rectangle extends Figure {
     /**
      * Этот объект в FXML
      */
-    private Button rectangleButton;
-    private Image buttonIcon = new Image("/images/buttons/rectangleButton.png");
+    private Button ellipseButton;
+    private Image buttonIcon = new Image("/images/buttons/ellipseButton.png");
 
 
     //Конструктор
-    public Rectangle(Controller controller) {
+    public Ellipse(Controller controller) {
         this.controller = controller;
         initialize();
     }
@@ -37,14 +36,14 @@ public class Rectangle extends Figure {
     //Инициализация
     public void initialize(){
         deskCanvas = controller.deskCanvas;
-        rectangleButton = controller.rectangleButton;
-        setIcon(rectangleButton, buttonIcon);
+        ellipseButton = controller.ellipseButton;
+        setIcon(ellipseButton, buttonIcon);
         run();
     }
 
     //Выполнение
     public void run(){
-        rectangleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        ellipseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 setCursor(deskCanvas, cursorImage);
             }

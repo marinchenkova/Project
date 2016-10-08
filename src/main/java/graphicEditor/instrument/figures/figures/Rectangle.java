@@ -1,17 +1,16 @@
-package graphicEditor.instrument.figure.figures;
+package graphicEditor.instrument.figures.figures;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.figure.Figure;
+import graphicEditor.instrument.figures.Figure;
 import javafx.event.EventHandler;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Линия
+ * Прямоугольник
  */
-public class Line extends Figure {
+public class Rectangle extends Figure {
     /**
      * Поля
      */
@@ -24,12 +23,12 @@ public class Line extends Figure {
     /**
      * Этот объект в FXML
      */
-    private Button lineButton;
-    private Image buttonIcon = new Image("/images/buttons/lineButton.png");
+    private Button rectangleButton;
+    private Image buttonIcon = new Image("/images/buttons/rectangleButton.png");
 
 
     //Конструктор
-    public Line(Controller controller) {
+    public Rectangle(Controller controller) {
         this.controller = controller;
         initialize();
     }
@@ -37,14 +36,14 @@ public class Line extends Figure {
     //Инициализация
     public void initialize(){
         deskCanvas = controller.deskCanvas;
-        lineButton = controller.lineButton;
-        setIcon(lineButton, buttonIcon);
+        rectangleButton = controller.rectangleButton;
+        setIcon(rectangleButton, buttonIcon);
         run();
     }
 
     //Выполнение
     public void run(){
-        lineButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        rectangleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 setCursor(deskCanvas, cursorImage);
             }

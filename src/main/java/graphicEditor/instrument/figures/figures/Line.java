@@ -1,17 +1,16 @@
-package graphicEditor.instrument.figure.figures;
+package graphicEditor.instrument.figures.figures;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.figure.Figure;
+import graphicEditor.instrument.figures.Figure;
 import javafx.event.EventHandler;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Эллипс
+ * Линия
  */
-public class Ellipse extends Figure {
+public class Line extends Figure {
     /**
      * Поля
      */
@@ -24,12 +23,12 @@ public class Ellipse extends Figure {
     /**
      * Этот объект в FXML
      */
-    private Button ellipseButton;
-    private Image buttonIcon = new Image("/images/buttons/ellipseButton.png");
+    private Button lineButton;
+    private Image buttonIcon = new Image("/images/buttons/lineButton.png");
 
 
     //Конструктор
-    public Ellipse(Controller controller) {
+    public Line(Controller controller) {
         this.controller = controller;
         initialize();
     }
@@ -37,14 +36,14 @@ public class Ellipse extends Figure {
     //Инициализация
     public void initialize(){
         deskCanvas = controller.deskCanvas;
-        ellipseButton = controller.ellipseButton;
-        setIcon(ellipseButton, buttonIcon);
+        lineButton = controller.lineButton;
+        setIcon(lineButton, buttonIcon);
         run();
     }
 
     //Выполнение
     public void run(){
-        ellipseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        lineButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 setCursor(deskCanvas, cursorImage);
             }

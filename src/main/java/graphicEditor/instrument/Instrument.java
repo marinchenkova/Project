@@ -3,20 +3,16 @@ package graphicEditor.instrument;
 import graphicEditor.Controller;
 import graphicEditor.MainApp;
 import graphicEditor.instrument.desk.Desk;
-import graphicEditor.instrument.figure.Figure;
+import graphicEditor.instrument.figures.Figure;
 import graphicEditor.instrument.mainInstruments.*;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
+import graphicEditor.instrument.palette.Palette;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.canvas.*;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
-
+import javafx.scene.paint.Color;
 
 /**
  * Инструмент
@@ -33,13 +29,16 @@ public class Instrument extends MainApp {
     private Pipette pipette;
     private Zoom zoom;
     private Figure figure;
+    private Palette palette;
 
     /**
      * Доска
      */
     protected Desk desk;
     protected Canvas deskCanvas;
-    public static Instrument activeInstrument;
+    protected static Instrument activeInstrument;
+    protected static Color activeColor;
+    protected static Color backgroundColor;
 
     //Конструктор
     public Instrument() {
@@ -54,8 +53,9 @@ public class Instrument extends MainApp {
     //Инициализация
     public void initialize(){
         desk = new Desk(controller);
-        brush = new Brush(controller);
+        palette = new Palette(controller);
 
+        brush = new Brush(controller);
         eraser = new Eraser(controller);
         fill = new Fill(controller);
         text = new Text(controller);
@@ -83,8 +83,8 @@ public class Instrument extends MainApp {
     /**
      * Применение иснтрумента
      */
-    public void mousePressedAction(MouseEvent event, GraphicsContext graphicsContext){
-       activeInstrument.mousePressedAction(event, graphicsContext);
+    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
+       activeInstrument.instrumentAction(event, graphicsContext);
     }
 
 }
