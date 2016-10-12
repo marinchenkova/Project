@@ -86,18 +86,25 @@ public class Desk extends Instrument {
             }
         });
 
-        //Нажатие мыши
+        //Мышь двигается с нажатием
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                getCoords(event);
+                activeInstrument.instrumentAction(event, graphicsContext);
+            }
+        });
+
+        //Клик мыши
         deskCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 activeInstrument.instrumentAction(event, graphicsContext);
             }
         });
 
-        //Мышь двигается с нажатием
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+        //Нажатие мыши
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                getCoords(event);
-                activeInstrument.instrumentAction(event, graphicsContext);
+                lineWidth = Integer.parseInt(widthSetter.getText());
             }
         });
     }

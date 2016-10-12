@@ -50,7 +50,7 @@ public class Instrument extends MainApp {
 
     //Другие
     private static ImageView instrumentImage;
-    private static TextField widthSetter;
+    protected static TextField widthSetter;
 
     //Конструктор
     public Instrument() {
@@ -100,6 +100,7 @@ public class Instrument extends MainApp {
                 lineWidth = Integer.parseInt(widthSetter.getText());
             }
         });
+
     }
 
     /**
