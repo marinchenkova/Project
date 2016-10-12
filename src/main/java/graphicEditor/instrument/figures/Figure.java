@@ -18,7 +18,7 @@ public class Figure extends Instrument {
     private Ellipse ellipse;
     private Line line;
 
-    protected static Cursor cursorImage = new ImageCursor(new Image("/images/cursors/figureCursor.png"), 2, 2);
+    protected static Cursor figureCursor = new ImageCursor(new Image("/images/cursors/figureCursor.png"), 2, 2);
 
     //Конструктор
     public Figure() {

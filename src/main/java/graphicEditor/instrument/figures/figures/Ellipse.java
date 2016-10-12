@@ -3,6 +3,7 @@ package graphicEditor.instrument.figures.figures;
 import graphicEditor.Controller;
 import graphicEditor.instrument.figures.Figure;
 import javafx.event.EventHandler;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +25,7 @@ public class Ellipse extends Figure {
      * Этот объект в FXML
      */
     private Button ellipseButton;
-    private Image buttonIcon = new Image("/images/buttons/ellipseButton.png");
+    private Image ellipseIcon = new Image("/images/buttons/ellipseIcon.png");
 
 
     //Конструктор
@@ -37,16 +38,30 @@ public class Ellipse extends Figure {
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         ellipseButton = controller.ellipseButton;
-        setIcon(ellipseButton, buttonIcon);
+        setIcon(ellipseButton, ellipseIcon);
         run();
     }
 
     //Выполнение
     public void run(){
+        //Нажатие мыши
         ellipseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setCursor(deskCanvas, cursorImage);
+                setActiveInstrument();
+                setCursor(deskCanvas, figureCursor);
+                setInstrumentIcon(ellipseIcon);
             }
         });
+    }
+
+    //Сделать этот инструмент активным
+    public void setActiveInstrument(){
+        activeInstrument = this;
+    }
+
+    //Применение эллипса
+    @Override
+    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
+
     }
 }

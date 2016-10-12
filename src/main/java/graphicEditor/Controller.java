@@ -51,6 +51,10 @@ public class Controller {
     public Label coordsLabel = new Label();
     @FXML
     public ImageView coordsImage = new ImageView();
+    @FXML
+    public ImageView instrumentImage = new ImageView();
+    @FXML
+    public TextField widthSetter = new TextField();
 
     //Классы наследники MainApp
     public Instrument instrument;

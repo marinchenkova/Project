@@ -26,8 +26,8 @@ public class Fill extends Instrument {
      * Этот объект в FXML
      */
     private Button fillButton;
-    private Image buttonIcon = new Image("/images/buttons/fillButton.png");
-    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/fillCursor.png"), 13, 31);
+    private Image fillIcon = new Image("/images/buttons/fillIcon.png");
+    private Cursor fillCursor = new ImageCursor(new Image("/images/cursors/fillCursor.png"), 13, 31);
 
     //Конструктор
     public Fill(Controller controller) {
@@ -39,7 +39,7 @@ public class Fill extends Instrument {
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         fillButton = controller.fillButton;
-        setIcon(fillButton, buttonIcon);
+        setIcon(fillButton, fillIcon);
         run();
     }
 
@@ -47,8 +47,9 @@ public class Fill extends Instrument {
     public void run(){
         fillButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setCursor(deskCanvas, cursorImage);
                 setActiveInstrument();
+                setCursor(deskCanvas, fillCursor);
+                setInstrumentIcon(fillIcon);
             }
         });
     }

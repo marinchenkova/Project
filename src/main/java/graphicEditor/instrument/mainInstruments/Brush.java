@@ -26,8 +26,8 @@ public class Brush extends Instrument {
      * Этот объект в FXML
      */
     private Button brushButton;
-    private Image buttonIcon = new Image("/images/buttons/brushButton.png");
-    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/brushCursor.png"), 15, 15);
+    private Image brushIcon = new Image("/images/buttons/brushIcon.png");
+    private Cursor brushCursor = new ImageCursor(new Image("/images/cursors/brushCursor.png"), 15, 15);
 
     //Конструктор
     public Brush(Controller controller) {
@@ -41,10 +41,11 @@ public class Brush extends Instrument {
 
         //Инструмент кисть выбирается по умолчанию
         setActiveInstrument();
+        setInstrumentIcon(brushIcon);
 
         brushButton = controller.brushButton;
-        setIcon(brushButton, buttonIcon);
-        setCursor(deskCanvas, cursorImage);
+        setIcon(brushButton, brushIcon);
+        setCursor(deskCanvas, brushCursor);
 
         run();
     }
@@ -54,8 +55,9 @@ public class Brush extends Instrument {
         //Нажатие мыши
         brushButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setCursor(deskCanvas, cursorImage);
                 setActiveInstrument();
+                setCursor(deskCanvas, brushCursor);
+                setInstrumentIcon(brushIcon);
             }
         });
     }
@@ -70,7 +72,7 @@ public class Brush extends Instrument {
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
         graphicsContext.setFill(activeColor);
 
-        graphicsContext.fillOval(event.getX(), event.getY(), 4, 4);
+        graphicsContext.fillOval(event.getX() - lineWidth/2 + 1, event.getY() - lineWidth/2 + 1, lineWidth, lineWidth);
 
     }
 

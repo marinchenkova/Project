@@ -4,6 +4,7 @@ import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.event.EventHandler;
 import javafx.scene.*;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -25,8 +26,8 @@ public class Pipette extends Instrument {
      * Этот объект в FXML
      */
     private Button pipetteButton;
-    private Image buttonIcon = new Image("/images/buttons/pipetteButton.png");
-    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/pipetteCursor.png"), 2, 1);
+    private Image pipetteIcon = new Image("/images/buttons/pipetteIcon.png");
+    private Cursor pipetteCursor = new ImageCursor(new Image("/images/cursors/pipetteCursor.png"), 2, 1);
 
 
     //Конструктор
@@ -39,7 +40,7 @@ public class Pipette extends Instrument {
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         pipetteButton = controller.pipetteButton;
-        setIcon(pipetteButton, buttonIcon);
+        setIcon(pipetteButton, pipetteIcon);
         run();
     }
 
@@ -47,8 +48,21 @@ public class Pipette extends Instrument {
     public void run(){
         pipetteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setCursor(deskCanvas, cursorImage);
+                setActiveInstrument();
+                setCursor(deskCanvas, pipetteCursor);
+                setInstrumentIcon(pipetteIcon);
             }
         });
+    }
+
+    //Сделать этот инструмент активным
+    public void setActiveInstrument(){
+        activeInstrument = this;
+    }
+
+    //Применение пипетки
+    @Override
+    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
+
     }
 }

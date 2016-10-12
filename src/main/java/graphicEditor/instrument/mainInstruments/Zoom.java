@@ -4,6 +4,7 @@ import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.event.EventHandler;
 import javafx.scene.*;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -25,8 +26,8 @@ public class Zoom extends Instrument {
      * Этот объект в FXML
      */
     private Button zoomButton;
-    private Image buttonIcon = new Image("/images/buttons/zoomButton.png");
-    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/zoomCursor.png"), 8, 8);
+    private Image zoomIcon = new Image("/images/buttons/zoomIcon.png");
+    private Cursor zoomCursor = new ImageCursor(new Image("/images/cursors/zoomCursor.png"), 8, 8);
 
     //Конструктор
     public Zoom(Controller controller) {
@@ -38,16 +39,30 @@ public class Zoom extends Instrument {
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         zoomButton = controller.zoomButton;
-        setIcon(zoomButton, buttonIcon);
+        setIcon(zoomButton, zoomIcon);
         run();
     }
 
     //Выполнение
     public void run(){
+        //Нажатие мыши
         zoomButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setCursor(deskCanvas, cursorImage);
+                setActiveInstrument();
+                setCursor(deskCanvas, zoomCursor);
+                setInstrumentIcon(zoomIcon);
             }
         });
+    }
+
+    //Сделать этот инструмент активным
+    public void setActiveInstrument(){
+        activeInstrument = this;
+    }
+
+    //Применение зума
+    @Override
+    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
+
     }
 }

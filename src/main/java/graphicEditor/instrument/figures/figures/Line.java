@@ -3,6 +3,7 @@ package graphicEditor.instrument.figures.figures;
 import graphicEditor.Controller;
 import graphicEditor.instrument.figures.Figure;
 import javafx.event.EventHandler;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +25,7 @@ public class Line extends Figure {
      * Этот объект в FXML
      */
     private Button lineButton;
-    private Image buttonIcon = new Image("/images/buttons/lineButton.png");
+    private Image lineIcon = new Image("/images/buttons/lineIcon.png");
 
 
     //Конструктор
@@ -37,16 +38,30 @@ public class Line extends Figure {
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         lineButton = controller.lineButton;
-        setIcon(lineButton, buttonIcon);
+        setIcon(lineButton, lineIcon);
         run();
     }
 
     //Выполнение
     public void run(){
+        //Нажатие мыши
         lineButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setCursor(deskCanvas, cursorImage);
+                setActiveInstrument();
+                setCursor(deskCanvas, figureCursor);
+                setInstrumentIcon(lineIcon);
             }
         });
+    }
+
+    //Сделать этот инструмент активным
+    public void setActiveInstrument(){
+        activeInstrument = this;
+    }
+
+    //Применение линии
+    @Override
+    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
+
     }
 }

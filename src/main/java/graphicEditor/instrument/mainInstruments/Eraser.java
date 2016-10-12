@@ -26,8 +26,8 @@ public class Eraser extends Instrument {
      * Этот объект в FXML
      */
     private Button eraserButton;
-    private Image buttonIcon = new Image("/images/buttons/eraserButton.png");
-    private Cursor cursorImage = new ImageCursor(new Image("/images/cursors/eraserCursor.png"), 2, 2);
+    private Image eraserIcon = new Image("/images/buttons/eraserIcon.png");
+    private Cursor eraserCursor = new ImageCursor(new Image("/images/cursors/eraserCursor.png"), 2, 2);
 
     //Конструктор
     public Eraser(Controller controller) {
@@ -40,7 +40,7 @@ public class Eraser extends Instrument {
         deskCanvas = controller.deskCanvas;
 
         eraserButton = controller.eraserButton;
-        setIcon(eraserButton, buttonIcon);
+        setIcon(eraserButton, eraserIcon);
 
         run();
     }
@@ -50,8 +50,9 @@ public class Eraser extends Instrument {
         //Нажатие мыши
         eraserButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setCursor(deskCanvas, cursorImage);
                 setActiveInstrument();
+                setCursor(deskCanvas, eraserCursor);
+                setInstrumentIcon(eraserIcon);
             }
         });
     }

@@ -30,7 +30,7 @@ public class MainApp extends Application {
         try {
             //Загрузка GUI формы
             FXMLLoader loader = new FXMLLoader(getClass().getResource
-                    ("/fxml/graphicEditorForm.fxml"));
+                    ("/fxml/graphicEditor.fxml"));
             Parent rootLayout = loader.load();
 
             //Создание сцены и сообщение GUI формы в сцену

@@ -6,10 +6,13 @@ import graphicEditor.instrument.desk.Desk;
 import graphicEditor.instrument.figures.Figure;
 import graphicEditor.instrument.mainInstruments.*;
 import graphicEditor.instrument.palette.Palette;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -22,7 +25,7 @@ public class Instrument extends MainApp {
     private  Controller controller;
 
     //Классы - наследники
-    public Brush brush;
+    private Brush brush;
     private Fill fill;
     private Text text;
     private Eraser eraser;
@@ -30,15 +33,24 @@ public class Instrument extends MainApp {
     private Zoom zoom;
     private Figure figure;
     private Palette palette;
+    private Desk desk;
 
     /**
      * Доска
      */
-    protected Desk desk;
     protected Canvas deskCanvas;
+
+    /**
+     * Активные значения
+     */
     protected static Instrument activeInstrument;
     protected static Color activeColor;
     protected static Color backgroundColor;
+    protected static int lineWidth;
+
+    //Другие
+    private static ImageView instrumentImage;
+    private static TextField widthSetter;
 
     //Конструктор
     public Instrument() {
@@ -52,6 +64,17 @@ public class Instrument extends MainApp {
 
     //Инициализация
     public void initialize(){
+        //Настройка по умолчанию
+        backgroundColor = Color.WHITE;
+
+        activeInstrument = brush;
+        activeColor = Color.BLACK;
+        instrumentImage = controller.instrumentImage;
+
+        widthSetter = controller.widthSetter;
+        lineWidth = Integer.parseInt(widthSetter.getText());
+
+        //Создание всех объектов классов-наследников
         desk = new Desk(controller);
         palette = new Palette(controller);
 
@@ -63,6 +86,20 @@ public class Instrument extends MainApp {
         zoom = new Zoom(controller);
 
         figure = new Figure(controller);
+
+        runInstrument();
+    }
+
+    /**
+     * Выполнение
+     */
+    public  void runInstrument(){
+        //Работа с шириной инструмента
+        widthSetter.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                lineWidth = Integer.parseInt(widthSetter.getText());
+            }
+        });
     }
 
     /**
@@ -74,9 +111,16 @@ public class Instrument extends MainApp {
     }
 
     /**
+     * Установка иконки активного инструмента
+     */
+    public void setInstrumentIcon(Image instrumentIcon){
+        instrumentImage.setImage(instrumentIcon);
+    }
+
+    /**
      * Выбрать курсор, который будет отображаться на доске
      */
-    public  void  setCursor(Canvas deskCanvas, Cursor cursorImage){
+    public void setCursor(Canvas deskCanvas, Cursor cursorImage){
         deskCanvas.setCursor(cursorImage);
     }
 
