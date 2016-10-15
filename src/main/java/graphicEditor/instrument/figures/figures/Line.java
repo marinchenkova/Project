@@ -28,13 +28,17 @@ public class Line extends Figure {
     private Image lineIcon = new Image("/images/buttons/lineIcon.png");
 
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Line(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         lineButton = controller.lineButton;
@@ -42,7 +46,9 @@ public class Line extends Figure {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         //Нажатие мыши
         lineButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -54,12 +60,18 @@ public class Line extends Figure {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение линии
+    /**
+     * Применение линии
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
 

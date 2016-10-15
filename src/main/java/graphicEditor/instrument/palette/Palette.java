@@ -21,13 +21,17 @@ public class Palette extends Instrument{
      * Этот объект в FXML
      */
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Palette(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
 
@@ -37,7 +41,9 @@ public class Palette extends Instrument{
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
 
     }

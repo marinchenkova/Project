@@ -29,13 +29,17 @@ public class Eraser extends Instrument {
     private Image eraserIcon = new Image("/images/buttons/eraserIcon.png");
     private Cursor eraserCursor = new ImageCursor(new Image("/images/cursors/eraserCursor.png"), 2, 2);
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Eraser(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
 
@@ -45,7 +49,9 @@ public class Eraser extends Instrument {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         //Нажатие мыши
         eraserButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -57,12 +63,18 @@ public class Eraser extends Instrument {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение ластика
+    /**
+     * Применение ластика
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
         graphicsContext.setFill(backgroundColor);

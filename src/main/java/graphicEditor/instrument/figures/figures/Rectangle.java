@@ -28,13 +28,17 @@ public class Rectangle extends Figure {
     private Image rectangleIcon = new Image("/images/buttons/rectangleIcon.png");
 
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Rectangle(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         rectangleButton = controller.rectangleButton;
@@ -42,7 +46,9 @@ public class Rectangle extends Figure {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         //Нажатие мыши
         rectangleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -54,12 +60,18 @@ public class Rectangle extends Figure {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение эллипса
+    /**
+     * Применение прямоугольника
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
 

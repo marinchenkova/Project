@@ -6,25 +6,33 @@ import graphicEditor.instrument.desk.Desk;
 import graphicEditor.instrument.figures.Figure;
 import graphicEditor.instrument.mainInstruments.*;
 import graphicEditor.instrument.palette.Palette;
+import graphicEditor.instrument.settingsPanel.SettingsPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
- * Инструмент
+ * Инструмент - объект, который содержит все инструменты
  */
 public class Instrument extends MainApp {
-    //Поля
+    /**
+     * Поля
+     */
+
+    /**
+     * Класс - контроллер
+     */
     private  Controller controller;
 
-    //Классы - наследники
+    /**
+     * Классы - наследники
+     */
     private Brush brush;
     private Fill fill;
     private Text text;
@@ -34,6 +42,7 @@ public class Instrument extends MainApp {
     private Figure figure;
     private Palette palette;
     private Desk desk;
+    private SettingsPanel settingsPanel;
 
     /**
      * Доска
@@ -47,12 +56,16 @@ public class Instrument extends MainApp {
     protected static Color activeColor;
     protected static Color backgroundColor;
     protected static int lineWidth;
-
-    //Другие
     private static ImageView instrumentImage;
+
+    /**
+     * Другие
+     */
     protected static TextField widthSetter;
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Instrument() {
 
     }
@@ -62,7 +75,9 @@ public class Instrument extends MainApp {
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         //Настройка по умолчанию
         backgroundColor = Color.WHITE;
@@ -71,11 +86,10 @@ public class Instrument extends MainApp {
         activeColor = Color.BLACK;
         instrumentImage = controller.instrumentImage;
 
-        widthSetter = controller.widthSetter;
-        lineWidth = Integer.parseInt(widthSetter.getText());
 
         //Создание всех объектов классов-наследников
         desk = new Desk(controller);
+        settingsPanel = new SettingsPanel(controller);
         palette = new Palette(controller);
 
         brush = new Brush(controller);
@@ -87,20 +101,14 @@ public class Instrument extends MainApp {
 
         figure = new Figure(controller);
 
-        runInstrument();
     }
 
-    /**
-     * Выполнение
-     */
-    public  void runInstrument(){
-        //Работа с шириной инструмента
-        widthSetter.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                lineWidth = Integer.parseInt(widthSetter.getText());
-            }
-        });
 
+    /**
+     * Применение иснтрумента
+     */
+    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
+       activeInstrument.instrumentAction(event, graphicsContext);
     }
 
     /**
@@ -124,13 +132,5 @@ public class Instrument extends MainApp {
     public void setCursor(Canvas deskCanvas, Cursor cursorImage){
         deskCanvas.setCursor(cursorImage);
     }
-
-    /**
-     * Применение иснтрумента
-     */
-    public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
-       activeInstrument.instrumentAction(event, graphicsContext);
-    }
-
 }
 

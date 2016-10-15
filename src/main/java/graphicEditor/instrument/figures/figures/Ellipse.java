@@ -28,13 +28,17 @@ public class Ellipse extends Figure {
     private Image ellipseIcon = new Image("/images/buttons/ellipseIcon.png");
 
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Ellipse(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         ellipseButton = controller.ellipseButton;
@@ -42,7 +46,9 @@ public class Ellipse extends Figure {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         //Нажатие мыши
         ellipseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -54,12 +60,18 @@ public class Ellipse extends Figure {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение эллипса
+    /**
+     * Применение эллипса
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
 

@@ -29,13 +29,17 @@ public class Fill extends Instrument {
     private Image fillIcon = new Image("/images/buttons/fillIcon.png");
     private Cursor fillCursor = new ImageCursor(new Image("/images/cursors/fillCursor.png"), 13, 31);
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Fill(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         fillButton = controller.fillButton;
@@ -43,7 +47,9 @@ public class Fill extends Instrument {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         fillButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -54,12 +60,18 @@ public class Fill extends Instrument {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение заливки
+    /**
+     * Применение заливки
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
         graphicsContext.setFill(activeColor);

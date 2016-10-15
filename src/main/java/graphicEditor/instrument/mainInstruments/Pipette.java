@@ -30,13 +30,17 @@ public class Pipette extends Instrument {
     private Cursor pipetteCursor = new ImageCursor(new Image("/images/cursors/pipetteCursor.png"), 2, 1);
 
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Pipette(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         pipetteButton = controller.pipetteButton;
@@ -44,7 +48,9 @@ public class Pipette extends Instrument {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         pipetteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -55,12 +61,18 @@ public class Pipette extends Instrument {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение пипетки
+    /**
+     * Применение пипетки
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
 

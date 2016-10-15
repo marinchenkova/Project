@@ -29,13 +29,17 @@ public class Brush extends Instrument {
     private Image brushIcon = new Image("/images/buttons/brushIcon.png");
     private Cursor brushCursor = new ImageCursor(new Image("/images/cursors/brushCursor.png"), 15, 15);
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Brush(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
 
@@ -50,7 +54,9 @@ public class Brush extends Instrument {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         //Нажатие мыши
         brushButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -62,16 +68,21 @@ public class Brush extends Instrument {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение кисти
+    /**
+     * Применение кисти
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
         graphicsContext.setFill(activeColor);
-
         graphicsContext.fillOval(event.getX() - lineWidth/2 + 1, event.getY() - lineWidth/2 + 1, lineWidth, lineWidth);
 
     }

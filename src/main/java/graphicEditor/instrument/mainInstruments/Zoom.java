@@ -29,13 +29,17 @@ public class Zoom extends Instrument {
     private Image zoomIcon = new Image("/images/buttons/zoomIcon.png");
     private Cursor zoomCursor = new ImageCursor(new Image("/images/cursors/zoomCursor.png"), 8, 8);
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Zoom(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         zoomButton = controller.zoomButton;
@@ -43,7 +47,9 @@ public class Zoom extends Instrument {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         //Нажатие мыши
         zoomButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -55,12 +61,18 @@ public class Zoom extends Instrument {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение зума
+    /**
+     * Применение зума
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
 

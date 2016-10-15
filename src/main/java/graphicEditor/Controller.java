@@ -52,11 +52,17 @@ public class Controller {
     @FXML
     public ImageView coordsImage = new ImageView();
     @FXML
+    public Label sizeLabel = new Label();
+    @FXML
+    public ImageView sizeImage = new ImageView();
+    @FXML
     public ImageView instrumentImage = new ImageView();
     @FXML
     public TextField widthSetter = new TextField();
 
-    //Классы наследники MainApp
+    /**
+     * Класс-наследник приложения MainApp
+     */
     public Instrument instrument;
 
     /**
@@ -74,5 +80,4 @@ public class Controller {
         //Создание всех объектов приложения
         instrument = new Instrument(this);
     }
-
 }

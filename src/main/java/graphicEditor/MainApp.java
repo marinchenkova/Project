@@ -7,13 +7,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
 /**
  * Графический редактор
  * @author Маринченко В. А.
  */
 public class MainApp extends Application {
-    //Поля
+    /**
+     * Поля
+     */
     private Stage primaryStage;
 
     @Override
@@ -37,6 +38,7 @@ public class MainApp extends Application {
             primaryStage.setScene(new Scene(rootLayout));
             primaryStage.show();
             primaryStage.setTitle("New picture");
+
         } catch (IOException error){
             error.printStackTrace();
         }
@@ -51,5 +53,4 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) { launch(args); }
-
 }

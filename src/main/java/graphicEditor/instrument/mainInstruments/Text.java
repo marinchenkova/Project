@@ -30,13 +30,17 @@ public class Text extends Instrument {
     private Cursor textCursor = Cursor.TEXT;
 
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Text(Controller controller) {
         this.controller = controller;
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
         textButton = controller.textButton;
@@ -44,7 +48,9 @@ public class Text extends Instrument {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         textButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -55,12 +61,18 @@ public class Text extends Instrument {
         });
     }
 
-    //Сделать этот инструмент активным
+    /**
+     * Сделать этот инструмент активным
+     */
     public void setActiveInstrument(){
         activeInstrument = this;
     }
 
-    //Применение текста
+    /**
+     * Применение текста
+     * @param event
+     * @param graphicsContext
+     */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
 

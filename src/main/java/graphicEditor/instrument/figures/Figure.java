@@ -10,17 +10,27 @@ import javafx.scene.image.Image;
  * Фигура
  */
 public class Figure extends Instrument {
-    //Поля
+    /**
+     * Поля
+     */
+
+    /**
+     * Класс - контроллер
+     */
     private Controller controller;
 
-    //Классы - наследники
+    /**
+     * Классы - наследники
+     */
     private Rectangle rectangle;
     private Ellipse ellipse;
     private Line line;
 
     protected static Cursor figureCursor = new ImageCursor(new Image("/images/cursors/figureCursor.png"), 2, 2);
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Figure() {
 
     }
@@ -30,7 +40,9 @@ public class Figure extends Instrument {
         initialize();
     }
 
-    //Инициализация
+    /**
+     * Инициализация
+     */
     public void initialize(){
         rectangle = new Rectangle(controller);
         ellipse = new Ellipse(controller);

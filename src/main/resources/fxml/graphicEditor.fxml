@@ -88,8 +88,10 @@
          <bottom>
             <Pane maxHeight="25.0" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="coordsLabel" layoutX="85.0" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0" />
                   <ImageView fx:id="coordsImage" fitHeight="25.0" fitWidth="25.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="coordsLabel" layoutX="85.0" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0" />
+                  <ImageView fx:id="sizeImage" fitHeight="25.0" fitWidth="25.0" layoutX="135.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="sizeLabel" layoutX="160.0" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0" />
                </children></Pane>
          </bottom>
          <center>

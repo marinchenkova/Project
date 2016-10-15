@@ -29,15 +29,20 @@ public class Desk extends Instrument {
     private GraphicsContext graphicsContext;
     private Label coordsLabel;
     private ImageView coordsImage;
+    private Label sizeLabel;
+    private ImageView sizeImage;
     private Image coordsIcon =  new Image("/images/misc/coordsIcon.png");
+    private Image sizeIcon =  new Image("/images/misc/sizeIcon.png");
 
-    private double width;
-    private double height;
+    private Integer width;
+    private Integer height;
     public Integer x;
     public Integer y;
 
 
-    //Конструктор
+    /**
+     * Конструктор
+     */
     public Desk (){
 
     }
@@ -47,15 +52,23 @@ public class Desk extends Instrument {
         initialize();
     }
 
+    /**
+     * Инициализация
+     */
     public void initialize(){
         deskCanvas = controller.deskCanvas;
 
-        width = deskCanvas.getWidth();
-        height = deskCanvas.getHeight();
+        width = (int) deskCanvas.getWidth();
+        height = (int) deskCanvas.getHeight();
 
         coordsLabel = controller.coordsLabel;
         coordsImage = controller.coordsImage;
+        sizeLabel = controller.sizeLabel;
+        sizeImage = controller.sizeImage;
+
         coordsImage.setImage(coordsIcon);
+        sizeImage.setImage(sizeIcon);
+        sizeLabel.setText(width.toString() + ", " + height.toString());
 
         graphicsContext = deskCanvas.getGraphicsContext2D();
         setBackground();
@@ -63,7 +76,9 @@ public class Desk extends Instrument {
         run();
     }
 
-    //Выполнение
+    /**
+     * Выполнение
+     */
     public void run(){
         //Мышь на доске
         deskCanvas.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
@@ -109,13 +124,18 @@ public class Desk extends Instrument {
         });
     }
 
-    //Установить фон белым
+    /**
+     * Установить фон белым
+     */
     public void setBackground(){
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.fillRect(0, 0, width, height);
     }
 
-    //Координаты мыши на доске
+    /**
+     * Координаты мыши на доске
+     * @param event
+     */
     public void getCoords(MouseEvent event){
         x = (int) event.getX();
         y = (int) event.getY();
