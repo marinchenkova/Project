@@ -13,14 +13,9 @@ import javafx.scene.input.MouseEvent;
  * Ввод текста
  */
 public class Text extends Instrument {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private  Controller controller;
+    private Text text;
 
     /**
      * Этот объект в FXML
@@ -35,15 +30,15 @@ public class Text extends Instrument {
      */
     public Text(Controller controller) {
         this.controller = controller;
+        text = this;
         initialize();
     }
 
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-        textButton = controller.textButton;
+    private void initialize(){
+        textButton = controller.getTextButton();
         setIcon(textButton, textIcon);
         run();
     }
@@ -51,21 +46,14 @@ public class Text extends Instrument {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         textButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, textCursor);
-                setInstrumentIcon(textIcon);
+                setActiveInstrument(text);
+                setDeskCursor(deskCanvas, textCursor);
+                setActiveInstrumentIcon(textIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**

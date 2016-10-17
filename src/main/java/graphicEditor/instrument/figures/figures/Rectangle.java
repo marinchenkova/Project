@@ -12,14 +12,9 @@ import javafx.scene.input.MouseEvent;
  * Прямоугольник
  */
 public class Rectangle extends Figure {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private  Controller controller;
+    private Rectangle rectangle;
 
     /**
      * Этот объект в FXML
@@ -33,15 +28,15 @@ public class Rectangle extends Figure {
      */
     public Rectangle(Controller controller) {
         this.controller = controller;
+        rectangle = this;
         initialize();
     }
 
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-        rectangleButton = controller.rectangleButton;
+    private void initialize(){
+        rectangleButton = controller.getRectangleButton();
         setIcon(rectangleButton, rectangleIcon);
         run();
     }
@@ -49,22 +44,15 @@ public class Rectangle extends Figure {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         //Нажатие мыши
         rectangleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, figureCursor);
-                setInstrumentIcon(rectangleIcon);
+                setActiveInstrument(rectangle);
+                setDeskCursor(deskCanvas, figureCursor);
+                setActiveInstrumentIcon(rectangleIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**

@@ -20,129 +20,82 @@ import javafx.scene.paint.Color;
 /**
  * Инструмент - объект, который содержит все инструменты
  */
+public class Instrument {
 
-//TODO данный класс не должен быть наследником MainApp
-//TODO
-
-public class Instrument extends MainApp {
-
-    //TODO убрать ненужные комментарии
-    /**
-     * Поля
-     */
+    private Controller controller;
+    protected static Canvas deskCanvas;
 
     /**
-     * Класс - контроллер
-     */
-    private  Controller controller;
-
-    //TODO вроде использовать в классе его наследников - это антипаттерн
-    /**
-     * Классы - наследники
-     */
-    private Brush brush;
-    private Fill fill;
-    private Text text;
-    private Eraser eraser;
-    private Pipette pipette;
-    private Zoom zoom;
-    private Figure figure;
-    private Palette palette;
-    private Desk desk;
-    private SettingsPanel settingsPanel;
-
-    /**
-     * Доска
-     */
-    protected Canvas deskCanvas;
-
-    /**
-     * Активные значения
+     * Активные значения - общие переменные для классов-наследников, которые изменяются при работе программы
      */
     protected static Instrument activeInstrument;
     protected static Color activeColor;
     protected static Color backgroundColor;
-    protected static int lineWidth;
+    protected static double lineWidth;
+    protected static TextField widthSetter;
     private static ImageView instrumentImage;
 
-    /**
-     * Другие
-     */
-    protected static TextField widthSetter;
-
-    //TODO пустой конструктор не за чем
+    //TODO как обойтись без пустого конструктора?
 
     /**
-     * Конструктор
+     * Конструктор: параметр controller передается для допуска к классу Controller
+     * @param controller
      */
-    public Instrument() {
-
-    }
-
     public Instrument(Controller controller) {
         this.controller = controller;
         initialize();
     }
-    //TODO данный метод вроде как можно сделать private. Или раз используется в наследнике, то protected.
-    /**
-     * Инициализация
-     */
-    public void initialize(){
-        //TODO длинноват метод, хотя в нем и все иициализируется.
-        //TODO по идее, когда изменится дизайн, такого не будет
+    public Instrument(){
 
-        //TODO findbugs тут очобенно сильно ругается. типа поля никогда не читаются. их надо убрать из класса.
-        //Настройка по умолчанию
-
-        backgroundColor = Color.WHITE;
-
-        activeInstrument = brush;
-        activeColor = Color.BLACK;
-        instrumentImage = controller.instrumentImage;
-
-
-        //Создание всех объектов классов-наследников
-        desk = new Desk(controller);
-        settingsPanel = new SettingsPanel(controller);
-        palette = new Palette(controller);
-
-        brush = new Brush(controller);
-        eraser = new Eraser(controller);
-        fill = new Fill(controller);
-        text = new Text(controller);
-        pipette = new Pipette(controller);
-        zoom = new Zoom(controller);
-
-        figure = new Figure(controller);
     }
 
+    /**
+     * Инициализация - cоздание объектов классов-наследников
+     */
+    private void initialize(){
+        deskCanvas = controller.getDeskCanvas();
+        instrumentImage = controller.getInstrumentImage();
+
+        //Создание всех объектов классов-наследников
+        new Palette(controller);
+        new Desk(controller);
+        new SettingsPanel(controller);
+        new Brush(controller);
+        new Eraser(controller);
+        new Fill(controller);
+        new Text(controller);
+        new Pipette(controller);
+        new Zoom(controller);
+        new Figure(controller);
+
+    }
 
     /**
-     * Применение иснтрумента
+     * Применение иснтрумента - вызывается из событий event объекта desk. Выполняет этот же метод, но переписанный,
+     * для каждого инструмента.
+     * @param event
      */
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
        activeInstrument.instrumentAction(event, graphicsContext);
     }
 
-    /**
-     * Установка иконки на кнопку
-     */
-    public void setIcon(Button button, Image buttonIcon) {
+    protected static void setActiveInstrument(Instrument instrument){
+        activeInstrument = instrument;
+    }
+
+    protected void setIcon(Button button, Image buttonIcon) {
         button.setPadding(Insets.EMPTY);
         button.setGraphic(new ImageView(buttonIcon));
     }
 
     /**
-     * Установка иконки активного инструмента
+     * Установка иконки активного инструмента в панель настроек
      */
-    public void setInstrumentIcon(Image instrumentIcon){
+    protected void setActiveInstrumentIcon(Image instrumentIcon){
         instrumentImage.setImage(instrumentIcon);
     }
 
-    /**
-     * Выбрать курсор, который будет отображаться на доске
-     */
-    public void setCursor(Canvas deskCanvas, Cursor cursorImage){
+    protected void setDeskCursor(Canvas deskCanvas, Cursor cursorImage){
         deskCanvas.setCursor(cursorImage);
     }
 }

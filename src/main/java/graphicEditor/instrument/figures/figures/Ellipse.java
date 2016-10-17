@@ -12,15 +12,9 @@ import javafx.scene.input.MouseEvent;
  * Эллипс
  */
 public class Ellipse extends Figure {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private  Controller controller;
-
+    private Ellipse ellipse;
     /**
      * Этот объект в FXML
      */
@@ -33,15 +27,15 @@ public class Ellipse extends Figure {
      */
     public Ellipse(Controller controller) {
         this.controller = controller;
+        ellipse = this;
         initialize();
     }
 
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-        ellipseButton = controller.ellipseButton;
+    private void initialize(){
+        ellipseButton = controller.getEllipseButton();
         setIcon(ellipseButton, ellipseIcon);
         run();
     }
@@ -49,22 +43,15 @@ public class Ellipse extends Figure {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         //Нажатие мыши
         ellipseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, figureCursor);
-                setInstrumentIcon(ellipseIcon);
+                setActiveInstrument(ellipse);
+                setDeskCursor(deskCanvas, figureCursor);
+                setActiveInstrumentIcon(ellipseIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**

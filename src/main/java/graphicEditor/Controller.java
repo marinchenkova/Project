@@ -13,77 +13,99 @@ import javafx.scene.image.ImageView;
  */
 public class Controller {
 
-    //TODO убрать мусор
-    /**
-    * Поля
-    */
+    @FXML
+    private Canvas deskCanvas = new Canvas();
+    @FXML
+    private Button brushButton = new Button();
+    @FXML
+    private Button eraserButton = new Button();
+    @FXML
+    private Button fillButton = new Button();
+    @FXML
+    private Button textButton = new Button();
+    @FXML
+    private Button pipetteButton = new Button();
+    @FXML
+    private Button zoomButton = new Button();
+    @FXML
+    private Button rectangleButton = new Button();
+    @FXML
+    private Button ellipseButton = new Button();
+    @FXML
+    private Button lineButton = new Button();
 
-    //TODO сделать поля private. public - нарушается инкапсуляция
+    @FXML
+    private Label coordsLabel = new Label();
+    @FXML
+    private Label sizeLabel = new Label();
+    @FXML
+    private ImageView coordsImage = new ImageView();
+    @FXML
+    private ImageView sizeImage = new ImageView();
+    @FXML
+    private ImageView instrumentImage = new ImageView();
+    @FXML
+    private TextField widthSetter = new TextField();
 
-    /**
-     * Доска
-     */
-    @FXML
-    public Canvas deskCanvas = new Canvas();
-
-    /**
-     * Кнопки
-     */
-    @FXML
-    public  Button brushButton = new Button();
-    @FXML
-    public Button fillButton = new Button();
-    @FXML
-    public Button textButton = new Button();
-    @FXML
-    public Button eraserButton = new Button();
-    @FXML
-    public Button pipetteButton = new Button();
-    @FXML
-    public Button zoomButton = new Button();
-    @FXML
-    public Button rectangleButton = new Button();
-    @FXML
-    public Button ellipseButton = new Button();
-    @FXML
-    public Button lineButton = new Button();
-
-    /**
-     * Информация
-     */
-    @FXML
-    public Label coordsLabel = new Label();
-    @FXML
-    public ImageView coordsImage = new ImageView();
-    @FXML
-    public Label sizeLabel = new Label();
-    @FXML
-    public ImageView sizeImage = new ImageView();
-    @FXML
-    public ImageView instrumentImage = new ImageView();
-    @FXML
-    public TextField widthSetter = new TextField();
-
-
-
-    /**
-     * Класс-наследник приложения MainApp
-     */
-    public Instrument instrument;
-
-    /**
-     * Конструктор
-     */
     public Controller() {
 
     }
 
     /**
-     * Инициализация класса-контроллера
+     * Инициализация класса-контроллера - создание всех объектов приложения
      */
     @FXML
     public void initialize() throws Exception {
-        //Создание всех объектов приложения
-        instrument = new Instrument(this);
+        new Instrument(this);
     }
+
+    public Canvas getDeskCanvas(){
+        return deskCanvas;
+    }
+    public Button getBrushButton(){
+        return brushButton;
+    }
+    public Button getEraserButton(){
+        return eraserButton;
+    }
+    public Button getFillButton(){
+        return fillButton;
+    }
+    public Button getTextButton(){
+        return textButton;
+    }
+    public Button getPipetteButton(){
+        return pipetteButton;
+    }
+    public Button getZoomButton(){
+        return zoomButton;
+    }
+    public Button getRectangleButton(){
+        return rectangleButton;
+    }
+    public Button getEllipseButton(){
+        return ellipseButton;
+    }
+    public Button getLineButton(){
+        return lineButton;
+    }
+    public Label getCoordsLabel(){
+        return coordsLabel;
+    }
+    public Label getSizeLabel(){
+        return sizeLabel;
+    }
+    public ImageView getCoordsImage(){
+        return coordsImage;
+    }
+    public ImageView getSizeImage(){
+        return sizeImage;
+    }
+    public ImageView getInstrumentImage(){
+        return instrumentImage;
+    }
+    public TextField getWidthSetter(){
+        return widthSetter;
+    }
+
 }

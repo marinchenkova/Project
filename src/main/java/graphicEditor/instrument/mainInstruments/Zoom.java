@@ -13,15 +13,9 @@ import javafx.scene.input.MouseEvent;
  * Лупа
  */
 public class Zoom extends Instrument {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private  Controller controller;
-
+    private Zoom zoom;
     /**
      * Этот объект в FXML
      */
@@ -34,15 +28,15 @@ public class Zoom extends Instrument {
      */
     public Zoom(Controller controller) {
         this.controller = controller;
+        zoom = this;
         initialize();
     }
 
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-        zoomButton = controller.zoomButton;
+    private void initialize(){
+        zoomButton = controller.getZoomButton();
         setIcon(zoomButton, zoomIcon);
         run();
     }
@@ -50,22 +44,15 @@ public class Zoom extends Instrument {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         //Нажатие мыши
         zoomButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, zoomCursor);
-                setInstrumentIcon(zoomIcon);
+                setActiveInstrument(zoom);
+                setDeskCursor(deskCanvas, zoomCursor);
+                setActiveInstrumentIcon(zoomIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**

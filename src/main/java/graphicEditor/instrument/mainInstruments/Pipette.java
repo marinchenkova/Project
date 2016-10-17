@@ -13,14 +13,9 @@ import javafx.scene.input.MouseEvent;
  * Пипетка
  */
 public class Pipette extends Instrument {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private  Controller controller;
+    private Pipette pipette;
 
     /**
      * Этот объект в FXML
@@ -34,6 +29,7 @@ public class Pipette extends Instrument {
      * Конструктор
      */
     public Pipette(Controller controller) {
+        pipette = this;
         this.controller = controller;
         initialize();
     }
@@ -41,9 +37,8 @@ public class Pipette extends Instrument {
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-        pipetteButton = controller.pipetteButton;
+    private void initialize(){
+        pipetteButton = controller.getPipetteButton();
         setIcon(pipetteButton, pipetteIcon);
         run();
     }
@@ -51,21 +46,14 @@ public class Pipette extends Instrument {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         pipetteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, pipetteCursor);
-                setInstrumentIcon(pipetteIcon);
+                setActiveInstrument(pipette);
+                setDeskCursor(deskCanvas, pipetteCursor);
+                setActiveInstrumentIcon(pipetteIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**

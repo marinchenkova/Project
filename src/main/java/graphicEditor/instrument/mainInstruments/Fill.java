@@ -13,14 +13,9 @@ import javafx.scene.input.MouseEvent;
  * Заливка
  */
 public class Fill extends Instrument {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private  Controller controller;
+    private Fill fill;
 
     /**
      * Этот объект в FXML
@@ -34,15 +29,15 @@ public class Fill extends Instrument {
      */
     public Fill(Controller controller) {
         this.controller = controller;
+        fill = this;
         initialize();
     }
 
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-        fillButton = controller.fillButton;
+    private void initialize(){
+        fillButton = controller.getFillButton();
         setIcon(fillButton, fillIcon);
         run();
     }
@@ -50,21 +45,14 @@ public class Fill extends Instrument {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         fillButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, fillCursor);
-                setInstrumentIcon(fillIcon);
+                setActiveInstrument(fill);
+                setDeskCursor(deskCanvas, fillCursor);
+                setActiveInstrumentIcon(fillIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**

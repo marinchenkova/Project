@@ -8,19 +8,12 @@ import javafx.event.*;
  * Панель настроек инструментов
  */
 public class SettingsPanel extends Instrument {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private Controller controller;
 
     /**
      * Объекты панели настроек
      */
-
 
     /**
      * Конструктор
@@ -33,8 +26,8 @@ public class SettingsPanel extends Instrument {
     /**
      * Инициализация
      */
-    public void initialize(){
-        widthSetter = controller.widthSetter;
+    private void initialize(){
+        widthSetter = controller.getWidthSetter();
         lineWidth = Integer.parseInt(widthSetter.getText());
 
         run();
@@ -43,7 +36,7 @@ public class SettingsPanel extends Instrument {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         //Работа с шириной инструмента
         widthSetter.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {

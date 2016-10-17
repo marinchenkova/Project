@@ -14,13 +14,7 @@ import javafx.scene.paint.Color;
  * Доска
  */
 public class Desk extends Instrument {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private Controller controller;
 
     /**
@@ -28,46 +22,36 @@ public class Desk extends Instrument {
      */
     private GraphicsContext graphicsContext;
     private Label coordsLabel;
-    private ImageView coordsImage;
     private Label sizeLabel;
-    private ImageView sizeImage;
     private Image coordsIcon =  new Image("/images/misc/coordsIcon.png");
     private Image sizeIcon =  new Image("/images/misc/sizeIcon.png");
 
     private Integer width;
     private Integer height;
-    public Integer x;
-    public Integer y;
-
 
     /**
      * Конструктор
      */
-    public Desk (){
-
-    }
-
     public Desk (Controller controller){
         this.controller = controller;
         initialize();
     }
 
     /**
-     * Инициализация
+     * Инициализация - параметры объекта deskCanvas: ширина, высота, иконки координат и размера доски,
+     * возврат координат и размеров на доску, установка цвета фона.
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-
+    private void initialize(){
         width = (int) deskCanvas.getWidth();
         height = (int) deskCanvas.getHeight();
 
-        coordsLabel = controller.coordsLabel;
-        coordsImage = controller.coordsImage;
-        sizeLabel = controller.sizeLabel;
-        sizeImage = controller.sizeImage;
-
+        ImageView coordsImage = controller.getCoordsImage();
+        ImageView sizeImage = controller.getSizeImage();
         coordsImage.setImage(coordsIcon);
         sizeImage.setImage(sizeIcon);
+
+        coordsLabel = controller.getCoordsLabel();
+        sizeLabel = controller.getSizeLabel();
         sizeLabel.setText(width.toString() + ", " + height.toString());
 
         graphicsContext = deskCanvas.getGraphicsContext2D();
@@ -79,7 +63,7 @@ public class Desk extends Instrument {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         //Мышь на доске
         deskCanvas.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -125,10 +109,10 @@ public class Desk extends Instrument {
     }
 
     /**
-     * Установить фон белым
+     * Установить цвет фона и нарисовать его
      */
-    public void setBackground(){
-        graphicsContext.setFill(Color.WHITE);
+    private void setBackground(){
+        graphicsContext.setFill(backgroundColor);
         graphicsContext.fillRect(0, 0, width, height);
     }
 
@@ -136,9 +120,9 @@ public class Desk extends Instrument {
      * Координаты мыши на доске
      * @param event
      */
-    public void getCoords(MouseEvent event){
-        x = (int) event.getX();
-        y = (int) event.getY();
+    private void getCoords(MouseEvent event){
+        Integer x = (int) event.getX();
+        Integer y = (int) event.getY();
         coordsLabel.setText(x.toString() + ", " + y.toString());
     }
 

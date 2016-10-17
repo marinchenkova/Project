@@ -5,6 +5,7 @@ import graphicEditor.instrument.figures.Figure;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
@@ -12,14 +13,9 @@ import javafx.scene.input.MouseEvent;
  * Линия
  */
 public class Line extends Figure {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private  Controller controller;
+    private Line line;
 
     /**
      * Этот объект в FXML
@@ -33,15 +29,15 @@ public class Line extends Figure {
      */
     public Line(Controller controller) {
         this.controller = controller;
+        line = this;
         initialize();
     }
 
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-        lineButton = controller.lineButton;
+    private void initialize(){
+        lineButton = controller.getLineButton();
         setIcon(lineButton, lineIcon);
         run();
     }
@@ -49,22 +45,15 @@ public class Line extends Figure {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         //Нажатие мыши
         lineButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, figureCursor);
-                setInstrumentIcon(lineIcon);
+                setActiveInstrument(line);
+                setDeskCursor(deskCanvas, figureCursor);
+                setActiveInstrumentIcon(lineIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**

@@ -8,19 +8,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import sun.util.calendar.Era;
 
 /**
  * Ластик
  */
 public class Eraser extends Instrument {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private  Controller controller;
+    private Eraser eraser;
 
     /**
      * Этот объект в FXML
@@ -34,16 +30,15 @@ public class Eraser extends Instrument {
      */
     public Eraser(Controller controller) {
         this.controller = controller;
+        eraser = this;
         initialize();
     }
 
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-
-        eraserButton = controller.eraserButton;
+    private void initialize(){
+        eraserButton = controller.getEraserButton();
         setIcon(eraserButton, eraserIcon);
 
         run();
@@ -52,22 +47,15 @@ public class Eraser extends Instrument {
     /**
      * Выполнение
      */
-    public void run(){
+    private void run(){
         //Нажатие мыши
         eraserButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, eraserCursor);
-                setInstrumentIcon(eraserIcon);
+                setActiveInstrument(eraser);
+                setDeskCursor(deskCanvas, eraserCursor);
+                setActiveInstrumentIcon(eraserIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**

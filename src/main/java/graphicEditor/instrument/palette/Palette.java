@@ -4,19 +4,11 @@ import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.scene.paint.Color;
 
-//TODO комментарии
-
 /**
  * Палитра
  */
 public class Palette extends Instrument{
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
     private Controller controller;
 
     /**
@@ -34,19 +26,14 @@ public class Palette extends Instrument{
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-
+    private void initialize(){
         activeColor = Color.BLACK;
         backgroundColor = Color.WHITE;
 
         run();
     }
 
-    /**
-     * Выполнение
-     */
-    public void run(){
+    private void run(){
 
     }
 

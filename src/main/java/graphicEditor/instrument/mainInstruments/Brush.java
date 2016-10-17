@@ -13,14 +13,9 @@ import javafx.scene.input.MouseEvent;
  * Кисть
  */
 public class Brush extends Instrument {
-    /**
-     * Поля
-     */
 
-    /**
-     * Класс - контроллер
-     */
-    private  Controller controller;
+    private Controller controller;
+    private Brush brush;
 
     /**
      * Этот объект в FXML
@@ -34,45 +29,34 @@ public class Brush extends Instrument {
      */
     public Brush(Controller controller) {
         this.controller = controller;
+        brush = this;
         initialize();
     }
 
     /**
      * Инициализация
      */
-    public void initialize(){
-        deskCanvas = controller.deskCanvas;
-
+    private void initialize(){
         //Инструмент кисть выбирается по умолчанию
-        setActiveInstrument();
-        setInstrumentIcon(brushIcon);
+        setActiveInstrument(brush);
+        setActiveInstrumentIcon(brushIcon);
 
-        brushButton = controller.brushButton;
+        brushButton = controller.getBrushButton();
         setIcon(brushButton, brushIcon);
-        setCursor(deskCanvas, brushCursor);
+        setDeskCursor(deskCanvas, brushCursor);
 
         run();
     }
 
-    /**
-     * Выполнение
-     */
-    public void run(){
+    private void run(){
         //Нажатие мыши
         brushButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument();
-                setCursor(deskCanvas, brushCursor);
-                setInstrumentIcon(brushIcon);
+                setActiveInstrument(brush);
+                setDeskCursor(deskCanvas, brushCursor);
+                setActiveInstrumentIcon(brushIcon);
             }
         });
-    }
-
-    /**
-     * Сделать этот инструмент активным
-     */
-    public void setActiveInstrument(){
-        activeInstrument = this;
     }
 
     /**
