@@ -4,6 +4,8 @@ import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
 import javafx.scene.paint.Color;
 
+//TODO комментарии
+
 /**
  * Палитра
  */

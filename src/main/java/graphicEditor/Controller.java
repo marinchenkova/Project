@@ -12,9 +12,13 @@ import javafx.scene.image.ImageView;
  * @author Маринченко В. А.
  */
 public class Controller {
+
+    //TODO убрать мусор
     /**
     * Поля
     */
+
+    //TODO сделать поля private. public - нарушается инкапсуляция
 
     /**
      * Доска
@@ -59,6 +63,8 @@ public class Controller {
     public ImageView instrumentImage = new ImageView();
     @FXML
     public TextField widthSetter = new TextField();
+
+
 
     /**
      * Класс-наследник приложения MainApp

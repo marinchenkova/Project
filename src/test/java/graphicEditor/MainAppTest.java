@@ -1,13 +1,21 @@
 package graphicEditor;
 
+//TODO убрать неиспользуемый иморт
 import javafx.stage.Stage;
 import org.junit.Test;
 
+//TODO убрать неиспользуемый иморт
 import static org.junit.Assert.*;
 
+//TODO на мой взгляд, бесполезный автогенерируемый комментарий. я бы убрал его
 /**
  * Created by Валентин on 30.09.2016.
  */
+
+//TODO пустые тест кейсы. заполнить бы их.
+
+    //TODO модульными тестами junit очень неудобно тестировать твое приложение.
+    //тут можно поискать или спросить у кого про фреймворки для функционального автоматического тестирования
 public class MainAppTest {
     private MainApp mainApp;
     @Test

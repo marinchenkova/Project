@@ -20,7 +20,13 @@ import javafx.scene.paint.Color;
 /**
  * Инструмент - объект, который содержит все инструменты
  */
+
+//TODO данный класс не должен быть наследником MainApp
+//TODO
+
 public class Instrument extends MainApp {
+
+    //TODO убрать ненужные комментарии
     /**
      * Поля
      */
@@ -30,6 +36,7 @@ public class Instrument extends MainApp {
      */
     private  Controller controller;
 
+    //TODO вроде использовать в классе его наследников - это антипаттерн
     /**
      * Классы - наследники
      */
@@ -63,6 +70,8 @@ public class Instrument extends MainApp {
      */
     protected static TextField widthSetter;
 
+    //TODO пустой конструктор не за чем
+
     /**
      * Конструктор
      */
@@ -74,12 +83,17 @@ public class Instrument extends MainApp {
         this.controller = controller;
         initialize();
     }
-
+    //TODO данный метод вроде как можно сделать private. Или раз используется в наследнике, то protected.
     /**
      * Инициализация
      */
     public void initialize(){
+        //TODO длинноват метод, хотя в нем и все иициализируется.
+        //TODO по идее, когда изменится дизайн, такого не будет
+
+        //TODO findbugs тут очобенно сильно ругается. типа поля никогда не читаются. их надо убрать из класса.
         //Настройка по умолчанию
+
         backgroundColor = Color.WHITE;
 
         activeInstrument = brush;
@@ -100,7 +114,6 @@ public class Instrument extends MainApp {
         zoom = new Zoom(controller);
 
         figure = new Figure(controller);
-
     }
 
 

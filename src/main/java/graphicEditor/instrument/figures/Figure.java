@@ -6,6 +6,8 @@ import graphicEditor.instrument.figures.figures.*;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 
+//TODO комментарии
+
 /**
  * Фигура
  */
@@ -39,6 +41,9 @@ public class Figure extends Instrument {
         this.controller = controller;
         initialize();
     }
+
+    //TODO хорошо бы аннотации добавлять, когда метод перегружается.
+    //TODO хотя, возможно, после рефакторинга не будет тут такого
 
     /**
      * Инициализация
