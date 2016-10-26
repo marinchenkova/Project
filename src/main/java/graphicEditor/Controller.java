@@ -8,7 +8,10 @@ import javafx.scene.image.ImageView;
 
 
 /**
- * Контроллер для MainApp
+ * Контроллер для класса {@link MainApp} - главного класса приложения.<br>
+ * Данный класс реализует связь объектов GUI формы с объектами логики приложения.<br>
+ * Методы:
+ *
  * @author Маринченко В. А.
  */
 public class Controller {
@@ -47,9 +50,7 @@ public class Controller {
     @FXML
     private TextField widthSetter = new TextField();
 
-    public Controller() {
-
-    }
+    public Controller() {}
 
     /**
      * Инициализация класса-контроллера - создание всех объектов приложения
@@ -58,7 +59,7 @@ public class Controller {
     public void initialize() throws Exception {
         new Instrument(this);
     }
-
+    //TODO Как сделать e.g. getButton(brush)?
     public Canvas getDeskCanvas(){
         return deskCanvas;
     }

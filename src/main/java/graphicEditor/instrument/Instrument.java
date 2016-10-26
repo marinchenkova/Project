@@ -1,14 +1,12 @@
 package graphicEditor.instrument;
 
 import graphicEditor.Controller;
-import graphicEditor.MainApp;
 import graphicEditor.instrument.desk.Desk;
 import graphicEditor.instrument.figures.Figure;
+import graphicEditor.instrument.paintedElements.BrushElement;
 import graphicEditor.instrument.mainInstruments.*;
 import graphicEditor.instrument.palette.Palette;
 import graphicEditor.instrument.settingsPanel.SettingsPanel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.*;
@@ -17,13 +15,16 @@ import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Инструмент - объект, который содержит все инструменты
  */
 public class Instrument {
 
     private Controller controller;
-    protected static Canvas deskCanvas;
+
 
     /**
      * Активные значения - общие переменные для классов-наследников, которые изменяются при работе программы
@@ -33,8 +34,14 @@ public class Instrument {
     protected static Color backgroundColor;
     protected static double lineWidth;
     protected static TextField widthSetter;
+    protected static Canvas deskCanvas;
+    protected static Desk desk;
     private static ImageView instrumentImage;
 
+    protected static boolean onBrushObject;
+    protected static boolean dragStarted = false;
+    protected static boolean dragEnded = false;
+    protected static List<BrushElement> brushElements;
     //TODO как обойтись без пустого конструктора?
 
     /**
@@ -55,10 +62,11 @@ public class Instrument {
     private void initialize(){
         deskCanvas = controller.getDeskCanvas();
         instrumentImage = controller.getInstrumentImage();
+        brushElements = new ArrayList<BrushElement>();
 
         //Создание всех объектов классов-наследников
         new Palette(controller);
-        new Desk(controller);
+        desk = new Desk(controller);
         new SettingsPanel(controller);
         new Brush(controller);
         new Eraser(controller);
@@ -97,6 +105,12 @@ public class Instrument {
 
     protected void setDeskCursor(Canvas deskCanvas, Cursor cursorImage){
         deskCanvas.setCursor(cursorImage);
+    }
+
+    public void findPainted(Integer mx, Integer my){
+        for (int i = 0; i < brushElements.size(); i++){
+            brushElements.get(i).isBrushElement(mx, my);
+        }
     }
 }
 

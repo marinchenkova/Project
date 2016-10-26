@@ -7,7 +7,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 
 /**
@@ -28,6 +27,7 @@ public class Desk extends Instrument {
 
     private Integer width;
     private Integer height;
+    private MouseEvent activeEvent;
 
     /**
      * Конструктор
@@ -67,7 +67,7 @@ public class Desk extends Instrument {
         //Мышь на доске
         deskCanvas.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                getCoords(event);
+                setCoords(event);
             }
         });
 
@@ -78,18 +78,21 @@ public class Desk extends Instrument {
             }
         });
 
-        //Мышь двигается на доске
+        //Мышь двигается по доске
         deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                getCoords(event);
+                activeEvent = event;
+                findPainted((int) event.getX(), (int) event.getY());
+                setCoords(event);
             }
         });
 
         //Мышь двигается с нажатием
         deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                getCoords(event);
+                setCoords(event);
                 activeInstrument.instrumentAction(event, graphicsContext);
+                dragStarted = true;
             }
         });
 
@@ -106,6 +109,16 @@ public class Desk extends Instrument {
                 lineWidth = Integer.parseInt(widthSetter.getText());
             }
         });
+
+        //Отжатие мыши
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                if(dragStarted){
+                    dragStarted = false;
+                    dragEnded = true;
+                }
+            }
+        });
     }
 
     /**
@@ -120,10 +133,16 @@ public class Desk extends Instrument {
      * Координаты мыши на доске
      * @param event
      */
-    private void getCoords(MouseEvent event){
+    private void setCoords(MouseEvent event){
         Integer x = (int) event.getX();
         Integer y = (int) event.getY();
         coordsLabel.setText(x.toString() + ", " + y.toString());
+    }
+    public Integer getX(){
+        return (int) activeEvent.getX();
+    }
+    public Integer getY(){
+        return (int) activeEvent.getY();
     }
 
 }

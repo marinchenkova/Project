@@ -2,6 +2,7 @@ package graphicEditor.instrument.mainInstruments;
 
 import graphicEditor.Controller;
 import graphicEditor.instrument.*;
+import graphicEditor.instrument.paintedElements.BrushElement;
 import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.canvas.GraphicsContext;
@@ -31,6 +32,9 @@ public class Brush extends Instrument {
         this.controller = controller;
         brush = this;
         initialize();
+    }
+    public Brush(){
+
     }
 
     /**
@@ -66,9 +70,13 @@ public class Brush extends Instrument {
      */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
-        graphicsContext.setFill(activeColor);
-        graphicsContext.fillOval(event.getX() - lineWidth/2 + 1, event.getY() - lineWidth/2 + 1, lineWidth, lineWidth);
-
+        if(dragStarted){
+            brushElements.get(brushElements.size()-1).paint(event, graphicsContext);
+        } else if(dragEnded) {
+            dragEnded = false;
+        } else {
+            brushElements.add(new BrushElement(event, graphicsContext));
+        }
     }
 
 }
