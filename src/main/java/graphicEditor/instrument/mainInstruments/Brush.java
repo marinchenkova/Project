@@ -64,19 +64,36 @@ public class Brush extends Instrument {
     }
 
     /**
-     * Применение кисти
-     * @param event
-     * @param graphicsContext
+     * Применение кисти: событие мыши "клик" создает заполненный круг цвета {@link Instrument#activeColor} и
+     * диаметром {@link Instrument#lineWidth}.
+     * @param event событие мыши
      */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
-        if(dragStarted){
-            brushElements.get(brushElements.size()-1).paint(event, graphicsContext);
-        } else if(dragEnded) {
-            dragEnded = false;
+        if(paintAllowed){
+            if(event.getEventType() == MouseEvent.MOUSE_PRESSED){
+                brushElements.add(new BrushElement(event, graphicsContext));
+            }
+            if(event.getEventType() == MouseEvent.MOUSE_DRAGGED){
+                brushElements.get(brushElements.size()-1).paint(event, graphicsContext);
+            }
+            if(event.getEventType() == MouseEvent.MOUSE_RELEASED){
+                paintAllowed = false;
+            }
         } else {
-            brushElements.add(new BrushElement(event, graphicsContext));
+            if(event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                System.err.println("DELETING");
+                elementAction(graphicsContext);
+            }
         }
+    }
+
+    /**
+     * Действие с объектом {@link BrushElement}
+     * @param graphicsContext
+     */
+    public void elementAction(GraphicsContext graphicsContext){
+        brushElements.get(elementNumber).delete(graphicsContext);
     }
 
 }

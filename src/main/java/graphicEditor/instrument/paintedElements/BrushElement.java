@@ -1,12 +1,12 @@
 package graphicEditor.instrument.paintedElements;
 
 import graphicEditor.instrument.mainInstruments.Brush;
+import graphicEditor.instrument.Instrument;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Объект, нарисованный одним действием инструмента: кисть, заливка, фигура
@@ -14,45 +14,59 @@ import java.util.List;
 public class BrushElement extends Brush{
 
     private Color color = activeColor;
-    private Integer x;
-    private Integer y;
     private Integer width = (int) lineWidth;
 
-    private List<Integer> xList;
-    private List<Integer> yList;
+    private ArrayList<Integer> xList = new ArrayList<Integer>();
+    private ArrayList<Integer> yList = new ArrayList<Integer>();
 
     public BrushElement(MouseEvent event, GraphicsContext graphicsContext){
-        initialize();
+        graphicsContext.setFill(color);
         paint(event, graphicsContext);
     }
 
-    private void initialize(){
-        xList = new ArrayList<Integer>();
-        yList = new ArrayList<Integer>();
+    /**
+     * Нарисовать овал заданной ширины {@link Instrument#lineWidth} и цвета {@link Instrument#activeColor}
+     */
+    public void paint(MouseEvent event, GraphicsContext graphicsContext){
+        graphicsContext.fillOval((int) (event.getX() - width/2 + 1),(int) (event.getY() - width/2 + 1), width, width);
+        xList.add((int) (event.getX() - width/2 + 1));
+        yList.add((int) (event.getY() - width/2 + 1));
     }
 
-    public void paint(MouseEvent event, GraphicsContext graphicsContext){
-        graphicsContext.setFill(activeColor);
-        graphicsContext.fillOval(event.getX() - width/2 + 1, event.getY() - width/2 + 1, width, width);
-        x = (int) (event.getX() - width/2 + 1);
-        y = (int) (event.getY() - width/2 + 1);
-        xList.add(x);
-        yList.add(y);
+    /**
+     * Нарисовать весь элемент. Метод используется при удалении одного из элементов.
+     */
+    public void paintWhole(GraphicsContext graphicsContext){
+        graphicsContext.setFill(color);
+        for (int i = 0; i < xList.size(); i++) {
+            graphicsContext.fillOval(xList.get(i),yList.get(i), width, width);
+        }
     }
 
     /**
      * Если курсор находится на объекте, возвращает true
      */
-    public boolean isBrushElement(Integer mx, Integer my){
+    public boolean onBrushElement(int mx, int my){
         for (int i = 0; i < xList.size(); i++) {
-            if ((mx - x) < x + width){
-                for (int j = 0; j < yList.size(); j++) {
-                    if ((my - y) < y + width) {
+            if ((Math.abs(mx - xList.get(i)) <= width) &&
+                    (Math.abs(my - yList.get(i)) <= width)){
                         return true;
-                    }
-                }
             }
         }
         return false;
+    }
+
+    /**
+     * Удаление графического элемента: элемнт удаляется из списка нарисованных элементов данного типа,
+     * а затем все оставшиеся элементы отрисовываются заново.
+     */
+    public void delete(GraphicsContext graphicsContext) {
+        desk.setBackground();
+        brushElements.remove(elementNumber);
+        if(brushElements.size() > 0 ){
+            for (BrushElement brushElement : brushElements) {
+                brushElement.paintWhole(graphicsContext);
+            }
+        }
     }
 }

@@ -19,12 +19,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Инструмент - объект, который содержит все инструменты
+ * Инструмент - объект, который содержит все инструменты рисования:
+ * <ul>
+ *     <li>Кисть {@link Brush}</li>
+ *     <li>Ластик {@link Eraser}</li>
+ *     <li>Заливка {@link Fill}</li>
+ *     <li>Набор текста {@link Text}</li>
+ *     <li>Пипетка {@link Pipette}</li>
+ *     <li>Зум {@link Zoom}</li>
+ *     <li>Фигуры {@link Figure}</li>
+ *     <li>Палитра {@link Palette}</li>
+ *     <li>Панель настроек рисования {@link SettingsPanel}</li>
+ *     <li>Доска {@link Desk}</li>
+ * </ul>
+ * Инструмент используется для хранения общих активных значений переменных рисования.
  */
 public class Instrument {
 
     private Controller controller;
-
 
     /**
      * Активные значения - общие переменные для классов-наследников, которые изменяются при работе программы
@@ -38,10 +50,12 @@ public class Instrument {
     protected static Desk desk;
     private static ImageView instrumentImage;
 
-    protected static boolean onBrushObject;
-    protected static boolean dragStarted = false;
+    protected static boolean dragging = false;
     protected static boolean dragEnded = false;
     protected static List<BrushElement> brushElements;
+
+    protected static boolean paintAllowed;
+    protected static int elementNumber = 0;
     //TODO как обойтись без пустого конструктора?
 
     /**
@@ -63,6 +77,7 @@ public class Instrument {
         deskCanvas = controller.getDeskCanvas();
         instrumentImage = controller.getInstrumentImage();
         brushElements = new ArrayList<BrushElement>();
+        paintAllowed = true;
 
         //Создание всех объектов классов-наследников
         new Palette(controller);
@@ -84,16 +99,31 @@ public class Instrument {
      * @param event
      */
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
-       activeInstrument.instrumentAction(event, graphicsContext);
+        activeInstrument.instrumentAction(event, graphicsContext);
+    }
+
+    /**
+     * Поиск номера нарисованного элемента, если под курсором он есть.
+     */
+    protected void findPainted(MouseEvent event){
+        if(brushElements.size() > 0){
+            for(int i = 0; i < brushElements.size(); i++) {
+                if(brushElements.get(i).onBrushElement((int) event.getX(),(int) event.getY())){
+                    paintAllowed = false;
+                    elementNumber = i;
+                    break;
+                } else {
+                    paintAllowed = true;
+                }
+            }
+        } else {
+            paintAllowed = true;
+        }
+        System.err.print(elementNumber);System.err.print(' ');System.err.println(paintAllowed);
     }
 
     protected static void setActiveInstrument(Instrument instrument){
         activeInstrument = instrument;
-    }
-
-    protected void setIcon(Button button, Image buttonIcon) {
-        button.setPadding(Insets.EMPTY);
-        button.setGraphic(new ImageView(buttonIcon));
     }
 
     /**
@@ -103,14 +133,13 @@ public class Instrument {
         instrumentImage.setImage(instrumentIcon);
     }
 
-    protected void setDeskCursor(Canvas deskCanvas, Cursor cursorImage){
-        deskCanvas.setCursor(cursorImage);
+    protected void setIcon(Button button, Image buttonIcon) {
+        button.setPadding(Insets.EMPTY);
+        button.setGraphic(new ImageView(buttonIcon));
     }
 
-    public void findPainted(Integer mx, Integer my){
-        for (int i = 0; i < brushElements.size(); i++){
-            brushElements.get(i).isBrushElement(mx, my);
-        }
+    protected void setDeskCursor(Canvas deskCanvas, Cursor cursorImage){
+        deskCanvas.setCursor(cursorImage);
     }
 }
 

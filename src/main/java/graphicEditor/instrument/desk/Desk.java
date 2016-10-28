@@ -82,7 +82,7 @@ public class Desk extends Instrument {
         deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 activeEvent = event;
-                findPainted((int) event.getX(), (int) event.getY());
+                findPainted(event);
                 setCoords(event);
             }
         });
@@ -92,14 +92,13 @@ public class Desk extends Instrument {
             public void handle(MouseEvent event) {
                 setCoords(event);
                 activeInstrument.instrumentAction(event, graphicsContext);
-                dragStarted = true;
             }
         });
 
         //Клик мыши
         deskCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                activeInstrument.instrumentAction(event, graphicsContext);
+
             }
         });
 
@@ -107,16 +106,15 @@ public class Desk extends Instrument {
         deskCanvas.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 lineWidth = Integer.parseInt(widthSetter.getText());
+                activeInstrument.instrumentAction(event, graphicsContext);
             }
         });
 
         //Отжатие мыши
         deskCanvas.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                if(dragStarted){
-                    dragStarted = false;
-                    dragEnded = true;
-                }
+                activeInstrument.instrumentAction(event, graphicsContext);
+                findPainted(event);
             }
         });
     }
@@ -124,7 +122,7 @@ public class Desk extends Instrument {
     /**
      * Установить цвет фона и нарисовать его
      */
-    private void setBackground(){
+    public void setBackground(){
         graphicsContext.setFill(backgroundColor);
         graphicsContext.fillRect(0, 0, width, height);
     }
