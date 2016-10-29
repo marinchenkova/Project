@@ -3,8 +3,8 @@ package graphicEditor.instrument;
 import graphicEditor.Controller;
 import graphicEditor.instrument.desk.Desk;
 import graphicEditor.instrument.figures.Figure;
-import graphicEditor.instrument.paintedElements.BrushElement;
 import graphicEditor.instrument.mainInstruments.*;
+import graphicEditor.instrument.paintedElements.PaintedElement;
 import graphicEditor.instrument.palette.Palette;
 import graphicEditor.instrument.settingsPanel.SettingsPanel;
 import javafx.geometry.Insets;
@@ -44,17 +44,15 @@ public class Instrument {
     protected static Instrument activeInstrument;
     protected static Color activeColor;
     protected static Color backgroundColor;
-    protected static double lineWidth;
+    protected static Integer lineWidth = 10;
     protected static TextField widthSetter;
     protected static Canvas deskCanvas;
     protected static Desk desk;
     private static ImageView instrumentImage;
 
-    protected static boolean dragging = false;
-    protected static boolean dragEnded = false;
-    protected static List<BrushElement> brushElements;
+    protected static List<PaintedElement> paintedElements = new ArrayList<PaintedElement>();
 
-    protected static boolean paintAllowed;
+    protected static boolean isOnPainted = false;
     protected static int elementNumber = 0;
     //TODO как обойтись без пустого конструктора?
 
@@ -76,8 +74,6 @@ public class Instrument {
     private void initialize(){
         deskCanvas = controller.getDeskCanvas();
         instrumentImage = controller.getInstrumentImage();
-        brushElements = new ArrayList<BrushElement>();
-        paintAllowed = true;
 
         //Создание всех объектов классов-наследников
         new Palette(controller);
@@ -94,32 +90,12 @@ public class Instrument {
     }
 
     /**
-     * Применение иснтрумента - вызывается из событий event объекта desk. Выполняет этот же метод, но переписанный,
+     * Применение иснтрумента - вызывается из событий объекта {@link Desk}. Выполняет этот же метод, но переписанный,
      * для каждого инструмента.
-     * @param event
+     * @param event событие мыши
      */
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
         activeInstrument.instrumentAction(event, graphicsContext);
-    }
-
-    /**
-     * Поиск номера нарисованного элемента, если под курсором он есть.
-     */
-    protected void findPainted(MouseEvent event){
-        if(brushElements.size() > 0){
-            for(int i = 0; i < brushElements.size(); i++) {
-                if(brushElements.get(i).onBrushElement((int) event.getX(),(int) event.getY())){
-                    paintAllowed = false;
-                    elementNumber = i;
-                    break;
-                } else {
-                    paintAllowed = true;
-                }
-            }
-        } else {
-            paintAllowed = true;
-        }
-        System.err.print(elementNumber);System.err.print(' ');System.err.println(paintAllowed);
     }
 
     protected static void setActiveInstrument(Instrument instrument){

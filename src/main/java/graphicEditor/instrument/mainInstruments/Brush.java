@@ -2,7 +2,7 @@ package graphicEditor.instrument.mainInstruments;
 
 import graphicEditor.Controller;
 import graphicEditor.instrument.*;
-import graphicEditor.instrument.paintedElements.BrushElement;
+import graphicEditor.instrument.paintedElements.elements.BrushElement;
 import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.canvas.GraphicsContext;
@@ -33,9 +33,6 @@ public class Brush extends Instrument {
         brush = this;
         initialize();
     }
-    public Brush(){
-
-    }
 
     /**
      * Инициализация
@@ -64,25 +61,26 @@ public class Brush extends Instrument {
     }
 
     /**
-     * Применение кисти: событие мыши "клик" создает заполненный круг цвета {@link Instrument#activeColor} и
-     * диаметром {@link Instrument#lineWidth}.
+     * Применение кисти: при нажатии ЛКМ выполняется метод {@link BrushElement#paint}, ПКМ - выделение объекта
+     * {@link Brush#elementAction}.
      * @param event событие мыши
      */
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
-        if(paintAllowed){
+        if(event.isPrimaryButtonDown()){
             if(event.getEventType() == MouseEvent.MOUSE_PRESSED){
-                brushElements.add(new BrushElement(event, graphicsContext));
+                paintedElements.add(new BrushElement(event, graphicsContext));
             }
             if(event.getEventType() == MouseEvent.MOUSE_DRAGGED){
-                brushElements.get(brushElements.size()-1).paint(event, graphicsContext);
+                paintedElements.get(paintedElements.size()-1).paint(event, graphicsContext);
             }
             if(event.getEventType() == MouseEvent.MOUSE_RELEASED){
-                paintAllowed = false;
+                isOnPainted = true;
             }
-        } else {
-            if(event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                System.err.println("DELETING");
+        }
+
+        if(event.isSecondaryButtonDown() && isOnPainted) {
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
                 elementAction(graphicsContext);
             }
         }
@@ -93,7 +91,7 @@ public class Brush extends Instrument {
      * @param graphicsContext
      */
     public void elementAction(GraphicsContext graphicsContext){
-        brushElements.get(elementNumber).delete(graphicsContext);
+        paintedElements.get(elementNumber).delete(graphicsContext);
     }
 
 }

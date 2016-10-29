@@ -2,6 +2,7 @@ package graphicEditor.instrument.desk;
 
 import graphicEditor.Controller;
 import graphicEditor.instrument.Instrument;
+import graphicEditor.instrument.paintedElements.PaintedElement;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -82,7 +83,7 @@ public class Desk extends Instrument {
         deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 activeEvent = event;
-                findPainted(event);
+                PaintedElement.findPainted(event);
                 setCoords(event);
             }
         });
@@ -114,7 +115,7 @@ public class Desk extends Instrument {
         deskCanvas.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 activeInstrument.instrumentAction(event, graphicsContext);
-                findPainted(event);
+                PaintedElement.findPainted(event);
             }
         });
     }

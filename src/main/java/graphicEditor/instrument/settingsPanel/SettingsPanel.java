@@ -28,7 +28,7 @@ public class SettingsPanel extends Instrument {
      */
     private void initialize(){
         widthSetter = controller.getWidthSetter();
-        lineWidth = Integer.parseInt(widthSetter.getText());
+        widthSetter.setText(lineWidth.toString());
 
         run();
     }
