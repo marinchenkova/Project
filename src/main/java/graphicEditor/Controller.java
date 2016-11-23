@@ -1,6 +1,6 @@
 package graphicEditor;
 
-import graphicEditor.instrument.Instrument;
+import graphicEditor.core.instrument.Instrument;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
@@ -23,17 +23,7 @@ public class Controller {
     @FXML
     private Button eraserButton = new Button();
     @FXML
-    private Button fillButton = new Button();
-    @FXML
-    private Button textButton = new Button();
-    @FXML
-    private Button pipetteButton = new Button();
-    @FXML
-    private Button zoomButton = new Button();
-    @FXML
     private Button rectangleButton = new Button();
-    @FXML
-    private Button ellipseButton = new Button();
     @FXML
     private Button lineButton = new Button();
 
@@ -53,12 +43,12 @@ public class Controller {
     public Controller() {}
 
     /**
-     * Инициализация класса-контроллера - создание всех объектов приложения
+     * Инициализация
      */
-    @FXML
     public void initialize() throws Exception {
-        new Instrument(this);
+
     }
+
     //TODO Как сделать e.g. getButton(brush)?
     public Canvas getDeskCanvas(){
         return deskCanvas;
@@ -69,23 +59,8 @@ public class Controller {
     public Button getEraserButton(){
         return eraserButton;
     }
-    public Button getFillButton(){
-        return fillButton;
-    }
-    public Button getTextButton(){
-        return textButton;
-    }
-    public Button getPipetteButton(){
-        return pipetteButton;
-    }
-    public Button getZoomButton(){
-        return zoomButton;
-    }
     public Button getRectangleButton(){
         return rectangleButton;
-    }
-    public Button getEllipseButton(){
-        return ellipseButton;
     }
     public Button getLineButton(){
         return lineButton;

@@ -1,36 +1,33 @@
-package graphicEditor.instrument.mainInstruments;
+package graphicEditor.core.instrument.instruments;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.Instrument;
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Ввод текста
+ * Линия
  */
-public class Text extends Instrument {
+public class Line extends Figure {
 
-    private  Controller controller;
-    private Text text;
+    private Controller controller;
+    private Line line;
 
     /**
      * Этот объект в FXML
      */
-    private Button textButton;
-    private Image textIcon = new Image("/images/buttons/textIcon.png");
-    private Cursor textCursor = Cursor.TEXT;
+    private Button lineButton;
+    private Image lineIcon = new Image("/images/buttons/lineIcon.png");
 
 
     /**
      * Конструктор
      */
-    public Text(Controller controller) {
+    public Line(Controller controller) {
         this.controller = controller;
-        text = this;
+        line = this;
         initialize();
     }
 
@@ -38,8 +35,8 @@ public class Text extends Instrument {
      * Инициализация
      */
     private void initialize(){
-        textButton = controller.getTextButton();
-        setIcon(textButton, textIcon);
+        lineButton = controller.getLineButton();
+        setIcon(lineButton, lineIcon);
         run();
     }
 
@@ -47,17 +44,18 @@ public class Text extends Instrument {
      * Выполнение
      */
     private void run(){
-        textButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        //Нажатие мыши
+        lineButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                setActiveInstrument(text);
-                setDeskCursor(deskCanvas, textCursor);
-                setActiveInstrumentIcon(textIcon);
+                setActiveInstrument(line);
+                setDeskCursor(deskCanvas, figureCursor);
+                setActiveInstrumentIcon(lineIcon);
             }
         });
     }
 
     /**
-     * Применение текста
+     * Применение линии
      * @param event
      * @param graphicsContext
      */

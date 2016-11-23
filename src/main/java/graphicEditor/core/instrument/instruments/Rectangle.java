@@ -1,7 +1,6 @@
-package graphicEditor.instrument.figures.figures;
+package graphicEditor.core.instrument.instruments;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.figures.Figure;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -13,7 +12,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class Rectangle extends Figure {
 
-    private  Controller controller;
+    private Controller controller;
     private Rectangle rectangle;
 
     /**

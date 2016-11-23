@@ -1,21 +1,20 @@
-package graphicEditor.instrument.mainInstruments;
+package graphicEditor.core.instrument.instruments;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.Instrument;
+import graphicEditor.core.instrument.Instrument;
 import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import sun.util.calendar.Era;
 
 /**
  * Ластик
  */
 public class Eraser extends Instrument {
 
-    private  Controller controller;
+    private Controller controller;
     private Eraser eraser;
 
     /**
@@ -67,6 +66,10 @@ public class Eraser extends Instrument {
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
         graphicsContext.setFill(backgroundColor);
         graphicsContext.fillRect(event.getX(), event.getY(), 16, 16);
+        //isOnPainted ? paintedElements.remove(elementNumber) :
     }
 
+    public void destructPainted(){
+
+    }
 }

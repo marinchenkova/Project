@@ -1,8 +1,8 @@
-package graphicEditor.instrument.desk;
+package graphicEditor.core.desk;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.Instrument;
-import graphicEditor.instrument.paintedElements.PaintedElement;
+import graphicEditor.core.instrument.Instrument;
+import graphicEditor.core.paintedElements.PaintedElement;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -137,12 +137,5 @@ public class Desk extends Instrument {
         Integer y = (int) event.getY();
         coordsLabel.setText(x.toString() + ", " + y.toString());
     }
-    public Integer getX(){
-        return (int) activeEvent.getX();
-    }
-    public Integer getY(){
-        return (int) activeEvent.getY();
-    }
-
 }
 

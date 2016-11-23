@@ -1,4 +1,4 @@
-package graphicEditor.menuBar;
+package graphicEditor.core.menuBar;
 
 //TODO ...
 

@@ -1,11 +1,10 @@
-package graphicEditor;
+package graphicEditor.core;
 
 //TODO убрать неиспользуемый иморт
-import javafx.stage.Stage;
 import org.junit.Test;
 
 //TODO убрать неиспользуемый иморт
-import static org.junit.Assert.*;
+
 
 //TODO на мой взгляд, бесполезный автогенерируемый комментарий. я бы убрал его
 /**

@@ -1,7 +1,7 @@
-package graphicEditor.instrument.settingsPanel;
+package graphicEditor.core.settingsPanel;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.Instrument;
+import graphicEditor.core.instrument.Instrument;
 import javafx.event.*;
 
 /**

@@ -1,7 +1,7 @@
-package graphicEditor.instrument.palette;
+package graphicEditor.core.palette;
 
 import graphicEditor.Controller;
-import graphicEditor.instrument.Instrument;
+import graphicEditor.core.instrument.Instrument;
 import javafx.scene.paint.Color;
 
 /**

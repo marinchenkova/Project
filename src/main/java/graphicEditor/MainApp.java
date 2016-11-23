@@ -23,7 +23,8 @@ public class MainApp extends Application {
 
     /**
      * Инициализация GUI формы
-     * @throws IOException
+     * @throws IOException ошибка в выполнении FXMLLoader.load()
+     * @throws IllegalStateException неверный путь к файлу FXML
      */
     private void initializeFXMLForm() {
         try {
@@ -36,8 +37,10 @@ public class MainApp extends Application {
             primaryStage.setScene(new Scene(rootLayout));
             primaryStage.show();
             primaryStage.setTitle("New picture");
-        } catch (IOException error){
-            error.printStackTrace();
+        } catch (IllegalStateException e){
+            System.err.println(this + ": wrong path to FXML");
+        } catch (IOException e) {
+            System.err.println(this + ": IOException in FXMLLoader.load()");
         }
     }
 
