@@ -1,8 +1,7 @@
 package graphicEditor.core.instrument;
 
-import graphicEditor.core.paintedElements.PaintedElement;
-import java.util.ArrayList;
-import java.util.List;
+import graphicEditor.core.util.MouseEvent;
+
 
 /**
  * {@link Instrument} - абстрактный класс для реализации инструментов рисования.
@@ -23,14 +22,13 @@ public abstract class Instrument {
     protected String buttonIconPath;
     protected String cursorIconPath;
 
-    protected List<PaintedElement> paintedElements = new ArrayList<PaintedElement>();
     protected boolean isOnPainted;
 /*
     protected static boolean isOnPainted = false;
     protected static int elementNumber = 0;
     */
 
-    protected Instrument(){}
+    public Instrument(){}
 
     public Instrument(String butIcPath, String cursIcPath){
         buttonIconPath = butIcPath;
@@ -42,9 +40,9 @@ public abstract class Instrument {
     public Instrument getInstrument(){ return this; }
 
     /**
-     * @param event событие мыши
+     *
      */
-    public abstract void instrumentAction(int mouseButton, String event, int x, int y);
+    public abstract void instrumentAction(MouseEvent me);
 
     @Override
     public String toString(){
@@ -73,10 +71,6 @@ public abstract class Instrument {
     }
     */
 
-    /*
-    protected void setDeskCursor(Canvas deskCanvas, Cursor cursorImage){
-        deskCanvas.setCursor(cursorImage);
-    }
-    */
+
 }
 

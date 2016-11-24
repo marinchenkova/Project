@@ -1,25 +1,12 @@
 package graphicEditor.core.desk;
 
-import graphicEditor.Controller;
-import graphicEditor.core.instrument.Instrument;
-import graphicEditor.core.paintedElements.PaintedElement;
-import javafx.event.EventHandler;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
-import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
-
+import static graphicEditor.core.util.MouseEvents.*;
 
 /**
  * Доска
  */
-public class Desk extends Instrument {
-
-    private Controller controller;
-
-    /**
-     * Объект в FXML
-     */
+public class Desk {
+/*
     private GraphicsContext graphicsContext;
     private Label coordsLabel;
     private Label sizeLabel;
@@ -30,19 +17,14 @@ public class Desk extends Instrument {
     private Integer height;
     private MouseEvent activeEvent;
 
-    /**
-     * Конструктор
-     */
-    public Desk (Controller controller){
-        this.controller = controller;
-        initialize();
+*/
+    public Desk (){
+
     }
 
-    /**
-     * Инициализация - параметры объекта deskCanvas: ширина, высота, иконки координат и размера доски,
-     * возврат координат и размеров на доску, установка цвета фона.
-     */
-    private void initialize(){
+
+    public void initialize(){
+        /*
         width = (int) deskCanvas.getWidth();
         height = (int) deskCanvas.getHeight();
 
@@ -59,83 +41,69 @@ public class Desk extends Instrument {
         setBackground();
 
         run();
+        */
     }
 
-    /**
-     * Выполнение
-     */
-    private void run(){
+    public void run(graphicEditor.core.util.MouseEvent me){
         //Мышь на доске
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                setCoords(event);
-            }
-        });
+        if(me.getEvent() == ENTERED){
+            setCoords(me);
+        }
 
         //Мышь не на доске
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                coordsLabel.setText("");
-            }
-        });
+        if(me.getEvent() == EXITED){
+            //coordsLabel.setText("");
+        }
 
         //Мышь двигается по доске
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                activeEvent = event;
-                PaintedElement.findPainted(event);
-                setCoords(event);
-            }
-        });
+        if(me.getEvent() == MOVED){
+            //activeEvent = event;
+            //PaintedElement.findPainted(event);
+            setCoords(me);
+        }
 
         //Мышь двигается с нажатием
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                setCoords(event);
-                activeInstrument.instrumentAction(event, graphicsContext);
-            }
-        });
+        if(me.getEvent() == DRAGGED){
+            setCoords(me);
+            //activeInstrument.instrumentAction(event, graphicsContext);
+        }
 
         //Клик мыши
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
+        if(me.getEvent() == DRAGGED){
 
-            }
-        });
+        }
 
         //Нажатие мыши
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                lineWidth = Integer.parseInt(widthSetter.getText());
-                activeInstrument.instrumentAction(event, graphicsContext);
-            }
-        });
+        if(me.getEvent() == PRESSED){
+            //lineWidth = Integer.parseInt(widthSetter.getText());
+            //activeInstrument.instrumentAction(event, graphicsContext);
+        }
 
         //Отжатие мыши
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                activeInstrument.instrumentAction(event, graphicsContext);
-                PaintedElement.findPainted(event);
-            }
-        });
+        if(me.getEvent() == RELEASED){
+            //activeInstrument.instrumentAction(event, graphicsContext);
+            //PaintedElement.findPainted(event);
+        }
     }
 
     /**
      * Установить цвет фона и нарисовать его
      */
     public void setBackground(){
-        graphicsContext.setFill(backgroundColor);
-        graphicsContext.fillRect(0, 0, width, height);
+
     }
 
     /**
      * Координаты мыши на доске
-     * @param event
      */
-    private void setCoords(MouseEvent event){
-        Integer x = (int) event.getX();
-        Integer y = (int) event.getY();
-        coordsLabel.setText(x.toString() + ", " + y.toString());
+    public void setCoords(graphicEditor.core.util.MouseEvent me){
+        //coordsLabel.setText(me.getX() + ", " + me.getY());
     }
+
+    /*
+    protected void setDeskCursor(Canvas deskCanvas, Cursor cursorImage){
+        deskCanvas.setCursor(cursorImage);
+    }
+    */
 }
 

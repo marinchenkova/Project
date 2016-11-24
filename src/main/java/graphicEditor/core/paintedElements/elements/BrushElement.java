@@ -1,6 +1,8 @@
 package graphicEditor.core.paintedElements.elements;
 
 import graphicEditor.core.paintedElements.PaintedElement;
+import graphicEditor.core.util.MouseEvent;
+
 import java.util.ArrayList;
 
 /**
@@ -13,19 +15,19 @@ public class BrushElement extends PaintedElement{
     private ArrayList<Integer> xList = new ArrayList<Integer>();
     private ArrayList<Integer> yList = new ArrayList<Integer>();
 
-    public BrushElement(int liWid, int x, int y){
-        lineWidth = liWid;
-        paint(x, y);
+    public BrushElement(MouseEvent me){
+        lineWidth = me.getWidth();
+        paint(me);
     }
 
     /**
      * Нарисовать круг заданной ширины
      */
     @Override
-    public void paint(int x, int y){
+    public void paint(MouseEvent me){
         /*graphicsContext.fillOval((int) (event.getX() - width/2 + 1),(int) (event.getY() - width/2 + 1), width, width);*/
-        xList.add(x);
-        yList.add(y);
+        xList.add(me.getX());
+        yList.add(me.getY());
     }
 
     /**
@@ -42,10 +44,10 @@ public class BrushElement extends PaintedElement{
      * Если курсор находится на объекте, возвращает true
      */
     @Override
-    public boolean onPaintedElement(int mx, int my){
+    public boolean onPaintedElement(MouseEvent me){
         for (int i = 0; i < xList.size(); i++) {
-            if ((Math.abs(mx - lineWidth / 2 - xList.get(i)) <= lineWidth / 2) &&
-                       (Math.abs(my - lineWidth / 2 - yList.get(i)) <= lineWidth / 2)){
+            if ((Math.abs(me.getX() - lineWidth / 2 - xList.get(i)) <= lineWidth / 2) &&
+                       (Math.abs(me.getY() - lineWidth / 2 - yList.get(i)) <= lineWidth / 2)){
                 return true;
             }
         }

@@ -1,22 +1,23 @@
 package graphicEditor.core.paintedElements;
 
+import graphicEditor.core.util.MouseEvent;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Абстрактный класс для объектов, нарисованных одним действием инструмента рисования
  */
 public abstract class PaintedElement{
-    protected static List<PaintedElement> paintedElements = new ArrayList<PaintedElement>();
-    protected static int elementNumber = -1;
+    private int elementNumber = -1;
 
     /**
      * Поиск номера нарисованного элемента под курсором
      */
-    public static boolean findPainted(int x, int y){
-        if(paintedElements.size() > 0){
-            for (int i = 0; i < paintedElements.size(); i++){
-                if (paintedElements.get(i).onPaintedElement(x, y)){
+    public boolean findPainted(MouseEvent me){
+        ArrayList<PaintedElement> pe = me.getPaintedEl();
+        if(pe.size() > 0){
+            for (int i = 0; i < pe.size(); i++){
+                if (pe.get(i).onPaintedElement(me)){
                     elementNumber = i;
                     return true;
                 }
@@ -26,14 +27,14 @@ public abstract class PaintedElement{
         //System.err.print(elementNumber);System.err.print(' ');System.err.println(isOnPainted);
     }
 
-    public static int getElementNumber() throws ArrayIndexOutOfBoundsException{
+    public int getElementNumber() throws ArrayIndexOutOfBoundsException{
         return elementNumber;
     }
 
     /**
      * Нарисовать объект с заданной шириной линии
      */
-    public abstract void paint(int x, int y);
+    public abstract void paint(MouseEvent me);
 
     /**
      * Нарисовать весь элемент: метод используется при удалении одного из элементов.
@@ -43,7 +44,7 @@ public abstract class PaintedElement{
     /**
      * Если курсор находится на объекте, возвращает true
      */
-    public abstract boolean onPaintedElement(int mx, int my);
+    public abstract boolean onPaintedElement(MouseEvent me);
 
     /**
      * Удаление графического элемента: элемент удаляется из списка нарисованных элементов данного типа,

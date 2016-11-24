@@ -12,30 +12,24 @@ import javafx.scene.input.MouseEvent;
 /**
  * Ластик
  */
-public class Eraser extends Instrument {
-
+public class Eraser {//extends Instrument {
+/*
     private Controller controller;
     private Eraser eraser;
 
-    /**
-     * Этот объект в FXML
-     */
+
     private Button eraserButton;
     private Image eraserIcon = new Image("/images/buttons/eraserIcon.png");
     private Cursor eraserCursor = new ImageCursor(new Image("/images/cursors/eraserCursor.png"), 2, 2);
 
-    /**
-     * Конструктор
-     */
+
     public Eraser(Controller controller) {
         this.controller = controller;
         eraser = this;
         initialize();
     }
 
-    /**
-     * Инициализация
-     */
+
     private void initialize(){
         eraserButton = controller.getEraserButton();
         setIcon(eraserButton, eraserIcon);
@@ -43,9 +37,7 @@ public class Eraser extends Instrument {
         run();
     }
 
-    /**
-     * Выполнение
-     */
+
     private void run(){
         //Нажатие мыши
         eraserButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -57,11 +49,7 @@ public class Eraser extends Instrument {
         });
     }
 
-    /**
-     * Применение ластика
-     * @param event
-     * @param graphicsContext
-     */
+
     @Override
     public void instrumentAction(MouseEvent event, GraphicsContext graphicsContext){
         graphicsContext.setFill(backgroundColor);
@@ -72,4 +60,5 @@ public class Eraser extends Instrument {
     public void destructPainted(){
 
     }
+    */
 }

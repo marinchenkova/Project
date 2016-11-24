@@ -1,6 +1,5 @@
 package graphicEditor;
 
-import graphicEditor.core.instrument.Instrument;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
@@ -8,11 +7,7 @@ import javafx.scene.image.ImageView;
 
 
 /**
- * Контроллер для класса {@link MainApp} - главного класса приложения.<br>
- * Данный класс реализует связь объектов GUI формы с объектами логики приложения.<br>
- * Методы:
- *
- * @author Маринченко В. А.
+ * Контроллер класс реализует связь GUI с логикой приложения
  */
 public class Controller {
 
@@ -48,40 +43,4 @@ public class Controller {
     public void initialize() throws Exception {
 
     }
-
-    //TODO Как сделать e.g. getButton(brush)?
-    public Canvas getDeskCanvas(){
-        return deskCanvas;
-    }
-    public Button getBrushButton(){
-        return brushButton;
-    }
-    public Button getEraserButton(){
-        return eraserButton;
-    }
-    public Button getRectangleButton(){
-        return rectangleButton;
-    }
-    public Button getLineButton(){
-        return lineButton;
-    }
-    public Label getCoordsLabel(){
-        return coordsLabel;
-    }
-    public Label getSizeLabel(){
-        return sizeLabel;
-    }
-    public ImageView getCoordsImage(){
-        return coordsImage;
-    }
-    public ImageView getSizeImage(){
-        return sizeImage;
-    }
-    public ImageView getInstrumentImage(){
-        return instrumentImage;
-    }
-    public TextField getWidthSetter(){
-        return widthSetter;
-    }
-
 }
