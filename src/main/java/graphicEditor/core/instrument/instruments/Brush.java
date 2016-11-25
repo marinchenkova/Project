@@ -3,11 +3,11 @@ package graphicEditor.core.instrument.instruments;
 import graphicEditor.core.instrument.*;
 import graphicEditor.core.paintedElements.PaintedElement;
 import graphicEditor.core.paintedElements.elements.BrushElement;
-import graphicEditor.core.util.*;
+import graphicEditor.core.util.mouse.*;
 
 import java.util.ArrayList;
 
-import static graphicEditor.core.util.MouseEvents.*;
+import static graphicEditor.core.util.mouse.MouseEvents.*;
 
 /**
  * Кисть
@@ -25,25 +25,22 @@ public class Brush extends Instrument {
     }
 
     /**
-     * Применение кисти: при нажатии ЛКМ выполняется метод {@link BrushElement#paint}, ПКМ - выделение объекта
-     * {@link Brush#elementAction}.
-     * @param
+     * Применение кисти
      */
     @Override
-    public void instrumentAction(MouseEvent me){
+    public void instrumentAction(MouseEvent me, int lineWidth, ArrayList<PaintedElement> pe){
         MouseEvents event = me.getEvent();
         int mButton = me.getMouseButton();
-        ArrayList<PaintedElement> pe = me.getPaintedEl();
         int x = me.getX();
         int y = me.getY();
-        int width = me.getWidth();
+        int w = lineWidth;
 
         if(mButton == 1){
             if(event == PRESSED){
-                pe.add(new BrushElement(me));
+                pe.add(new BrushElement(x, y, w));
             }
             if(event == DRAGGED){
-                pe.get(pe.size()-1).paint(me);
+                pe.get(pe.size()-1).paintAtom(x, y);
             }
             if(event == RELEASED){
                 isOnPainted = true;
@@ -60,7 +57,7 @@ public class Brush extends Instrument {
     /**
      * Действие с объектом {@link BrushElement}
      */
-    public void elementAction(MouseEvent me){
+    private void elementAction(MouseEvent me){
         System.err.println("TEST: " + this.getClass() + ".elementAction() : " + me.getX() + "," + me.getY());
         //PaintedElement.findPainted(me);
         //me.getPaintedEl().get(PaintedElement.getElementNumber()).outline();

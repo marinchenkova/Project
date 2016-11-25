@@ -1,6 +1,9 @@
 package graphicEditor.core.instrument;
 
-import graphicEditor.core.util.MouseEvent;
+import graphicEditor.core.paintedElements.PaintedElement;
+import graphicEditor.core.util.mouse.MouseEvent;
+
+import java.util.ArrayList;
 
 
 /**
@@ -19,8 +22,8 @@ public abstract class Instrument {
     protected static Desk desk;
     */
 
-    protected String buttonIconPath;
-    protected String cursorIconPath;
+    protected final String buttonIconPath;
+    protected final String cursorIconPath;
 
     protected boolean isOnPainted;
 /*
@@ -28,7 +31,10 @@ public abstract class Instrument {
     protected static int elementNumber = 0;
     */
 
-    public Instrument(){}
+    public Instrument(){
+        buttonIconPath = null;
+        cursorIconPath = null;
+    }
 
     public Instrument(String butIcPath, String cursIcPath){
         buttonIconPath = butIcPath;
@@ -42,25 +48,43 @@ public abstract class Instrument {
     /**
      *
      */
-    public abstract void instrumentAction(MouseEvent me);
+    public abstract void instrumentAction(MouseEvent me, int lineWidth, ArrayList<PaintedElement> pe);
 
     @Override
     public String toString(){
         return this.getClass().toString();
     }
 
-    //TODO хэш-код
-    @Override
-    public int hashCode(){
-        return 0;
-    }
 
-    public String getButtonIconPath(){
+    public String getButtonIconPath() throws NullPointerException{
         return buttonIconPath;
     }
 
-    public String getCursorIconPath(){
+    public String getCursorIconPath() throws NullPointerException{
         return cursorIconPath;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Instrument)) return false;
+
+        Instrument that = (Instrument) o;
+
+        if (isOnPainted != that.isOnPainted) return false;
+        if (getButtonIconPath() != null ? !getButtonIconPath().equals(that.getButtonIconPath()) :
+                that.getButtonIconPath() != null)
+            return false;
+        return getCursorIconPath() != null ? getCursorIconPath().equals(that.getCursorIconPath()) :
+                that.getCursorIconPath() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getButtonIconPath() != null ? getButtonIconPath().hashCode() : 0;
+        result = 31 * result + (getCursorIconPath() != null ? getCursorIconPath().hashCode() : 0);
+        result = 31 * result + (isOnPainted ? 1 : 0);
+        return result;
     }
 
     /*

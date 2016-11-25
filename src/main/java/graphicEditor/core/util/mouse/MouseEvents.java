@@ -1,4 +1,4 @@
-package graphicEditor.core.util;
+package graphicEditor.core.util.mouse;
 
 /**
  * События мыши

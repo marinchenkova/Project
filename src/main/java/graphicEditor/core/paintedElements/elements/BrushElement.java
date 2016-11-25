@@ -1,53 +1,50 @@
 package graphicEditor.core.paintedElements.elements;
 
 import graphicEditor.core.paintedElements.PaintedElement;
-import graphicEditor.core.util.MouseEvent;
-
 import java.util.ArrayList;
 
 /**
  * Объект, нарисованный одним действием инструмента кисть
  */
-public class BrushElement extends PaintedElement{
+public class BrushElement implements PaintedElement{
 
     private int lineWidth;
-
     private ArrayList<Integer> xList = new ArrayList<Integer>();
     private ArrayList<Integer> yList = new ArrayList<Integer>();
 
-    public BrushElement(MouseEvent me){
-        lineWidth = me.getWidth();
-        paint(me);
+    public BrushElement(int x, int y, int width){
+        lineWidth = width;
+        paintAtom(x, y);
     }
 
     /**
      * Нарисовать круг заданной ширины
      */
-    @Override
-    public void paint(MouseEvent me){
+    public void paintAtom(int x, int y){
         /*graphicsContext.fillOval((int) (event.getX() - width/2 + 1),(int) (event.getY() - width/2 + 1), width, width);*/
-        xList.add(me.getX());
-        yList.add(me.getY());
+        xList.add(x);
+        yList.add(y);
     }
 
     /**
-     * Отрисовка всего элемента. Метод используется при удалении одного из элементов {@link PaintedElement}.
+     * Возвращение списков координат: используеся при отрисовке этого элемента и при удалении одного из элементов
+     * {@link PaintedElement}.
      */
-    @Override
-    public void paintWhole(){
-        for (int i = 0; i < xList.size(); i++) {
-            //TODO
-        }
+    public ArrayList<Integer> getXList(){
+        return xList;
+    }
+
+    public ArrayList<Integer> getYList(){
+        return yList;
     }
 
     /**
      * Если курсор находится на объекте, возвращает true
      */
-    @Override
-    public boolean onPaintedElement(MouseEvent me){
+    public boolean onPainted(int x, int y){
         for (int i = 0; i < xList.size(); i++) {
-            if ((Math.abs(me.getX() - lineWidth / 2 - xList.get(i)) <= lineWidth / 2) &&
-                       (Math.abs(me.getY() - lineWidth / 2 - yList.get(i)) <= lineWidth / 2)){
+            if ((Math.abs(x - lineWidth / 2 - xList.get(i)) <= lineWidth / 2) &&
+                       (Math.abs(y - lineWidth / 2 - yList.get(i)) <= lineWidth / 2)){
                 return true;
             }
         }
@@ -58,24 +55,17 @@ public class BrushElement extends PaintedElement{
      * Удаление графического элемента: элемент удаляется из списка нарисованных элементов данного типа,
      * а затем все оставшиеся элементы отрисовываются заново.
      */
-    /*
-    @Override
-    public void delete(GraphicsContext graphicsContext) {
-        desk.setBackground();
-        paintedElements.remove(elementNumber);
-        if(paintedElements.size() > 0 ){
-            for (PaintedElement paintedElement : paintedElements) {
-                paintedElement.paintWhole(graphicsContext);
-            }
+
+    public void delete(ArrayList<PaintedElement> pe, int i) {
+        pe.remove(i);
+        for(PaintedElement e : pe){
+            pe.remove(e);
         }
     }
 
-    @Override
-    public void outline(GraphicsContext graphicsContext){
-        graphicsContext.setFill(Color.rgb(0, 100, 100, 0.5));
-        for (int i = 0; i < xList.size(); i++) {
-            graphicsContext.fillOval(xList.get(i), yList.get(i), width, width);
-        }
+
+    public void outline(){
+
     }
-    */
+
 }

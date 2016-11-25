@@ -1,109 +1,84 @@
 package graphicEditor.core.desk;
 
-import static graphicEditor.core.util.MouseEvents.*;
+import graphicEditor.core.paintedElements.PaintedElement;
+import graphicEditor.core.util.color.Colors;
+
+import java.util.ArrayList;
 
 /**
  * Доска
  */
 public class Desk {
-/*
-    private GraphicsContext graphicsContext;
-    private Label coordsLabel;
-    private Label sizeLabel;
-    private Image coordsIcon =  new Image("/images/misc/coordsIcon.png");
-    private Image sizeIcon =  new Image("/images/misc/sizeIcon.png");
 
-    private Integer width;
-    private Integer height;
-    private MouseEvent activeEvent;
+    private int width;
+    private int height;
+    private Colors backgroundColor;
 
-*/
-    public Desk (){
+    private ArrayList<PaintedElement> pe = new ArrayList<PaintedElement>();
+    private int elNum = -1;
+
+    public Desk (int w, int h, Colors backCol){
+        width = w;
+        height = h;
+        backgroundColor = backCol;
+    }
+
+    public void onAction(){
 
     }
 
+    public void onMouseEntered(){
 
-    public void initialize(){
-        /*
-        width = (int) deskCanvas.getWidth();
-        height = (int) deskCanvas.getHeight();
-
-        ImageView coordsImage = controller.getCoordsImage();
-        ImageView sizeImage = controller.getSizeImage();
-        coordsImage.setImage(coordsIcon);
-        sizeImage.setImage(sizeIcon);
-
-        coordsLabel = controller.getCoordsLabel();
-        sizeLabel = controller.getSizeLabel();
-        sizeLabel.setText(width.toString() + ", " + height.toString());
-
-        graphicsContext = deskCanvas.getGraphicsContext2D();
-        setBackground();
-
-        run();
-        */
     }
 
-    public void run(graphicEditor.core.util.MouseEvent me){
-        //Мышь на доске
-        if(me.getEvent() == ENTERED){
-            setCoords(me);
-        }
+    public void onMouseExited(){
 
-        //Мышь не на доске
-        if(me.getEvent() == EXITED){
-            //coordsLabel.setText("");
-        }
-
-        //Мышь двигается по доске
-        if(me.getEvent() == MOVED){
-            //activeEvent = event;
-            //PaintedElement.findPainted(event);
-            setCoords(me);
-        }
-
-        //Мышь двигается с нажатием
-        if(me.getEvent() == DRAGGED){
-            setCoords(me);
-            //activeInstrument.instrumentAction(event, graphicsContext);
-        }
-
-        //Клик мыши
-        if(me.getEvent() == DRAGGED){
-
-        }
-
-        //Нажатие мыши
-        if(me.getEvent() == PRESSED){
-            //lineWidth = Integer.parseInt(widthSetter.getText());
-            //activeInstrument.instrumentAction(event, graphicsContext);
-        }
-
-        //Отжатие мыши
-        if(me.getEvent() == RELEASED){
-            //activeInstrument.instrumentAction(event, graphicsContext);
-            //PaintedElement.findPainted(event);
-        }
     }
 
-    /**
-     * Установить цвет фона и нарисовать его
-     */
-    public void setBackground(){
+    public void onMouseClicked(){
+
+    }
+
+    public void onMousePressed(){
+
+    }
+
+    public void onMouseReleased(){
+
+    }
+
+    public void onMouseDragged(){
 
     }
 
     /**
-     * Координаты мыши на доске
+     * Поиск номера нарисованного элемента под курсором
      */
-    public void setCoords(graphicEditor.core.util.MouseEvent me){
-        //coordsLabel.setText(me.getX() + ", " + me.getY());
+    public boolean findPainted(int x, int y){
+        if(pe.size() > 0){
+            for (int i = 0; i < pe.size(); i++){
+                if (pe.get(i).onPainted(x, y)){
+                    elNum = i;
+                    return true;
+                }
+            }
+        }
+        return false;
+        //System.err.print(elementNumber);System.err.print(' ');System.err.println(isOnPainted);
     }
 
-    /*
-    protected void setDeskCursor(Canvas deskCanvas, Cursor cursorImage){
-        deskCanvas.setCursor(cursorImage);
-    }
-    */
+    public Colors getBackgroundColor(){ return backgroundColor; }
+
+    public void setBackgroundColor(Colors backCol){ backgroundColor = backCol; }
+
+    public int getWidth(){ return width; }
+
+    public void setWidth(int w){ width = w; }
+
+    public int getHeight(){ return height; }
+
+    public void setHeight(int h){ height = h; }
+
+    public ArrayList<PaintedElement> getPaintedElements(){ return pe; }
 }
 
