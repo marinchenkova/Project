@@ -2,6 +2,7 @@ package graphicEditor.core.paintedElements.elements;
 
 import graphicEditor.core.paintedElements.PaintedElement;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Объект, нарисованный одним действием инструмента кисть
@@ -9,8 +10,8 @@ import java.util.ArrayList;
 public class BrushElement implements PaintedElement{
 
     private int lineWidth;
-    private ArrayList<Integer> xList = new ArrayList<Integer>();
-    private ArrayList<Integer> yList = new ArrayList<Integer>();
+    private ArrayList<Integer> xList = new ArrayList<>();
+    private ArrayList<Integer> yList = new ArrayList<>();
 
     public BrushElement(int x, int y, int width){
         lineWidth = width;
@@ -18,54 +19,79 @@ public class BrushElement implements PaintedElement{
     }
 
     /**
-     * Нарисовать круг заданной ширины
+     * Добавление новых координат к списку
      */
+    @Override
     public void paintAtom(int x, int y){
-        /*graphicsContext.fillOval((int) (event.getX() - width/2 + 1),(int) (event.getY() - width/2 + 1), width, width);*/
+        //graphicsContext.fillOval((int) (event.getX() - width/2 + 1),(int) (event.getY() - width/2 + 1), width, width);
         xList.add(x);
         yList.add(y);
     }
 
     /**
-     * Возвращение списков координат: используеся при отрисовке этого элемента и при удалении одного из элементов
+     * Возврат списков координат: используеся при отрисовке этого элемента и при удалении одного из элементов
      * {@link PaintedElement}.
      */
-    public ArrayList<Integer> getXList(){
-        return xList;
-    }
+    public ArrayList<Integer> getXList(){ return xList; }
+    public ArrayList<Integer> getYList(){ return yList; }
 
-    public ArrayList<Integer> getYList(){
-        return yList;
-    }
-
-    /**
-     * Если курсор находится на объекте, возвращает true
-     */
+    @Override
     public boolean onPainted(int x, int y){
         for (int i = 0; i < xList.size(); i++) {
-            if ((Math.abs(x - lineWidth / 2 - xList.get(i)) <= lineWidth / 2) &&
-                       (Math.abs(y - lineWidth / 2 - yList.get(i)) <= lineWidth / 2)){
+            if ((Math.abs(x - xList.get(i)) <= lineWidth / 2) &&
+                       (Math.abs(y - yList.get(i)) <= lineWidth / 2)){
                 return true;
             }
         }
         return false;
     }
 
-    /**
-     * Удаление графического элемента: элемент удаляется из списка нарисованных элементов данного типа,
-     * а затем все оставшиеся элементы отрисовываются заново.
-     */
+    @Override
+    public void scale(int k){
+        int ax = xList.get(0);
+        int ay = yList.get(0);
+        ArrayList<Integer> newX = new ArrayList<>();
+        ArrayList<Integer> newY = new ArrayList<>();
 
-    public void delete(ArrayList<PaintedElement> pe, int i) {
-        pe.remove(i);
-        for(PaintedElement e : pe){
-            pe.remove(e);
+        newX.add(ax);
+        newY.add(ay);
+
+        for(int i = 1; i < xList.size(); i++){
+            newX.add((xList.get(i) - ax) * k + ax);
+            newY.add((yList.get(i) - ay) * k + ay);
         }
+
+        xList = newX;
+        yList = newY;
     }
 
+    @Override
+    public void translate(int dx, int dy){
+        ArrayList<Integer> newX = new ArrayList<>();
+        ArrayList<Integer> newY = new ArrayList<>();
 
-    public void outline(){
+        for(int i = 0; i < xList.size(); i++){
+            newX.add(xList.get(i) + dx);
+            newY.add(yList.get(i) - dy);
+        }
 
+        xList = newX;
+        yList = newY;
     }
 
+    @Override
+    public void rotate(double a){
+        int mx = (Collections.max(xList) + Collections.min(xList)) / 2;
+        int my = (Collections.max(yList) + Collections.min(yList)) / 2;
+        ArrayList<Integer> newX = new ArrayList<>();
+        ArrayList<Integer> newY = new ArrayList<>();
+
+        for(int i = 0; i < xList.size(); i++){
+            newX.add((int) ((xList.get(i) - mx) * Math.cos(a) - (yList.get(i) - my) * Math.sin(a)) + mx);
+            newY.add((int) ((xList.get(i) - mx) * Math.sin(a) + (yList.get(i) - my) * Math.cos(a)) + my);
+        }
+
+        xList = newX;
+        yList = newY;
+    }
 }

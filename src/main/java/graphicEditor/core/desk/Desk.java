@@ -13,9 +13,7 @@ public class Desk {
     private int width;
     private int height;
     private Colors backgroundColor;
-
-    private ArrayList<PaintedElement> pe = new ArrayList<PaintedElement>();
-    private int elNum = -1;
+    private ArrayList<PaintedElement> pe = new ArrayList<>();
 
     public Desk (int w, int h, Colors backCol){
         width = w;
@@ -23,48 +21,18 @@ public class Desk {
         backgroundColor = backCol;
     }
 
-    public void onAction(){
-
-    }
-
-    public void onMouseEntered(){
-
-    }
-
-    public void onMouseExited(){
-
-    }
-
-    public void onMouseClicked(){
-
-    }
-
-    public void onMousePressed(){
-
-    }
-
-    public void onMouseReleased(){
-
-    }
-
-    public void onMouseDragged(){
-
-    }
-
     /**
-     * Поиск номера нарисованного элемента под курсором
+     * Поиск номера нарисованного элемента позаданным координатам
      */
-    public boolean findPainted(int x, int y){
+    public int findPainted(int x, int y){
         if(pe.size() > 0){
             for (int i = 0; i < pe.size(); i++){
                 if (pe.get(i).onPainted(x, y)){
-                    elNum = i;
-                    return true;
+                    return i;
                 }
             }
         }
-        return false;
-        //System.err.print(elementNumber);System.err.print(' ');System.err.println(isOnPainted);
+        return -1;
     }
 
     public Colors getBackgroundColor(){ return backgroundColor; }
@@ -80,5 +48,7 @@ public class Desk {
     public void setHeight(int h){ height = h; }
 
     public ArrayList<PaintedElement> getPaintedElements(){ return pe; }
+
+    public void addPaintedElement(PaintedElement element){ pe.add(element); }
 }
 

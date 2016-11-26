@@ -48,12 +48,10 @@ public abstract class Instrument {
     /**
      *
      */
-    public abstract void instrumentAction(MouseEvent me, int lineWidth, ArrayList<PaintedElement> pe);
+    public abstract PaintedElement instrumentAction(MouseEvent me, int lineWidth);
 
     @Override
-    public String toString(){
-        return this.getClass().toString();
-    }
+    public String toString(){ return this.getClass().toString(); }
 
 
     public String getButtonIconPath() throws NullPointerException{
