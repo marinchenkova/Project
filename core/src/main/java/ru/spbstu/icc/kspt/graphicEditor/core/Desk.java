@@ -1,9 +1,6 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.desk;
+package ru.spbstu.icc.kspt.graphicEditor.core;
 
-import ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.PaintedElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.color.Color;
-import ru.spbstu.icc.kspt.graphicEditor.core.util.mouse.MouseEvent;
-import ru.spbstu.icc.kspt.graphicEditor.core.util.mouse.MouseEvents;
 
 import java.util.ArrayList;
 

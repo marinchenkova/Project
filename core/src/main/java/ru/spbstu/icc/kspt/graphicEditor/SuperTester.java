@@ -1,12 +1,20 @@
 package ru.spbstu.icc.kspt.graphicEditor;
 
+import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
+
 /**
  * @author Marinchenko V. A.
  */
 public class SuperTester {
 
     public static void main(String[] args) {
+        doNull(null);
+    }
 
+    public static void doNull(PaintedElement e){
+        if(e == null){
+            System.out.println(e);
+        }
     }
 
     //OLD CODE

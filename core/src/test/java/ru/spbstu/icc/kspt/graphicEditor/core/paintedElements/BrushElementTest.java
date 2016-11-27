@@ -1,7 +1,6 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.elements;
+package ru.spbstu.icc.kspt.graphicEditor.core.paintedElements;
 
 import org.junit.Test;
-import ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.elements.BrushElement;
 
 import static org.junit.Assert.*;
 

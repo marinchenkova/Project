@@ -1,7 +1,7 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.instrument.instruments;
+package ru.spbstu.icc.kspt.graphicEditor.core.instruments;
 
-import ru.spbstu.icc.kspt.graphicEditor.core.instrument.Instrument;
-import ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.Instrument;
+import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
 
 /**
  * Инструмент для выполнения действий над объектами {@link PaintedElement}

@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.instrument.instruments;
+package ru.spbstu.icc.kspt.graphicEditor.core.instruments;
 
 /**
  * Прямоугольник

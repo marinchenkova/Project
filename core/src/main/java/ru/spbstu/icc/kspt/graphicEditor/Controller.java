@@ -1,13 +1,14 @@
-package ru.spbstu.icc.kspt.graphicEditor.view.control;
+package ru.spbstu.icc.kspt.graphicEditor;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-
 /**
- * Контроллер класс реализует связь GUI с логикой приложения
+ * Класс {@link Controller} реализует связь GUI с логикой приложения.
  */
 public class Controller {
 
@@ -41,6 +42,7 @@ public class Controller {
     /**
      * Инициализация
      */
+    @FXML
     public void initialize() throws Exception {
 
     }

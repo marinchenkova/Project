@@ -1,6 +1,6 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.elements;
+package ru.spbstu.icc.kspt.graphicEditor.core.paintedElements;
 
-import ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
 
 import java.util.ArrayList;
 import java.util.Collections;
