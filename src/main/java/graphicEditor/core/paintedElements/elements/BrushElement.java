@@ -23,7 +23,6 @@ public class BrushElement implements PaintedElement{
      */
     @Override
     public void paintAtom(int x, int y){
-        //graphicsContext.fillOval((int) (event.getX() - width/2 + 1),(int) (event.getY() - width/2 + 1), width, width);
         xList.add(x);
         yList.add(y);
     }

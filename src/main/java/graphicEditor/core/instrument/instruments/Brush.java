@@ -28,41 +28,24 @@ public class Brush extends Instrument {
      * Применение кисти
      */
     @Override
-    public PaintedElement instrumentAction(MouseEvent me, int lineWidth){
+    public PaintedElement onAction(MouseEvent me, int lineWidth){
         MouseEvents event = me.getEvent();
         int mButton = me.getMouseButton();
         int x = me.getX();
         int y = me.getY();
-        int w = lineWidth;
-        BrushElement be = new BrushElement(x, y, w);
+        BrushElement be = new BrushElement(x, y, lineWidth);
 
         if(mButton == 1){
-            if(event == PRESSED){
-                return be;
-            }
-            if(event == DRAGGED){
-                be.paintAtom(x, y);
-            }
-            if(event == RELEASED){
-                isOnPainted = true;
-                return be;
-            }
-        }
-
-        if(mButton == 2 && isOnPainted) {
-            if (event == PRESSED) {
-                elementAction(me);
+            switch (event){
+                case PRESSED:
+                    return be;
+                case DRAGGED:
+                    be.paintAtom(x, y);
+                    break;
+                case RELEASED:
+                    return be;
             }
         }
         return be;
-    }
-
-    /**
-     * Действие с объектом {@link BrushElement}
-     */
-    private void elementAction(MouseEvent me){
-        System.err.println("TEST: " + this.getClass() + ".elementAction() : " + me.getX() + "," + me.getY());
-        //PaintedElement.findPainted(me);
-        //me.getPaintedEl().get(PaintedElement.getElementNumber()).outline();
     }
 }

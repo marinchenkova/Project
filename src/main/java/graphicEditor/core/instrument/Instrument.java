@@ -10,26 +10,13 @@ import java.util.ArrayList;
  * {@link Instrument} - абстрактный класс для реализации инструментов рисования.
  */
 public abstract class Instrument {
-    /**
-     * Активные значения - общие переменные для классов-наследников, которые изменяются при работе программы
-     */
-    /*protected static Instrument activeInstrument;
-    protected static Color activeColor;
-    protected static Color backgroundColor;
-    protected static Integer lineWidth = 10;
-    protected static TextField widthSetter;
-    protected static Canvas deskCanvas;
-    protected static Desk desk;
-    */
+
 
     protected final String buttonIconPath;
     protected final String cursorIconPath;
 
     protected boolean isOnPainted;
-/*
-    protected static boolean isOnPainted = false;
-    protected static int elementNumber = 0;
-    */
+
 
     public Instrument(){
         buttonIconPath = null;
@@ -48,7 +35,9 @@ public abstract class Instrument {
     /**
      *
      */
-    public abstract PaintedElement instrumentAction(MouseEvent me, int lineWidth);
+    public PaintedElement onAction(MouseEvent me, int lineWidth) throws NullPointerException {
+        return null;
+    }
 
     @Override
     public String toString(){ return this.getClass().toString(); }
@@ -84,15 +73,5 @@ public abstract class Instrument {
         result = 31 * result + (isOnPainted ? 1 : 0);
         return result;
     }
-
-    /*
-     * Установка иконки активного инструмента в панель настроек
-
-    protected void setActiveInstrumentIcon(){
-        instrumentImage.setImage(instrumentIcon);
-    }
-    */
-
-
 }
 

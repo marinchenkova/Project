@@ -16,7 +16,7 @@ public class Controller {
     @FXML
     private Button brushButton = new Button();
     @FXML
-    private Button eraserButton = new Button();
+    private Button agentButton = new Button();
     @FXML
     private Button rectangleButton = new Button();
     @FXML
