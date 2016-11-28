@@ -10,7 +10,7 @@
 - ДОБАВЛЕНО: объекты, созданные кистью, можно удалять:
 
 
-![alt text](Diagrams/Versions/8.gif)
+![alt text](images/Versions/8.gif)
 
 
 ##Описание
@@ -27,13 +27,13 @@
 
 ##Дополнительно
   Построитель плоской карты окружения на Arduino, его основные части: 
-  - плата Arduino                                    ![alt text](Diagrams/README/arduino-uno.png)
-  - ультразвуковой дальномер (возвращает расстояние) ![alt text](Diagrams/README/hc-sr04.png)
-  - шаговый двигатель (возвращает угол поворота оси) ![alt text](Diagrams/README/motor.png)
+  - плата Arduino                                    ![alt text](images/README/arduino-uno.png)
+  - ультразвуковой дальномер (возвращает расстояние) ![alt text](images/README/hc-sr04.png)
+  - шаговый двигатель (возвращает угол поворота оси) ![alt text](images/README/motor.png)
   
 Эти два параметра (расстояние и угол поворота оси двигателя) записываются в текстовый файл, который используется графическим редактором для построения плоской карты (вид сверху), например, комнаты.
 Вид сверху:
-![alt text](Diagrams/README/Arduino.gif)
+![alt text](images/README/Arduino.gif)
 
 "Ar" - устройство на Arduino.
 
