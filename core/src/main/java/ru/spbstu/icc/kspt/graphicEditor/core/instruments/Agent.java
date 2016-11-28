@@ -9,7 +9,6 @@ import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
 public class Agent extends Instrument {
 
     public Agent(){}
-    public Agent(String butIcPath, String cursIcPath){ super(butIcPath, cursIcPath); }
 
     public PaintedElement getScaled(PaintedElement element, double k){
         element.scale(k);

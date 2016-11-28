@@ -2,8 +2,9 @@ package ru.spbstu.icc.kspt.graphicEditor.app.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,33 +16,53 @@ import java.io.IOException;
 public class MainApp extends Application {
 
     private Stage primaryStage;
+    private BorderPane rootLayout;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        initializeFXMLForm();
+
+        initRootLayout();
+
+        initPaintLayout();
     }
 
     /**
-     * Инициализация GUI формы
+     * Инициализация главного окна приложения.
      * @throws IOException ошибка в выполнении FXMLLoader.load()
      * @throws IllegalStateException неверный путь к файлу FXML
      */
-    private void initializeFXMLForm() {
+    private void initRootLayout(){
         try {
-            //Загрузка GUI формы
+            //Загрузка FXML файла
             FXMLLoader loader = new FXMLLoader(getClass().getResource
-                    ("/fxml/graphicEditor.fxml"));
-            Parent rootLayout = loader.load();
+                    ("/fxml/rootLayout.fxml"));
+            rootLayout = loader.load();
 
-            //Создание сцены и сообщение GUI формы в сцену
             primaryStage.setScene(new Scene(rootLayout));
             primaryStage.show();
-            primaryStage.setTitle("New picture");
-        } catch (IllegalStateException e){
-            System.err.println(this + ": wrong path to FXML");
-        } catch (IOException e) {
-            System.err.println(this + ": IOException in FXMLLoader.load()");
+            primaryStage.setTitle("New picture : Map Editor Java 8");
+
+        } catch (Exception e) {
+            System.err.println(this + ": " + e);
+        }
+    }
+
+    /**
+     * Инициализация окна рисования.
+     * @throws IOException ошибка в выполнении FXMLLoader.load()
+     * @throws IllegalStateException неверный путь к файлу FXML
+     */
+    private void initPaintLayout(){
+        try {
+            //Загрузка FXML файла
+            FXMLLoader loader = new FXMLLoader(getClass().getResource
+                    ("/fxml/paintLayout.fxml"));
+            AnchorPane paintLayout = loader.load();
+            rootLayout.setCenter(paintLayout);
+
+        } catch (Exception e) {
+            System.err.println(this + ": " + e);
         }
     }
 

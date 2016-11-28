@@ -5,7 +5,7 @@ package ru.spbstu.icc.kspt.graphicEditor.core.instruments;
  */
 public class Line{//} extends Figure {
 /*
-    private Controller controller;
+    private PaintController controller;
     private Line line;
 
 
@@ -14,7 +14,7 @@ public class Line{//} extends Figure {
 
 
 
-    public Line(Controller controller) {
+    public Line(PaintController controller) {
         this.controller = controller;
         line = this;
         initialize();

@@ -5,7 +5,7 @@ package ru.spbstu.icc.kspt.graphicEditor.core.instruments;
  */
 public class Rectangle{//extends Figure {
 /*
-    private Controller controller;
+    private PaintController controller;
     private Rectangle rectangle;
 
 
@@ -14,7 +14,7 @@ public class Rectangle{//extends Figure {
 
 
 
-    public Rectangle(Controller controller) {
+    public Rectangle(PaintController controller) {
         this.controller = controller;
         rectangle = this;
         initialize();

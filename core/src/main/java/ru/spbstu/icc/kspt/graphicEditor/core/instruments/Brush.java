@@ -13,7 +13,6 @@ public class Brush extends Instrument {
     private BrushElement be;
 
     public Brush(){}
-    public Brush(String butIcPath, String cursIcPath){ super(butIcPath, cursIcPath); }
 
     /**
      * Применение кисти

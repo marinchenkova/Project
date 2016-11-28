@@ -1,13 +1,9 @@
 group 'ru.spbstu.icc.kspt'
 version '1.0-SNAPSHOT'
 
-mainClassName = 'ru.spbstu.icc.kspt.graphicEditor.app.view'
-
 dependencies {
     compile "log4j:log4j:1.2.17"
     compile project(":core")
 }
 
-jar {
-    manifest.attributes('Main-Class': mainClassName);
-}
+
