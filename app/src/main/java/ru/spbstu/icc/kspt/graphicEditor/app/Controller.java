@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor;
+package ru.spbstu.icc.kspt.graphicEditor.app;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -6,6 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+
+import ru.spbstu.icc.kspt.graphicEditor.core.*;
+import ru.spbstu.icc.kspt.graphicEditor.core.instruments.*;
+import ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.*;
+import ru.spbstu.icc.kspt.graphicEditor.core.util.color.*;
+import ru.spbstu.icc.kspt.graphicEditor.core.util.mouse.*;
 
 /**
  * Класс {@link Controller} реализует связь GUI с логикой приложения.

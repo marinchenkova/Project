@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor.view;
+package ru.spbstu.icc.kspt.graphicEditor.app.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

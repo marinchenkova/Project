@@ -1,2 +1,4 @@
-rootProject.name = 'graphicEditor.core'
+rootProject.name = 'graphicEditor'
+
+include 'app', 'core'
 
