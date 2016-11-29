@@ -1,33 +1,34 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.instruments;
 
 import ru.spbstu.icc.kspt.graphicEditor.core.Instrument;
+import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.BrushElement;
-import ru.spbstu.icc.kspt.graphicEditor.core.util.mouse.MouseEvent;
-import ru.spbstu.icc.kspt.graphicEditor.core.util.mouse.MouseEvents;
+import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 /**
  * Кисть
  */
 public class Brush extends Instrument {
 
-    private BrushElement be;
-
     public Brush(){}
+
+    public Brush(Object buttonIcon, Object cursorIcon){
+        icon = buttonIcon;
+        cursor = cursorIcon;
+    }
+
 
     /**
      * Применение кисти
      */
     @Override
-    public void onAction(MouseEvent me, int lineWidth){
-        MouseEvents event = me.getEvent();
-        int x = me.getX();
-        int y = me.getY();
-        be = new BrushElement(x, y, lineWidth);
+    public void onAction(Point point, int diameter){
+        int x = point.getX();
+        int y = point.getY();
+        pe = new BrushElement(point, diameter);
 
-        if(event == MouseEvents.DRAGGED){
-            be.paintAtom(x, y);
+        if(isDragged){
+            pe.paintAtom(point);
         }
     }
-
-    public BrushElement getBrushElement(){ return be; }
 }

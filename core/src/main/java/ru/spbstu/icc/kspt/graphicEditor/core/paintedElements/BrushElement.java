@@ -1,6 +1,7 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.paintedElements;
 
 import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,36 +11,51 @@ import java.util.Collections;
  */
 public class BrushElement implements PaintedElement {
 
-    private int lineWidth;
-    private ArrayList<Integer> xList = new ArrayList<>();
-    private ArrayList<Integer> yList = new ArrayList<>();
+    private ArrayList<Point> points = new ArrayList<>();
+    private int diameter;
 
-    public BrushElement(int x, int y, int width){
-        lineWidth = width;
-        paintAtom(x, y);
+    private int xmax = 0;
+    private int ymax = 0;
+    private int xmin = 10000;
+    private int ymin = 10000;
+
+    public BrushElement(Point point, int d){
+        diameter = d;
+        paintAtom(point);
     }
 
     /**
      * Добавление новых координат к списку
      */
     @Override
-    public void paintAtom(int x, int y){
-        xList.add(x);
-        yList.add(y);
+    public void paintAtom(Point point){
+        points.add(point);
+        if(points.get(points.size() - 1).getX() > xmax) {
+            xmax = points.get(points.size() - 1).getX();
+        }
+        if(points.get(points.size() - 1).getY() > ymax) {
+            ymax = points.get(points.size() - 1).getY();
+        }
+        if(points.get(points.size() - 1).getX() < xmin) {
+            xmin = points.get(points.size() - 1).getX();
+        }
+        if(points.get(points.size() - 1).getY() < ymin) {
+            ymin = points.get(points.size() - 1).getY();
+        }
     }
 
     /**
      * Возврат списков координат: используеся при отрисовке этого элемента и при удалении одного из элементов
      * {@link PaintedElement}.
      */
-    public ArrayList<Integer> getXList(){ return xList; }
-    public ArrayList<Integer> getYList(){ return yList; }
+    public ArrayList<Point> getPoints(){ return points; }
+    public int getDiameter(){ return diameter; }
 
     @Override
     public boolean onPainted(int x, int y){
-        for (int i = 0; i < xList.size(); i++) {
-            if ((Math.abs(x - xList.get(i)) <= lineWidth / 2) &&
-                       (Math.abs(y - yList.get(i)) <= lineWidth / 2)){
+        for (int i = 0; i < points.size(); i++) {
+            if ((Math.abs(x - points.get(i).getX()) <= diameter / 2) &&
+                       (Math.abs(y - points.get(i).getY()) <= diameter / 2)){
                 return true;
             }
         }
@@ -48,50 +64,50 @@ public class BrushElement implements PaintedElement {
 
     @Override
     public void scale(double k){
-        int ax = xList.get(0);
-        int ay = yList.get(0);
-        ArrayList<Integer> newX = new ArrayList<>();
-        ArrayList<Integer> newY = new ArrayList<>();
+        int ax = points.get(0).getX();
+        int ay = points.get(0).getY();
 
-        newX.add(ax);
-        newY.add(ay);
+        Point first = new Point(ax, ay);
+        ArrayList<Point> scaledPoints = new ArrayList<>();
 
-        for(int i = 1; i < xList.size(); i++){
-            newX.add((int) ((xList.get(i) - ax) * k + ax));
-            newY.add((int) ((yList.get(i) - ay) * k + ay));
+        scaledPoints.add(first);
+
+        for(int i = 1; i < points.size(); i++){
+            Point next = new Point((int) ((points.get(i).getX() - ax) * k) + ax,
+                    (int) ((points.get(i).getY() - ay) * k) + ay);
+            scaledPoints.add(next);
         }
 
-        xList = newX;
-        yList = newY;
+        points = scaledPoints;
     }
 
     @Override
     public void translate(int dx, int dy){
-        ArrayList<Integer> newX = new ArrayList<>();
-        ArrayList<Integer> newY = new ArrayList<>();
+        ArrayList<Point> translatedPoints = new ArrayList<>();
 
-        for(int i = 0; i < xList.size(); i++){
-            newX.add(xList.get(i) + dx);
-            newY.add(yList.get(i) - dy);
+        for(int i = 0; i < points.size(); i++){
+            Point next = new Point(points.get(i).getX() + dx,
+                    points.get(i).getY() + dy);
+            translatedPoints.add(next);
         }
 
-        xList = newX;
-        yList = newY;
+        points = translatedPoints;
     }
 
     @Override
     public void rotate(double a){
-        int mx = (Collections.max(xList) + Collections.min(xList)) / 2;
-        int my = (Collections.max(yList) + Collections.min(yList)) / 2;
-        ArrayList<Integer> newX = new ArrayList<>();
-        ArrayList<Integer> newY = new ArrayList<>();
+        int mx = (int) (xmax - xmin) / 2;
+        int my = (int) (ymax - ymin) / 2;
+        ArrayList<Point> rotatedPoints = new ArrayList<>();
 
-        for(int i = 0; i < xList.size(); i++){
-            newX.add((int) ((xList.get(i) - mx) * Math.cos(a) - (yList.get(i) - my) * Math.sin(a)) + mx);
-            newY.add((int) ((xList.get(i) - mx) * Math.sin(a) + (yList.get(i) - my) * Math.cos(a)) + my);
+        for(int i = 0; i < points.size(); i++){
+            Point next = new Point((int) ((points.get(i).getX() - mx) * Math.cos(a) -
+                        (points.get(i).getY() - my) * Math.sin(a)) + mx,
+                (int) ((points.get(i).getX() - mx) * Math.sin(a) +
+                        (points.get(i).getY() - my) * Math.cos(a)) + my);
+            rotatedPoints.add(next);
         }
 
-        xList = newX;
-        yList = newY;
+        points = rotatedPoints;
     }
 }

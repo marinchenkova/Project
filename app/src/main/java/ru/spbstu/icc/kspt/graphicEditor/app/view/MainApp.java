@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import ru.spbstu.icc.kspt.graphicEditor.app.PaintController;
 
 import java.io.IOException;
 
@@ -60,6 +61,9 @@ public class MainApp extends Application {
                     ("/fxml/paintLayout.fxml"));
             AnchorPane paintLayout = loader.load();
             rootLayout.setCenter(paintLayout);
+
+            PaintController pController = loader.getController();
+            pController.setApplication(this);
 
         } catch (Exception e) {
             System.err.println(this + ": " + e);

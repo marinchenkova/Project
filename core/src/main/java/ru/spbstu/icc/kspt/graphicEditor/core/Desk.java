@@ -1,7 +1,5 @@
 package ru.spbstu.icc.kspt.graphicEditor.core;
 
-import ru.spbstu.icc.kspt.graphicEditor.core.util.color.Color;
-
 import java.util.ArrayList;
 
 /**
@@ -11,10 +9,10 @@ public class Desk {
 
     private int width;
     private int height;
-    private Color backgroundColor;
+    private Object backgroundColor;
     private ArrayList<PaintedElement> pe = new ArrayList<>();
 
-    public Desk (int w, int h, Color backCol){
+    public Desk (int w, int h, Object backCol){
         width = w;
         height = h;
         backgroundColor = backCol;
@@ -34,13 +32,15 @@ public class Desk {
         return null;
     }
 
-    public Color getBackgroundColor(){ return backgroundColor; }
+    public Object getBackgroundColor(){ return backgroundColor; }
 
     public int getWidth(){ return width; }
 
     public int getHeight(){ return height; }
 
-    public void setBackgroundColor(Color backCol){ backgroundColor = backCol; }
+    public ArrayList<PaintedElement> getPE(){ return pe; }
+
+    public void setBackgroundColor(Object backCol){ backgroundColor = backCol; }
 
     public void setWidth(int w){ width = w; }
 

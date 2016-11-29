@@ -9,6 +9,10 @@ import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
 public class Agent extends Instrument {
 
     public Agent(){}
+    public Agent(Object buttonIcon, Object cursorIcon){
+        icon = buttonIcon;
+        cursor = cursorIcon;
+    }
 
     public PaintedElement getScaled(PaintedElement element, double k){
         element.scale(k);

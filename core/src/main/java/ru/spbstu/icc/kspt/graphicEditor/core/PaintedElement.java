@@ -1,5 +1,7 @@
 package ru.spbstu.icc.kspt.graphicEditor.core;
 
+import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
+
 import java.util.ArrayList;
 
 /**
@@ -8,20 +10,14 @@ import java.util.ArrayList;
 public interface PaintedElement{
 
     /**
-     * Возврат нарисованного элемента для действий над ним
-     */
-    default PaintedElement getPaintedElement(){ return this; }
-
-    /**
      * Возврат списков координат
      */
-    ArrayList<Integer> getXList();
-    ArrayList<Integer> getYList();
+    ArrayList<Point> getPoints();
 
     /**
      * Нарисовать объект с заданной шириной линии
      */
-    void paintAtom(int x, int y);
+    void paintAtom(Point point);
 
     /**
      * Поиск нарисованного элемента в заданных координатах
