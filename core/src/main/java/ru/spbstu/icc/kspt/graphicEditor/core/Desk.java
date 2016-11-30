@@ -24,7 +24,7 @@ public class Desk {
     public PaintedElement findPainted(int x, int y) throws NullPointerException{
         if(pe.size() > 0){
             for (PaintedElement element: pe){
-                if (element.onPainted(x, y)){
+                if (element.findPoint(x, y)){
                     return element;
                 }
             }

@@ -10,25 +10,33 @@ import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
  */
 public class Brush extends Instrument {
 
-    public Brush(){}
-
     public Brush(Object buttonIcon, Object cursorIcon){
         icon = buttonIcon;
         cursor = cursorIcon;
     }
 
-
     /**
-     * Применение кисти
+     * Применение кисти: при вызове метода создается объект {@link BrushElement}.
+     * @param point добавляемая точка {@link Point}
+     * @param diameter диаметр точки {@link Point}
      */
     @Override
-    public void onAction(Point point, int diameter){
-        int x = point.getX();
-        int y = point.getY();
+    public void mousePressed(Point point, int diameter){
         pe = new BrushElement(point, diameter);
-
-        if(isDragged){
-            pe.paintAtom(point);
-        }
     }
+
+    /**
+     * Применение кисти: при вызове метода в существующий объект {@link BrushElement}
+     * добавляется точка
+     * @param point добавляемая точка
+     * @throws NullPointerException нельзя редактировать {@link PaintedElement}, т.к.
+     * он еще не создан
+     */
+    @Override
+    public void mouseDragged(Point point) throws NullPointerException{
+        if(pe == null) throw new NullPointerException("PaintedElement does not exist");
+        pe.addPoint(point);
+    }
+
+
 }

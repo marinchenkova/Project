@@ -41,7 +41,7 @@ public class Line{//} extends Figure {
 
 
     @Override
-    public void onAction(MouseEvent event, GraphicsContext graphicsContext){
+    public void mousePressed(MouseEvent event, GraphicsContext graphicsContext){
 
     }
     */

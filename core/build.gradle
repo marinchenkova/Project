@@ -1,3 +1,6 @@
 group 'ru.spbstu.icc.kspt'
 version '1.0-SNAPSHOT'
 
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

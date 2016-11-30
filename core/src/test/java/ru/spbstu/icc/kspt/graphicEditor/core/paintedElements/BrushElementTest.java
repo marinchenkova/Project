@@ -1,50 +1,48 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.paintedElements;
 
 import org.junit.Test;
+import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-/**
- * @author Marinchenko V. A.
- */
 public class BrushElementTest {
 
     private BrushElement be;
 
     @Test
-    public void onPainted() throws Exception {
-        be = new BrushElement(100, 100, 10);
+    public void findPoint() throws Exception {
+        be = new BrushElement(new Point(100, 100), 10);
         int c = 95 + (int)(Math.random() * ((10) + 1));
 
-        assertEquals(true, be.onPainted(c, c));
+        assertEquals(true, be.findPoint(c, c));
     }
 
     @Test
     public void scale() throws Exception {
-        be = new BrushElement(100, 100, 10);
-        be.paintAtom(200, 200);
-        be.scale(2);
-        int newX = be.getXList().get(1);
+        be = new BrushElement(new Point(100, 100), 10);
+        be.addPoint(new Point(200, 200));
+        be.scale(2, 2);
+        int newX = be.getPoints().get(1).getX();
 
         assertEquals(300, newX, 0);
     }
 
     @Test
     public void translate() throws Exception {
-        be = new BrushElement(100, 100, 10);
-        be.paintAtom(200, 200);
+        be = new BrushElement(new Point(100, 100), 10);
+        be.addPoint(new Point(200, 200));
         be.translate(50, 50);
-        int newX = be.getXList().get(1);
+        int newX = be.getPoints().get(1).getX();
 
         assertEquals(250, newX, 0);
     }
 
     @Test
     public void rotate() throws Exception {
-        be = new BrushElement(100, 100, 10);
-        be.paintAtom(200, 200);
+        be = new BrushElement(new Point(100, 100), 10);
+        be.addPoint(new Point(200, 200));
         be.rotate(Math.PI / 2);
-        int newX = be.getXList().get(1);
+        int newX = be.getPoints().get(1).getX();
 
         assertEquals(100, newX, 0);
     }

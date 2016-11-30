@@ -17,18 +17,19 @@ public interface PaintedElement{
     /**
      * Нарисовать объект с заданной шириной линии
      */
-    void paintAtom(Point point);
+    void addPoint(Point point);
 
     /**
      * Поиск нарисованного элемента в заданных координатах
      */
-    boolean onPainted(int x, int y);
+    boolean findPoint(int x, int y);
 
     /**
      * Операция масштабирования
-     * @param k коэффициент масштабирования
+     * @param kx коэффициент масштабирования
+     * @param ky
      */
-    void scale(double k);
+    void scale(double ky, double kx);
 
     /**
      * Операция сдвига

@@ -10,7 +10,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import ru.spbstu.icc.kspt.graphicEditor.app.view.MainApp;
@@ -136,7 +135,7 @@ public class PaintController {
     /**
      * Обработка нажатия кнопок
      */
-    public void onButton(){
+    private void onButton(){
         agentButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -182,14 +181,14 @@ public class PaintController {
         deskCanvas.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                onInstrumentAction(event);
+                activeInstrument.mousePressed(new Point((int) event.getX(), (int) event.getY()), lineWidth);
             }
         });
 
         deskCanvas.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                desk.addPaintedElement(activeInstrument.getPaintedElement());
+                desk.addPaintedElement(activeInstrument.mouseReleased());
             }
         });
 
@@ -203,18 +202,10 @@ public class PaintController {
         deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                onInstrumentAction(event);
+                activeInstrument.mouseDragged(new Point((int) event.getX(), (int) event.getY()));
                 setCoordsLabel(event);
             }
         });
-    }
-
-    private void onInstrumentAction(MouseEvent event){
-        if(event.getEventType() == MouseEvent.MOUSE_DRAGGED){
-            activeInstrument.setDragged(true);
-        } else activeInstrument.setDragged(false);
-
-        activeInstrument.onAction(new Point((int) event.getX(), (int) event.getY()), lineWidth);
     }
 
     private void setLineWidth(){
