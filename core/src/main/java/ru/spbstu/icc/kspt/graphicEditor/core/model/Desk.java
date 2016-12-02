@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor.core;
+package ru.spbstu.icc.kspt.graphicEditor.core.model;
 
 import java.util.ArrayList;
 
@@ -38,6 +38,8 @@ public class Desk {
 
     public int getHeight(){ return height; }
 
+    public String getSizeString(){ return width + ", " + height; }
+
     public ArrayList<PaintedElement> getPE(){ return pe; }
 
     public void setBackgroundColor(Object backCol){ backgroundColor = backCol; }
@@ -45,6 +47,11 @@ public class Desk {
     public void setWidth(int w){ width = w; }
 
     public void setHeight(int h){ height = h; }
+
+    public void setSize(int w, int h){
+        setWidth(w);
+        setHeight(h);
+    }
 
     public void addPaintedElement(PaintedElement element){ pe.add(element); }
 }

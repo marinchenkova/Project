@@ -42,7 +42,7 @@ public class MainApp extends Application {
 
             primaryStage.setScene(new Scene(rootLayout));
             primaryStage.show();
-            primaryStage.setTitle("New picture : Map Editor Java 8");
+            primaryStage.setTitle("New picture : Graphic Editor Java 8");
 
         } catch (Exception e) {
             System.err.println(this + ": " + e);

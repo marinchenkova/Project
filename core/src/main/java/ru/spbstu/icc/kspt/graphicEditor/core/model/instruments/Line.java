@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.instruments;
+package ru.spbstu.icc.kspt.graphicEditor.core.model.instruments;
 
 /**
  * Линия

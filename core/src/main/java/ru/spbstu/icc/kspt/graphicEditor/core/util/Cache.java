@@ -1,4 +1,6 @@
-package ru.spbstu.icc.kspt.graphicEditor.core;
+package ru.spbstu.icc.kspt.graphicEditor.core.util;
+
+import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
 
 import java.util.ArrayList;
 

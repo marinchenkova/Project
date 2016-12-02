@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor.core;
+package ru.spbstu.icc.kspt.graphicEditor.core.model;
 
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
@@ -8,11 +8,6 @@ import java.util.ArrayList;
  * Интерфейс для объектов, нарисованных одним действием инструмента рисования
  */
 public interface PaintedElement{
-
-    /**
-     * Возврат списков координат
-     */
-    ArrayList<Point> getPoints();
 
     /**
      * Нарисовать объект с заданной шириной линии
@@ -43,4 +38,10 @@ public interface PaintedElement{
      * @param a угол поворота в радианах
      */
     void rotate(double a);
+
+    /**
+     * Возврат ширины элемента
+     * @return ширина
+     */
+    int getWidth();
 }

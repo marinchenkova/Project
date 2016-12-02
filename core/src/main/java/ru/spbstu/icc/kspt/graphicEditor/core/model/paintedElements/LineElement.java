@@ -1,26 +1,25 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.paintedElements;
+package ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements;
 
-import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
-import java.util.ArrayList;
-
 /**
- * Объект, нарисованный одним действием инструмента кисть
+ * Объект, нарисованный одним действием инструмента Линия
  */
-public class BrushElement implements PaintedElement {
+public class LineElement implements PaintedElement {
 
-    private ArrayList<Point> points = new ArrayList<>();
-    private int diameter;
+    private Point start;
+    private Point end;
+    private int width;
 
     private int xmax = 0;
     private int ymax = 0;
     private int xmin = 10000;
     private int ymin = 10000;
 
-    public BrushElement(Point point, int d){
-        diameter = d;
-        addPoint(point);
+    public LineElement(Point point, int d){
+        width = d;
+        start = point;
     }
 
     /**
@@ -32,36 +31,15 @@ public class BrushElement implements PaintedElement {
      */
     @Override
     public void addPoint(Point point){
-        points.add(point);
-        extrem();
+        end = point;
+        xmin = start.getX() < end.getX() ? start.getX() : end.getX();
+        xmax = start.getX() > end.getX() ? start.getX() : end.getX();
+        ymin = start.getY() < end.getY() ? start.getY() : end.getY();
+        ymax = start.getY() > end.getY() ? start.getY() : end.getY();
     }
 
-    /**
-     * Поиск максимумов и минимумов для применения в методах преобразования координат.
-     * Вызывается всегда после метода {@link BrushElement#addPoint(Point)}.
-     */
-    private void extrem(){
-        if(points.get(points.size() - 1).getX() > xmax) {
-            xmax = points.get(points.size() - 1).getX();
-        }
-        if(points.get(points.size() - 1).getY() > ymax) {
-            ymax = points.get(points.size() - 1).getY();
-        }
-        if(points.get(points.size() - 1).getX() < xmin) {
-            xmin = points.get(points.size() - 1).getX();
-        }
-        if(points.get(points.size() - 1).getY() < ymin) {
-            ymin = points.get(points.size() - 1).getY();
-        }
-    }
-
-    /**
-     * Возврат списка {@link BrushElement#points}: используеся при отрисовке этого элемента
-     * и при удалении одного из элементов {@link BrushElement}.
-     */
-    public ArrayList<Point> getPoints(){ return points; }
-
-    public int getDiameter(){ return diameter; }
+    @Override
+    public int getWidth(){ return width; }
 
     /**
      * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
@@ -72,13 +50,12 @@ public class BrushElement implements PaintedElement {
      */
     @Override
     public boolean findPoint(int x, int y){
-        for (Point point : points) {
-            if ((Math.abs(x - point.getX()) <= diameter / 2) &&
-                    (Math.abs(y - point.getY()) <= diameter / 2)) {
-                return true;
-            }
-        }
-        return false;
+        double k = (ymax - ymin) / (xmax - xmin);
+        double w = width / 2;
+        double r = w / Math.cos(Math.atan(k));
+        return (x >= xmin - w) && (x <= xmax + w) &&
+               (y >= ymin - w) && (y <= ymax + w) &&
+               (y <= k * x + r) && (y >= k * x - r);
     }
 
     /**
@@ -88,6 +65,7 @@ public class BrushElement implements PaintedElement {
      */
     @Override
     public void scale(double kx, double ky){
+        /*
         int ax = points.get(0).getX();
         int ay = points.get(0).getY();
 
@@ -101,6 +79,7 @@ public class BrushElement implements PaintedElement {
         }
 
         points = scaledPoints;
+        */
     }
 
     /**
@@ -110,6 +89,7 @@ public class BrushElement implements PaintedElement {
      */
     @Override
     public void translate(int dx, int dy){
+        /*
         ArrayList<Point> translatedPoints = new ArrayList<>();
 
         for (Point p : points) {
@@ -117,6 +97,7 @@ public class BrushElement implements PaintedElement {
         }
 
         points = translatedPoints;
+        */
     }
 
     /**
@@ -125,6 +106,7 @@ public class BrushElement implements PaintedElement {
      */
     @Override
     public void rotate(double a){
+        /*
         int mx = (xmax + xmin) / 2;
         int my = (ymax + ymin) / 2;
 
@@ -137,5 +119,6 @@ public class BrushElement implements PaintedElement {
         }
 
         points = rotatedPoints;
+        */
     }
 }

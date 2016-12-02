@@ -1,7 +1,5 @@
 package ru.spbstu.icc.kspt.graphicEditor.app;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.*;
@@ -13,9 +11,10 @@ import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import ru.spbstu.icc.kspt.graphicEditor.app.view.MainApp;
-import ru.spbstu.icc.kspt.graphicEditor.core.Desk;
-import ru.spbstu.icc.kspt.graphicEditor.core.Instrument;
-import ru.spbstu.icc.kspt.graphicEditor.core.instruments.*;
+import ru.spbstu.icc.kspt.graphicEditor.core.util.Cache;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.Desk;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.Instrument;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.*;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 /**
@@ -32,6 +31,7 @@ public class PaintController {
     private Instrument brush;
 
     private Desk desk;
+    private Cache cache;
 
     //TODO список: карта курсоров
     private Cursor agentCursor;
@@ -67,20 +67,13 @@ public class PaintController {
     public PaintController() {}
 
     /**
-     * Инициализация
+     * Инициализация средств рисования
      */
     @FXML
     public void initialize() throws Exception {
         initInstruments();
-        activeInstrument = brush;
-
         initDesk();
-
         initInfo();
-
-        onButton();
-
-        paint();
     }
 
     /**
@@ -110,12 +103,15 @@ public class PaintController {
         } catch (IllegalArgumentException e){
             System.err.println(this + ": " + e);
         }
+
+        //Инструмент по умолчанию
+        activeInstrument = brush;
     }
 
     /**
      * Инициализация доски: размеры, цвет фона
      */
-    private void initDesk(){
+    public void initDesk(){
         deskGC = deskCanvas.getGraphicsContext2D();
         desk = new Desk((int) deskCanvas.getWidth(), (int) deskCanvas.getHeight(), Color.WHITE);
 
@@ -123,8 +119,9 @@ public class PaintController {
         deskGC.fillRect(0, 0, desk.getWidth(), desk.getHeight());
     }
 
-    private void initInfo() {
-        setLineWidth();
+    public void initInfo() {
+        lineWidth = Integer.parseInt(widthSetter.getText());
+        coordsLabel.setText(desk.getSizeString());
 
         coordsIcon.setImage(new Image("/icons/coordsIcon.png"));
         sizeIcon.setImage(new Image("/icons/sizeIcon.png"));
@@ -135,90 +132,66 @@ public class PaintController {
     /**
      * Обработка нажатия кнопок
      */
-    private void onButton(){
-        agentButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                activeInstrument = agent;
-                instrumentImage.setImage((Image) activeInstrument.getIcon());
-            }
+    public void onButton(){
+        agentButton.setOnAction(event -> {
+            activeInstrument = agent;
+            instrumentImage.setImage((Image) activeInstrument.getIcon());
         });
 
-        brushButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                activeInstrument = brush;
-                instrumentImage.setImage((Image) activeInstrument.getIcon());
-            }
+        brushButton.setOnAction(event -> {
+            activeInstrument = brush;
+            instrumentImage.setImage((Image) activeInstrument.getIcon());
         });
     }
 
     /**
      * Обработка событий мыши
      */
-    private void paint(){
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setCoordsLabel(event);
-            }
+    public void paint(){
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> setCoordsLabelText(event));
+
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_EXITED, event -> setCoordsLabelText(null));
+
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, event -> setCoordsLabelText(event));
+
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            activeInstrument.mousePressed(new Point((int) event.getX(), (int) event.getY()), lineWidth);
         });
 
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setCoordsLabel(null);
-            }
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
+            desk.addPaintedElement(activeInstrument.mouseReleased());
         });
 
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setCoordsLabel(event);
-            }
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
         });
 
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                activeInstrument.mousePressed(new Point((int) event.getX(), (int) event.getY()), lineWidth);
-            }
-        });
-
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                desk.addPaintedElement(activeInstrument.mouseReleased());
-            }
-        });
-
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-            }
-        });
-
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                activeInstrument.mouseDragged(new Point((int) event.getX(), (int) event.getY()));
-                setCoordsLabel(event);
-            }
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+            activeInstrument.mouseDragged(new Point((int) event.getX(), (int) event.getY()));
+            setCoordsLabelText(event);
         });
     }
 
-    private void setLineWidth(){
-        lineWidth = Integer.parseInt(widthSetter.getText());
+    public void setLineWidth(Integer width){
+        widthSetter.setText(width.toString());
     }
 
-    private void setCoordsLabel(MouseEvent event){
+    public void setSize(int w, int h){
+        desk.setSize(w, h);
+
+        deskCanvas.setWidth(w);
+        deskCanvas.setHeight(h);
+
+        sizeLabel.setText(desk.getSizeString());
+    }
+
+    public void setCoordsLabelText(MouseEvent event){
         if(event != null){
             coordsLabel.setText((int) event.getX() + ", " + (int) event.getY());
         } else coordsLabel.setText("");
     }
 
-    private void setButtonIcon(Button button, Image image){
+    public void setButtonIcon(Button button, Image image){
         button.setPadding(new Insets(0, 0, 0, 0));
         button.setGraphic(new ImageView(image));
     }

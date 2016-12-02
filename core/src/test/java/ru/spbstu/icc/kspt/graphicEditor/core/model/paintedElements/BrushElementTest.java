@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.paintedElements;
+package ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements;
 
 import org.junit.Test;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
@@ -12,7 +12,7 @@ public class BrushElementTest {
     @Test
     public void findPoint() throws Exception {
         be = new BrushElement(new Point(100, 100), 10);
-        int c = 95 + (int)(Math.random() * ((10) + 1));
+        int c = 95 + (int)(Math.random() * 11);
 
         assertEquals(true, be.findPoint(c, c));
     }

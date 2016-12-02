@@ -1,8 +1,8 @@
-package ru.spbstu.icc.kspt.graphicEditor.core.instruments;
+package ru.spbstu.icc.kspt.graphicEditor.core.model.instruments;
 
-import ru.spbstu.icc.kspt.graphicEditor.core.Instrument;
-import ru.spbstu.icc.kspt.graphicEditor.core.PaintedElement;
-import ru.spbstu.icc.kspt.graphicEditor.core.paintedElements.BrushElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.Instrument;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.BrushElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 /**

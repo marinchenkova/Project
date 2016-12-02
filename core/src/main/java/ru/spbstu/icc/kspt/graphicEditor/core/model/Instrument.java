@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor.core;
+package ru.spbstu.icc.kspt.graphicEditor.core.model;
 
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
