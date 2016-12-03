@@ -26,17 +26,35 @@ public class LineElementTest {
 
     @Test
     public void scale() throws Exception {
+        le = new LineElement(new Point(100, 100), 10);
+        le.addPoint(new Point(200, 200));
 
+        le.scale(2, 2);
+        int newX = le.getEnd().getX();
+
+        assertEquals(300, newX, 0);
     }
 
     @Test
     public void translate() throws Exception {
+        le = new LineElement(new Point(100, 100), 10);
+        le.addPoint(new Point(200, 200));
 
+        le.translate(50, 50);
+        int newX = le.getEnd().getX();
+
+        assertEquals(250, newX, 0);
     }
 
     @Test
     public void rotate() throws Exception {
+        le = new LineElement(new Point(100, 100), 10);
+        le.addPoint(new Point(200, 200));
 
+        le.rotate(Math.PI / 2);
+        int newX = le.getEnd().getX();
+
+        assertEquals(100, newX, 0);
     }
 
 }

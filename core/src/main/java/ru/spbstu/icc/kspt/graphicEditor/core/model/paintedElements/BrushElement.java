@@ -13,10 +13,8 @@ public class BrushElement implements PaintedElement {
     private ArrayList<Point> points = new ArrayList<>();
     private int width;
 
-    private int xmax = 0;
-    private int ymax = 0;
-    private int xmin = 10000;
-    private int ymin = 10000;
+    private Point center;
+    private boolean isClosed = false;
 
     public BrushElement(Point point, int d){
         width = d;
@@ -32,27 +30,32 @@ public class BrushElement implements PaintedElement {
      */
     @Override
     public void addPoint(Point point){
-        points.add(point);
-        extrem();
+        if(!isClosed) points.add(point);
     }
 
     /**
-     * Поиск максимумов и минимумов для применения в методах преобразования координат.
-     * Вызывается всегда после метода {@link BrushElement#addPoint(Point)}.
+     * Запрет добавления точек методом {@link BrushElement#addPoint(Point)}.
      */
-    private void extrem(){
-        if(points.get(points.size() - 1).getX() > xmax) {
-            xmax = points.get(points.size() - 1).getX();
+    @Override
+    public void close(){
+        isClosed = true;
+        setCenter();
+    }
+
+    /**
+     * Поиск геометрического центра для применения в методах преобразования координат.
+     * Вызывается всегда после методов изменения {@link BrushElement}.
+     */
+    private void setCenter(){
+        double x = 0;
+        double y = 0;
+
+        for (int i = 0; i < points.size(); i++){
+            x = (x + points.get(i).getX()) / (i + 1);
+            y = (y + points.get(i).getY()) / (i + 1);
         }
-        if(points.get(points.size() - 1).getY() > ymax) {
-            ymax = points.get(points.size() - 1).getY();
-        }
-        if(points.get(points.size() - 1).getX() < xmin) {
-            xmin = points.get(points.size() - 1).getX();
-        }
-        if(points.get(points.size() - 1).getY() < ymin) {
-            ymin = points.get(points.size() - 1).getY();
-        }
+
+        center = new Point((int) x, (int) y);
     }
 
     /**
@@ -63,12 +66,48 @@ public class BrushElement implements PaintedElement {
 
     @Override
     public int getWidth(){ return width; }
+    public Point getCenter(){ return center; }
+
+    /**
+     * Возвращает мастшабированный объект {@link BrushElement},  не изменяя его.
+     * @param kx коэффициент по X
+     * @param ky коэффициент по Y
+     * @return мастшабированный объект {@link BrushElement}
+     */
+    public BrushElement getScaled(double kx, double ky){
+        BrushElement b = this;
+        b.scale(kx, ky);
+        return b;
+    }
+
+    /**
+     * Возвращает перемещенный объект {@link BrushElement},  не изменяя его.
+     * @param dx пермещение по X
+     * @param dy пермещение по Y
+     * @return перемещенный объект {@link BrushElement}
+     */
+    public BrushElement getTranslated(int dx, int dy){
+        BrushElement b = this;
+        b.translate(dx, dy);
+        return b;
+    }
+
+    /**
+     * Возвращает повернутый объект {@link BrushElement},  не изменяя его.
+     * @param a угол в радианах
+     * @return повернутый объект {@link BrushElement}
+     */
+    public BrushElement getRotated(double a){
+        BrushElement b = this;
+        b.rotate(a);
+        return b;
+    }
 
     /**
      * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
      * каждого инструмента.
-     * @param x x
-     * @param y y
+     * @param x координата x
+     * @param y координата y
      * @return true - если точка {@link Point} найдена.
      */
     @Override
@@ -102,6 +141,7 @@ public class BrushElement implements PaintedElement {
         }
 
         points = scaledPoints;
+        setCenter();
     }
 
     /**
@@ -118,6 +158,7 @@ public class BrushElement implements PaintedElement {
         }
 
         points = translatedPoints;
+        setCenter();
     }
 
     /**
@@ -126,10 +167,9 @@ public class BrushElement implements PaintedElement {
      */
     @Override
     public void rotate(double a){
-        int mx = (xmax + xmin) / 2;
-        int my = (ymax + ymin) / 2;
-
         ArrayList<Point> rotatedPoints = new ArrayList<>();
+        int mx = center.getX();
+        int my = center.getY();
 
         for (Point p : points) {
             int x = (int) ((p.getX() - mx) * Math.cos(a) - (p.getY() - my) * Math.sin(a)) + mx;
@@ -138,5 +178,6 @@ public class BrushElement implements PaintedElement {
         }
 
         points = rotatedPoints;
+        setCenter();
     }
 }

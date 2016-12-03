@@ -5,6 +5,7 @@ import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 import static org.junit.Assert.assertEquals;
 
+
 public class BrushElementTest {
 
     private BrushElement be;
@@ -12,6 +13,8 @@ public class BrushElementTest {
     @Test
     public void findPoint() throws Exception {
         be = new BrushElement(new Point(100, 100), 10);
+        be.close();
+
         int c = 95 + (int)(Math.random() * 11);
 
         assertEquals(true, be.findPoint(c, c));
@@ -21,6 +24,8 @@ public class BrushElementTest {
     public void scale() throws Exception {
         be = new BrushElement(new Point(100, 100), 10);
         be.addPoint(new Point(200, 200));
+        be.close();
+
         be.scale(2, 2);
         int newX = be.getPoints().get(1).getX();
 
@@ -31,6 +36,8 @@ public class BrushElementTest {
     public void translate() throws Exception {
         be = new BrushElement(new Point(100, 100), 10);
         be.addPoint(new Point(200, 200));
+        be.close();
+
         be.translate(50, 50);
         int newX = be.getPoints().get(1).getX();
 
@@ -41,6 +48,8 @@ public class BrushElementTest {
     public void rotate() throws Exception {
         be = new BrushElement(new Point(100, 100), 10);
         be.addPoint(new Point(200, 200));
+        be.close();
+
         be.rotate(Math.PI / 2);
         int newX = be.getPoints().get(1).getX();
 

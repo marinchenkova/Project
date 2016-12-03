@@ -1,18 +1,23 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model;
 
+import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.BrushElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
-import java.util.ArrayList;
 
 /**
- * Интерфейс для объектов, нарисованных одним действием инструмента рисования
+ * Интерфейс для объектов, нарисованных одним действием инструмента рисования.
  */
 public interface PaintedElement{
 
     /**
-     * Нарисовать объект с заданной шириной линии
+     * Нарисовать объект с заданной шириной линии.
      */
     void addPoint(Point point);
+
+    /**
+     * Запрет добавления точек.
+     */
+    void close();
 
     /**
      * Поиск нарисованного элемента в заданных координатах
@@ -44,4 +49,27 @@ public interface PaintedElement{
      * @return ширина
      */
     int getWidth();
+
+    /**
+     * Возвращает мастшабированный объект {@link PaintedElement},  не изменяя его.
+     * @param kx коэффициент по X
+     * @param ky коэффициент по Y
+     * @return мастшабированный объект {@link PaintedElement}
+     */
+    PaintedElement getScaled(double kx, double ky);
+
+    /**
+     * Возвращает перемещенный объект {@link PaintedElement},  не изменяя его.
+     * @param dx пермещение по X
+     * @param dy пермещение по Y
+     * @return перемещенный объект {@link PaintedElement}
+     */
+    PaintedElement getTranslated(int dx, int dy);
+
+    /**
+     * Возвращает повернутый объект {@link PaintedElement},  не изменяя его.
+     * @param a угол в радианах
+     * @return повернутый объект {@link PaintedElement}
+     */
+    PaintedElement getRotated(double a);
 }

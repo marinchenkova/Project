@@ -12,10 +12,8 @@ public class LineElement implements PaintedElement {
     private Point end;
     private int width;
 
-    private int xmax = 0;
-    private int ymax = 0;
-    private int xmin = 10000;
-    private int ymin = 10000;
+    private Point center;
+    private boolean isClosed = false;
 
     public LineElement(Point point, int d){
         width = d;
@@ -31,15 +29,68 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void addPoint(Point point){
-        end = point;
-        xmin = start.getX() < end.getX() ? start.getX() : end.getX();
-        xmax = start.getX() > end.getX() ? start.getX() : end.getX();
-        ymin = start.getY() < end.getY() ? start.getY() : end.getY();
-        ymax = start.getY() > end.getY() ? start.getY() : end.getY();
+        if(!isClosed) end = point;
+        close();
+    }
+
+    /**
+     * Запрет добавления точек методом {@link LineElement#addPoint(Point)}.
+     */
+    @Override
+    public void close(){
+        isClosed = true;
+        setCenter();
     }
 
     @Override
     public int getWidth(){ return width; }
+    public Point getStart(){ return start; }
+    public Point getEnd(){ return end; }
+    public Point getCenter(){ return center; }
+
+    /**
+     * Возвращает мастшабированный объект {@link LineElement},  не изменяя его.
+     * @param kx коэффициент по X
+     * @param ky коэффициент по Y
+     * @return мастшабированный объект {@link LineElement}
+     */
+    public LineElement getScaled(double kx, double ky){
+        LineElement b = this;
+        b.scale(kx, ky);
+        return b;
+    }
+
+    /**
+     * Возвращает перемещенный объект {@link LineElement},  не изменяя его.
+     * @param dx пермещение по X
+     * @param dy пермещение по Y
+     * @return перемещенный объект {@link LineElement}
+     */
+    public LineElement getTranslated(int dx, int dy){
+        LineElement b = this;
+        b.translate(dx, dy);
+        return b;
+    }
+
+    /**
+     * Возвращает повернутый объект {@link LineElement},  не изменяя его.
+     * @param a угол в радианах
+     * @return повернутый объект {@link LineElement}
+     */
+    public LineElement getRotated(double a){
+        LineElement b = this;
+        b.rotate(a);
+        return b;
+    }
+
+    /**
+     * Поиск геометрического центра для применения в методах преобразования координат.
+     * Вызывается всегда после методов изменения {@link BrushElement}.
+     */
+    private void setCenter(){
+        center = new Point(((start.getX() + end.getX()) / 2),
+                           ((start.getY() + end.getY()) / 2));
+    }
 
     /**
      * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
@@ -50,54 +101,37 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public boolean findPoint(int x, int y){
-        double k = (ymax - ymin) / (xmax - xmin);
+        double k = (end.getY() - start.getY()) / (end.getX() - start.getX());
         double w = width / 2;
         double r = w / Math.cos(Math.atan(k));
-        return (x >= xmin - w) && (x <= xmax + w) &&
-               (y >= ymin - w) && (y <= ymax + w) &&
+
+        return (x >= Math.min(end.getX(), start.getX()) - w) &&
+               (x <= Math.max(end.getX(), start.getX()) + w) &&
+               (y >= Math.min(end.getY(), start.getY()) - w) &&
+               (y <= Math.max(end.getY(), start.getY()) + w) &&
                (y <= k * x + r) && (y >= k * x - r);
     }
 
     /**
-     * Масштабирование объекта {@link BrushElement}.
+     * Масштабирование объекта {@link LineElement}.
      * @param kx коэффициент масштабирования по оси X
      * @param ky коэффициент масштабирования по оси Y
      */
     @Override
     public void scale(double kx, double ky){
-        /*
-        int ax = points.get(0).getX();
-        int ay = points.get(0).getY();
-
-        ArrayList<Point> scaledPoints = new ArrayList<>();
-        scaledPoints.add(new Point(ax, ay));
-
-        for(int i = 1; i < points.size(); i++){
-            int x = (int) ((points.get(i).getX() - ax) * kx + ax);
-            int y = (int) ((points.get(i).getY() - ay) * ky + ay);
-            scaledPoints.add(new Point(x, y));
-        }
-
-        points = scaledPoints;
-        */
+        end = new Point((int) ((end.getX() - start.getX()) * kx + start.getX()),
+                        (int) ((end.getY() - start.getY()) * ky + start.getY()));
     }
 
     /**
-     * Перемещение объекта {@link BrushElement}.
+     * Перемещение объекта {@link LineElement}.
      * @param dx сдвиг по x
      * @param dy сдвиг по y
      */
     @Override
     public void translate(int dx, int dy){
-        /*
-        ArrayList<Point> translatedPoints = new ArrayList<>();
-
-        for (Point p : points) {
-            translatedPoints.add(new Point(p.getX() + dx,p.getY() + dy));
-        }
-
-        points = translatedPoints;
-        */
+        start = new Point(start.getX() + dx, start.getY() + dy);
+        end = new Point(end.getX() + dx, end.getY() + dy);
     }
 
     /**
@@ -106,19 +140,15 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void rotate(double a){
-        /*
-        int mx = (xmax + xmin) / 2;
-        int my = (ymax + ymin) / 2;
+        int mx = center.getX();
+        int my = center.getY();
 
-        ArrayList<Point> rotatedPoints = new ArrayList<>();
+        int x = (int) ((start.getX() - mx) * Math.cos(a) - (start.getY() - my) * Math.sin(a)) + mx;
+        int y = (int) ((start.getX() - mx) * Math.sin(a) + (start.getY() - my) * Math.cos(a)) + my;
+        start = new Point(x, y);
 
-        for (Point p : points) {
-            int x = (int) ((p.getX() - mx) * Math.cos(a) - (p.getY() - my) * Math.sin(a)) + mx;
-            int y = (int) ((p.getX() - mx) * Math.sin(a) + (p.getY() - my) * Math.cos(a)) + my;
-            rotatedPoints.add(new Point(x, y));
-        }
-
-        points = rotatedPoints;
-        */
+        x = (int) ((end.getX() - mx) * Math.cos(a) - (end.getY() - my) * Math.sin(a)) + mx;
+        y = (int) ((end.getX() - mx) * Math.sin(a) + (end.getY() - my) * Math.cos(a)) + my;
+        end = new Point(x, y);
     }
 }
