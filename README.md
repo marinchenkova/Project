@@ -1,4 +1,5 @@
 ﻿[![Build Status](https://travis-ci.org/marinchenkova/Project.svg?branch=master)](https://travis-ci.org/marinchenkova/Project)
+[![codecov](https://codecov.io/gh/marinchenkova/Project/branch/master/graph/badge.svg)](https://codecov.io/gh/marinchenkova/Project)
 
 # Графический редактор на Java + проект Arduino
 
