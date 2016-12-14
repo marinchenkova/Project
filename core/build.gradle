@@ -1,6 +1,17 @@
 group 'ru.spbstu.icc.kspt'
 version '1.0-SNAPSHOT'
 
+apply plugin: 'jacoco'
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+
+jacocoTestReport { 
+	reports { 
+		xml.enabled = true 
+		html.enabled = true 
+	} 
+} 
+
+check.dependsOn jacocoTestReport

@@ -1,6 +1,19 @@
 group 'ru.spbstu.icc.kspt'
 
 apply plugin: 'idea'
+apply plugin: 'findbugs' 
+
+tasks.withType(FindBugs) { 
+	reports { 
+	xml.enabled true 
+	} 
+} 
+
+findbugs { 
+	effort = "max" 
+	reportLevel = "low" 
+	ignoreFailures = true 
+}
 
 subprojects {
     apply plugin: 'java'

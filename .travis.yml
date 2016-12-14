@@ -1,6 +1,20 @@
-language: java
+language: generic
 
 sudo: required
 
-jdk:
-  - oraclejdk8
+dist: trusty
+
+services:
+  - docker
+
+before_install:
+  - sudo pip install --user codecov
+
+install:
+  - docker pull lamtev/java
+
+script:
+  - docker run -v $TRAVIS_BUILD_DIR:/graphicEditor lamtev/java /bin/bash -c " cd graphicEditor && cloc * && gradle build "
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
