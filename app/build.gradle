@@ -6,4 +6,14 @@ dependencies {
     compile project(":core")
 }
 
+jar { 
+	manifest { 
+		attributes( 
+			"Main-Class": "ru.spbstu.icc.kspt.graphicEditor.app.view.MainApp" 
+		) 
+	} 
 
+	from { 
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } 
+	} 
+}

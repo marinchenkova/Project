@@ -1,4 +1,6 @@
-﻿# Графический редактор на Java + проект Arduino
+﻿[![Build Status](https://travis-ci.org/marinchenkova/Project.svg?branch=master)](https://travis-ci.org/marinchenkova/Project)
+
+# Графический редактор на Java + проект Arduino
 
 ###Текущее состояние проекта:
 - при выборе инструмента изменяется курсор и иконка на панели инструментов
