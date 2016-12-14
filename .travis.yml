@@ -20,14 +20,14 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 before_deploy: 
-- sudo mv ${TRAVIS_BUILD_DIR}/app/build/libs/app-1.0-SNAPSHOT.jar ${TRAVIS_BUILD_DIR}/app/build/libs/GraphicEditor.jar 
-- sudo chmod 777 ${TRAVIS_BUILD_DIR}/app/build/libs/GraphicEditor.jar 
+  - sudo mv ${TRAVIS_BUILD_DIR}/app/build/libs/app-1.0-SNAPSHOT.jar ${TRAVIS_BUILD_DIR}/app/build/libs/GraphicEditor.jar 
+  - sudo chmod 777 ${TRAVIS_BUILD_DIR}/app/build/libs/GraphicEditor.jar 
 
 deploy: 
-provider: releases 
-api_key: "$GITHUB_DEPLOY_TOKEN" 
-file: 
-- ${TRAVIS_BUILD_DIR}/app/build/libs/GraphicEditor.jar 
-skip_cleanup: true 
-on: 
-tags: true
+  provider: releases 
+  api_key: "$GITHUB_DEPLOY_TOKEN" 
+  file: 
+    - ${TRAVIS_BUILD_DIR}/app/build/libs/GraphicEditor.jar 
+  skip_cleanup: true 
+  on: 
+    tags: true
