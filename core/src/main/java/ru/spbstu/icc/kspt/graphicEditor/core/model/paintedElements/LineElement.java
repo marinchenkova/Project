@@ -64,6 +64,9 @@ public class LineElement implements PaintedElement {
      */
     public ArrayList<Point> getPoints(){ return new ArrayList<>(); }
 
+    public Point getStart(){ return start; }
+    public Point getEnd(){ return end; }
+
     /**
      * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
      * каждого инструмента.

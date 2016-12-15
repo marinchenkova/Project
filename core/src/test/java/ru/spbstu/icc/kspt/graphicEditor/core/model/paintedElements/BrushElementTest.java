@@ -17,7 +17,7 @@ public class BrushElementTest {
 
         int c = 95 + (int)(Math.random() * 11);
 
-        assertEquals(true, be.findPoint(c, c));
+        assertEquals(true, be.findPoint(new Point(c, c)));
     }
 
     @Test
@@ -27,9 +27,9 @@ public class BrushElementTest {
         be.close();
 
         be.scale(2, 2);
-        int newX = be.getPoints().get(1).getX();
+        double newX = be.getPoints().get(1).getX();
 
-        assertEquals(300, newX, 0);
+        assertEquals(250, newX, 0);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class BrushElementTest {
         be.close();
 
         be.translate(50, 50);
-        int newX = be.getPoints().get(1).getX();
+        double newX = be.getPoints().get(1).getX();
 
         assertEquals(250, newX, 0);
     }
@@ -51,7 +51,7 @@ public class BrushElementTest {
         be.close();
 
         be.rotate(Math.PI / 2);
-        int newX = be.getPoints().get(1).getX();
+        double newX = be.getPoints().get(1).getX();
 
         assertEquals(100, newX, 0);
     }

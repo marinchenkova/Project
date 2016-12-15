@@ -21,7 +21,7 @@ public class LineElementTest {
         int x = 95 + (int)(Math.random() * 111);
         int y = x + (int)(Math.random() * 8);
 
-        assertEquals(true, le.findPoint(x, y));
+        assertEquals(true, le.findPoint(new Point(x, y)));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class LineElementTest {
         le.addPoint(new Point(200, 200));
 
         le.scale(2, 2);
-        int newX = le.getEnd().getX();
+        double newX = le.getEnd().getX();
 
         assertEquals(300, newX, 0);
     }
@@ -41,7 +41,7 @@ public class LineElementTest {
         le.addPoint(new Point(200, 200));
 
         le.translate(50, 50);
-        int newX = le.getEnd().getX();
+        double newX = le.getEnd().getX();
 
         assertEquals(250, newX, 0);
     }
@@ -52,7 +52,7 @@ public class LineElementTest {
         le.addPoint(new Point(200, 200));
 
         le.rotate(Math.PI / 2);
-        int newX = le.getEnd().getX();
+        double newX = le.getEnd().getX();
 
         assertEquals(100, newX, 0);
     }
