@@ -1,5 +1,7 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model;
 
+import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +12,7 @@ public class Desk {
     private int width;
     private int height;
     private Object backgroundColor;
-    private ArrayList<PaintedElement> pe = new ArrayList<>();
+    private ArrayList<PaintedElement> pEls = new ArrayList<>();
 
     public Desk (int w, int h, Object backCol){
         width = w;
@@ -21,13 +23,18 @@ public class Desk {
     /**
      * Поиск номера нарисованного элемента позаданным координатам
      */
-    public PaintedElement findPainted(int x, int y) throws NullPointerException{
-        if(pe.size() > 0){
-            for (PaintedElement element: pe){
-                if (element.findPoint(x, y)){
-                    return element;
+    public PaintedElement findPainted(Point point){
+        try{
+            if(pEls.size() > 0){
+                for (PaintedElement element: pEls){
+                    if (element.findPoint(point)){
+                        pEls.remove(element);
+                        return element;
+                    }
                 }
             }
+        } catch (NullPointerException e){
+            System.err.println("Desk.findPainted() catch " + e);
         }
         return null;
     }
@@ -40,7 +47,7 @@ public class Desk {
 
     public String getSizeString(){ return width + ", " + height; }
 
-    public ArrayList<PaintedElement> getPE(){ return pe; }
+    public ArrayList<PaintedElement> getPE() throws NullPointerException{ return pEls; }
 
     public void setBackgroundColor(Object backCol){ backgroundColor = backCol; }
 
@@ -53,6 +60,6 @@ public class Desk {
         setHeight(h);
     }
 
-    public void addPaintedElement(PaintedElement element){ pe.add(element); }
+    public void addElement(PaintedElement element){ pEls.add(element); }
 }
 

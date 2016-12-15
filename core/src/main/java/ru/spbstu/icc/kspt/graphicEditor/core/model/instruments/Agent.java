@@ -7,21 +7,29 @@ import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 /**
  * Инструмент для выполнения действий над объектами {@link PaintedElement}
  */
-public class Agent extends Instrument {
+public class Agent {
+
+    private Object icon;
+    private Object cursor;
 
     public Agent(Object buttonIcon, Object cursorIcon){
         icon = buttonIcon;
         cursor = cursorIcon;
     }
 
-    @Override
-    public void mousePressed(Point point, int diameter){
-        //TODO
+    public void scale(PaintedElement pe, double kx, double ky){
+        pe.scale(kx, ky);
     }
 
-
-    @Override
-    public void mouseDragged(Point point) throws NullPointerException{
-        //TODO
+    public void translate(PaintedElement pe, int dx, int dy){
+        pe.translate(dx, dy);
     }
+
+    public void rotate(PaintedElement pe, double a){
+        pe.rotate(a);
+    }
+
+    public Object getIcon() throws NullPointerException{ return icon; }
+
+    public Object getCursor() throws NullPointerException{ return cursor; }
 }

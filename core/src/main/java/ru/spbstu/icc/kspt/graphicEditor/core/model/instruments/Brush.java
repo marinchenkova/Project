@@ -18,11 +18,11 @@ public class Brush extends Instrument {
     /**
      * Применение кисти: при вызове метода создается объект {@link BrushElement}.
      * @param point добавляемая точка {@link Point}
-     * @param diameter диаметр точки {@link Point}
+     * @param width диаметр точки {@link Point}
      */
     @Override
-    public void mousePressed(Point point, int diameter){
-        pe = new BrushElement(point, diameter);
+    public void onPressed(Point point, double width){
+        pe = new BrushElement(point, width);
     }
 
     /**
@@ -33,7 +33,7 @@ public class Brush extends Instrument {
      * он еще не создан
      */
     @Override
-    public void mouseDragged(Point point) throws NullPointerException{
+    public void onDragged(Point point) throws NullPointerException{
         if(pe == null) throw new NullPointerException("PaintedElement does not exist");
         pe.addPoint(point);
     }

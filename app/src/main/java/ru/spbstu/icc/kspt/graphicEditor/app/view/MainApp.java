@@ -18,14 +18,16 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private PaintController pController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
         initRootLayout();
-
         initPaintLayout();
+
+        painting();
     }
 
     /**
@@ -62,12 +64,17 @@ public class MainApp extends Application {
             AnchorPane paintLayout = loader.load();
             rootLayout.setCenter(paintLayout);
 
-            PaintController pController = loader.getController();
+            pController = loader.getController();
             pController.setApplication(this);
 
         } catch (Exception e) {
             System.err.println(this + ": " + e);
         }
+    }
+
+    public void painting(){
+        pController.onSettingsChanged();
+        pController.paint();
     }
 
     public static void main(String[] args) { launch(args); }

@@ -22,11 +22,12 @@ public abstract class Instrument {
 
     public Object getCursor() throws NullPointerException{ return cursor; }
 
-    public abstract void mousePressed(Point point, int diameter);
+    public abstract void onPressed(Point point, double width);
 
-    public abstract void mouseDragged(Point point);
+    public abstract void onDragged(Point point);
 
-    public PaintedElement mouseReleased() throws NullPointerException{
+    public PaintedElement onReleased() throws NullPointerException{
+        pe.close();
         return pe;
     }
 

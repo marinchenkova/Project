@@ -5,14 +5,19 @@ package ru.spbstu.icc.kspt.graphicEditor.core.util;
  */
 public class Point {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
-    public Point(int mx, int my){
+    public Point(double mx, double my){
         x = mx;
         y = my;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
+    public double getX() { return x; }
+    public double getY() { return y; }
+
+    @Override
+    public String toString(){
+        return (int) x + " ; " + (int) y;
+    }
 }

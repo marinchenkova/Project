@@ -3,6 +3,8 @@ package ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
+import java.util.ArrayList;
+
 /**
  * Объект, нарисованный одним действием инструмента Линия
  */
@@ -22,7 +24,7 @@ public class LineElement implements PaintedElement {
 
     /**
      * Добавление точек {@link Point} к списку {@link BrushElement#points}.
-     * В первый раз вызывается из конструктора {@link BrushElement#BrushElement(Point, int)},
+     * В первый раз вызывается из конструктора {@link BrushElement#BrushElement(Point, double)},
      * затем должен вызываться при перетаскивании мыши
      * {@link javafx.scene.input.MouseEvent#MOUSE_DRAGGED}.
      * @param point добавляемая точка
@@ -43,46 +45,10 @@ public class LineElement implements PaintedElement {
     }
 
     @Override
-    public int getWidth(){ return width; }
-    public Point getStart(){ return start; }
-    public Point getEnd(){ return end; }
     public Point getCenter(){ return center; }
 
-    /**
-     * Возвращает мастшабированный объект {@link LineElement},  не изменяя его.
-     * @param kx коэффициент по X
-     * @param ky коэффициент по Y
-     * @return мастшабированный объект {@link LineElement}
-     */
-    public LineElement getScaled(double kx, double ky){
-        LineElement b = this;
-        b.scale(kx, ky);
-        return b;
-    }
-
-    /**
-     * Возвращает перемещенный объект {@link LineElement},  не изменяя его.
-     * @param dx пермещение по X
-     * @param dy пермещение по Y
-     * @return перемещенный объект {@link LineElement}
-     */
-    public LineElement getTranslated(int dx, int dy){
-        LineElement b = this;
-        b.translate(dx, dy);
-        return b;
-    }
-
-    /**
-     * Возвращает повернутый объект {@link LineElement},  не изменяя его.
-     * @param a угол в радианах
-     * @return повернутый объект {@link LineElement}
-     */
-    public LineElement getRotated(double a){
-        LineElement b = this;
-        b.rotate(a);
-        return b;
-    }
-
+    @Override
+    public double getWidth(){ return  width; }
     /**
      * Поиск геометрического центра для применения в методах преобразования координат.
      * Вызывается всегда после методов изменения {@link BrushElement}.
@@ -93,14 +59,22 @@ public class LineElement implements PaintedElement {
     }
 
     /**
+     * Возврат списка {@link BrushElement#points}: используеся при отрисовке этого элемента
+     * и при удалении одного из элементов {@link BrushElement}.
+     */
+    public ArrayList<Point> getPoints(){ return new ArrayList<>(); }
+
+    /**
      * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
      * каждого инструмента.
-     * @param x x
-     * @param y y
+     * @param p точка {@link Point}
      * @return true - если точка {@link Point} найдена.
      */
     @Override
-    public boolean findPoint(int x, int y){
+    public boolean findPoint(Point p){
+        double x = p.getX();
+        double y = p.getY();
+
         double k = (end.getY() - start.getY()) / (end.getX() - start.getX());
         double w = width / 2;
         double r = w / Math.cos(Math.atan(k));
@@ -119,8 +93,8 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void scale(double kx, double ky){
-        end = new Point((int) ((end.getX() - start.getX()) * kx + start.getX()),
-                        (int) ((end.getY() - start.getY()) * ky + start.getY()));
+        end = new Point((end.getX() - start.getX()) * kx + start.getX(),
+                        (end.getY() - start.getY()) * ky + start.getY());
     }
 
     /**
@@ -129,7 +103,7 @@ public class LineElement implements PaintedElement {
      * @param dy сдвиг по y
      */
     @Override
-    public void translate(int dx, int dy){
+    public void translate(double dx, double dy){
         start = new Point(start.getX() + dx, start.getY() + dy);
         end = new Point(end.getX() + dx, end.getY() + dy);
     }
@@ -140,15 +114,15 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void rotate(double a){
-        int mx = center.getX();
-        int my = center.getY();
+        double mx = center.getX();
+        double my = center.getY();
 
-        int x = (int) ((start.getX() - mx) * Math.cos(a) - (start.getY() - my) * Math.sin(a)) + mx;
-        int y = (int) ((start.getX() - mx) * Math.sin(a) + (start.getY() - my) * Math.cos(a)) + my;
+        double x = (start.getX() - mx) * Math.cos(a) - (start.getY() - my) * Math.sin(a) + mx;
+        double y = (start.getX() - mx) * Math.sin(a) + (start.getY() - my) * Math.cos(a) + my;
         start = new Point(x, y);
 
-        x = (int) ((end.getX() - mx) * Math.cos(a) - (end.getY() - my) * Math.sin(a)) + mx;
-        y = (int) ((end.getX() - mx) * Math.sin(a) + (end.getY() - my) * Math.cos(a)) + my;
+        x = (end.getX() - mx) * Math.cos(a) - (end.getY() - my) * Math.sin(a) + mx;
+        y = (end.getX() - mx) * Math.sin(a) + (end.getY() - my) * Math.cos(a) + my;
         end = new Point(x, y);
     }
 }
