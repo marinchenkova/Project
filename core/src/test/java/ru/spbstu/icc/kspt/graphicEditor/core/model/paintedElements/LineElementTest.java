@@ -1,7 +1,6 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements;
 
 import org.junit.Test;
-import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.Line;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 import static org.junit.Assert.*;
@@ -21,7 +20,7 @@ public class LineElementTest {
         int x = 95 + (int)(Math.random() * 111);
         int y = x + (int)(Math.random() * 8);
 
-        assertEquals(true, le.findPoint(new Point(x, y)));
+        assertEquals(true, le.findElement(new Point(x, y)));
     }
 
     @Test

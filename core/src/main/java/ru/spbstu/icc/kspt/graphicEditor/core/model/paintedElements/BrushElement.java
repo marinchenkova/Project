@@ -49,7 +49,7 @@ public class BrushElement implements PaintedElement {
      * @return true - если точка {@link Point} найдена.
      */
     @Override
-    public boolean findPoint(Point p){
+    public boolean findElement(Point p){
         for (Point point : points) {
             if ((Math.abs(p.getX() - point.getX()) <= width / 2) &&
                     (Math.abs(p.getY() - point.getY()) <= width / 2)) {

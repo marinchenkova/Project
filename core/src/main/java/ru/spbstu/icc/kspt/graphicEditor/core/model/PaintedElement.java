@@ -34,7 +34,7 @@ public interface PaintedElement{
     /**
      * Поиск нарисованного элемента в заданных координатах
      */
-    boolean findPoint(Point p);
+    boolean findElement(Point p);
 
     /**
      * Операция масштабирования

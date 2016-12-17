@@ -27,7 +27,7 @@ public class Desk {
         try{
             if(pEls.size() > 0){
                 for (PaintedElement element: pEls){
-                    if (element.findPoint(point)){
+                    if (element.findElement(point)){
                         pEls.remove(element);
                         return element;
                     }

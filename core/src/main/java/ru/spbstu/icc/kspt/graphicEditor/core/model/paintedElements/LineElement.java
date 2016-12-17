@@ -12,14 +12,16 @@ public class LineElement implements PaintedElement {
 
     private Point start;
     private Point end;
-    private int width;
+    private double width;
 
     private Point center;
     private boolean isClosed = false;
+    private ArrayList<Point> points = new ArrayList<>();
 
-    public LineElement(Point point, int d){
-        width = d;
+    public LineElement(Point point, double w){
+        width = w;
         start = point;
+        points.add(point);
     }
 
     /**
@@ -31,8 +33,12 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void addPoint(Point point){
-        if(!isClosed) end = point;
-        close();
+        if(!isClosed){
+            points.remove(end);
+            end = point;
+            points.add(end);
+            setCenter();
+        }
     }
 
     /**
@@ -49,9 +55,9 @@ public class LineElement implements PaintedElement {
 
     @Override
     public double getWidth(){ return  width; }
+
     /**
      * Поиск геометрического центра для применения в методах преобразования координат.
-     * Вызывается всегда после методов изменения {@link BrushElement}.
      */
     private void setCenter(){
         center = new Point(((start.getX() + end.getX()) / 2),
@@ -59,13 +65,10 @@ public class LineElement implements PaintedElement {
     }
 
     /**
-     * Возврат списка {@link BrushElement#points}: используеся при отрисовке этого элемента
-     * и при удалении одного из элементов {@link BrushElement}.
+     * Возврат списка {@link LineElement#points}: используеся при отрисовке этого элемента
+     * и при удалении одного из элементов {@link LineElement}.
      */
-    public ArrayList<Point> getPoints(){ return new ArrayList<>(); }
-
-    public Point getStart(){ return start; }
-    public Point getEnd(){ return end; }
+    public ArrayList<Point> getPoints(){ return points; }
 
     /**
      * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
@@ -74,19 +77,29 @@ public class LineElement implements PaintedElement {
      * @return true - если точка {@link Point} найдена.
      */
     @Override
-    public boolean findPoint(Point p){
+    public boolean findElement(Point p){
         double x = p.getX();
         double y = p.getY();
 
         double k = (end.getY() - start.getY()) / (end.getX() - start.getX());
         double w = width / 2;
         double r = w / Math.cos(Math.atan(k));
-
-        return (x >= Math.min(end.getX(), start.getX()) - w) &&
+        boolean b = false;
+        //TODO
+               if((x >= Math.min(end.getX(), start.getX()) - w) &&
                (x <= Math.max(end.getX(), start.getX()) + w) &&
                (y >= Math.min(end.getY(), start.getY()) - w) &&
                (y <= Math.max(end.getY(), start.getY()) + w) &&
-               (y <= k * x + r) && (y >= k * x - r);
+               (y <= k * start.getX() + r) && (y >= k * start.getX() - r))
+         b = true;
+        System.out.println(b);
+        return b;
+    }
+
+    private void updatePoints(){
+        points = new ArrayList<>();
+        points.add(start);
+        points.add(end);
     }
 
     /**
@@ -96,8 +109,12 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void scale(double kx, double ky){
-        end = new Point((end.getX() - start.getX()) * kx + start.getX(),
-                        (end.getY() - start.getY()) * ky + start.getY());
+        start = new Point((start.getX() - center.getX()) * kx + center.getX(),
+                          (start.getY() - center.getY()) * ky + center.getY());
+        end = new Point((end.getX() - center.getX()) * kx + center.getX(),
+                        (end.getY() - center.getY()) * ky + center.getY());
+        points.removeAll(points);
+        System.out.println(points);
     }
 
     /**
@@ -112,7 +129,7 @@ public class LineElement implements PaintedElement {
     }
 
     /**
-     * Вращение объекта {@link BrushElement} вокруг его геометрического центра.
+     * Вращение объекта {@link LineElement} вокруг его геометрического центра.
      * @param a угол поворота в радианах
      */
     @Override

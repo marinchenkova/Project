@@ -38,6 +38,4 @@ public class Brush extends Instrument {
         if(pe == null) throw new NullPointerException("PaintedElement does not exist");
         pe.addPoint(point);
     }
-
-
 }

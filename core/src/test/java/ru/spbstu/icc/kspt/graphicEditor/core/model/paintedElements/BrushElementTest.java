@@ -17,7 +17,7 @@ public class BrushElementTest {
 
         int c = 95 + (int)(Math.random() * 11);
 
-        assertEquals(true, be.findPoint(new Point(c, c)));
+        assertEquals(true, be.findElement(new Point(c, c)));
     }
 
     @Test

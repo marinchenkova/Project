@@ -1,48 +1,39 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model.instruments;
 
+import ru.spbstu.icc.kspt.graphicEditor.core.model.Instrument;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.BrushElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.LineElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
+
 /**
  * Линия
  */
-public class Line{//} extends Figure {
-/*
-    private PaintController controller;
-    private Line line;
+public class Line extends Instrument {
 
-
-    private Button lineButton;
-    private Image lineIcon = new Image("/images/buttons/lineIcon.png");
-
-
-
-    public Line(PaintController controller) {
-        this.controller = controller;
-        line = this;
-        initialize();
+    public Line(Object buttonIcon){
+        icon = buttonIcon;
     }
 
-
-    private void initialize(){
-        lineButton = controller.getLineButton();
-        setIcon(lineButton, lineIcon);
-        run();
-    }
-
-
-    private void run(){
-        //Нажатие мыши
-        lineButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                setActiveInstrument(line);
-                setDeskCursor(deskCanvas, figureCursor);
-                setActiveInstrumentIcon(lineIcon);
-            }
-        });
-    }
-
-
+    /**
+     * Применение линии: при вызове метода создается объект {@link LineElement}.
+     * @param point добавляемая точка {@link Point}
+     * @param width диаметр точки {@link Point}
+     */
     @Override
-    public void onPressed(MouseEvent event, GraphicsContext graphicsContext){
-
+    public void onPressed(Point point, double width){
+        pe = new LineElement(point, width);
     }
-    */
+
+    /**
+     * Применение линии: при вызове метода в существующем объекте {@link LineElement} изменяется конечная точка
+     * @param point новая конечная точка
+     * @throws NullPointerException нельзя редактировать {@link PaintedElement}, т.к.
+     * он еще не создан
+     */
+    @Override
+    public void onDragged(Point point) throws NullPointerException{
+        if(pe == null) throw new NullPointerException("PaintedElement does not exist");
+        pe.addPoint(point);
+    }
 }

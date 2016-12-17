@@ -1,6 +1,5 @@
 package ru.spbstu.icc.kspt.graphicEditor.app.control;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
@@ -15,11 +14,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import ru.spbstu.icc.kspt.graphicEditor.app.view.MainApp;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.BrushElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.LineElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Cache;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.Desk;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.Instrument;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.*;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
+
+import java.util.ArrayList;
 
 /**
  * Класс {@link PaintController} реализует взаимодействие объектов рисования: доски и инструментов
@@ -98,8 +101,11 @@ public class PaintController {
             brush = new Brush(brushIcon);
             setButtonIcon(brushButton, brushIcon);
 
-            //TODO
             //Линия
+            Image lineIcon = new Image("/icons/lineIcon.png");
+            line = new Line(lineIcon);
+            setButtonIcon(lineButton, lineIcon);
+            //TODO
             //Прямоугольник
 
 
@@ -143,6 +149,12 @@ public class PaintController {
 
         brushButton.setOnAction(event -> {
             activeInstrument = brush;
+            editing = false;
+            instrumentImage.setImage((Image) activeInstrument.getIcon());
+        });
+
+        lineButton.setOnAction(event -> {
+            activeInstrument = line;
             editing = false;
             instrumentImage.setImage((Image) activeInstrument.getIcon());
         });
@@ -219,6 +231,7 @@ public class PaintController {
             if (event.getButton() == MouseButton.PRIMARY) {
                 elementToEdit.translate(x - refPoint.getX(), y - refPoint.getY());
                 repaint();
+                paintElement(elementToEdit);
                 refPoint = new Point(x ,y);
             }
 
@@ -226,6 +239,7 @@ public class PaintController {
             else if (event.getButton() == MouseButton.MIDDLE) {
                 elementToEdit.rotate(0.031415 * (refPoint.getX() - x));
                 repaint();
+                paintElement(elementToEdit);
                 refPoint = new Point(x ,y);
             }
 
@@ -239,11 +253,13 @@ public class PaintController {
 
                 elementToEdit.scale(kx, ky);
                 repaint();
+                paintElement(elementToEdit);
                 refPoint = new Point(x ,y);
             }
 
         //В режиме рисования
         } else if(!editing) {
+            repaint();
             activeInstrument.onDragged(new Point(x, y));
             paintElement(activeInstrument.getPE());
         }
@@ -264,29 +280,31 @@ public class PaintController {
     }
 
     private void onMouseMoved(MouseEvent event){
-        double x = event.getX();
-        double y = event.getY();
 
     }
 
     private void paintElement(PaintedElement element){
-        for(Point p : element.getPoints()){
-            deskGC.fillOval(p.getX(), p.getY(), element.getWidth(), element.getWidth());
+        if(element.getClass() == BrushElement.class){
+            for(Point p : element.getPoints()){
+                deskGC.fillOval(p.getX(), p.getY(), element.getWidth(), element.getWidth());
+            }
+        }
+
+        if(element.getClass() == LineElement.class){
+            Point start = element.getPoints().get(0);
+            Point end = element.getPoints().size() > 1 ? element.getPoints().get(1) : start;
+            deskGC.setLineWidth(activeWidth);
+            deskGC.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
         }
     }
 
     private void repaint(){
         repaintBackground();
-
         if(desk.getPE().size() > 0){
             for(PaintedElement e : desk.getPE()){
-                for(Point p : e.getPoints()){
-                    deskGC.fillOval(p.getX(), p.getY(), e.getWidth(), e.getWidth());
-                }
+                paintElement(e);
             }
         }
-
-        paintElement(elementToEdit);
     }
 
     private void repaintBackground(){
