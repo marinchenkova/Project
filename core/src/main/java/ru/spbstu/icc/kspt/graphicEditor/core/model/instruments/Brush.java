@@ -5,14 +5,15 @@ import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.BrushElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
+import java.util.ArrayList;
+
 /**
  * Кисть
  */
 public class Brush extends Instrument {
 
-    public Brush(Object buttonIcon, Object cursorIcon){
+    public Brush(Object buttonIcon){
         icon = buttonIcon;
-        cursor = cursorIcon;
     }
 
     /**

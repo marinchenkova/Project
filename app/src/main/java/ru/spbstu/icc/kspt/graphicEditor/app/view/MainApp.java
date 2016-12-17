@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import ru.spbstu.icc.kspt.graphicEditor.app.PaintController;
+import ru.spbstu.icc.kspt.graphicEditor.app.control.PaintController;
 
 import java.io.IOException;
 

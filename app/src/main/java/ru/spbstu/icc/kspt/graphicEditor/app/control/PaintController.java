@@ -1,13 +1,15 @@
-package ru.spbstu.icc.kspt.graphicEditor.app;
+package ru.spbstu.icc.kspt.graphicEditor.app.control;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -30,20 +32,18 @@ public class PaintController {
     private Instrument activeInstrument;
     private double activeWidth;
 
+    private Image editIcon;
     private PaintedElement elementToEdit;
     private boolean editing = false;
     private Point refPoint = new Point(0, 0);
+    private Point curPoint;
 
-
-    private Agent agent;
     private Instrument brush;
+    private Instrument line;
+    private Instrument rectangle;
 
     private Desk desk;
     private Cache cache = new Cache();
-
-    //TODO список: карта курсоров
-    private Cursor agentCursor;
-    private Cursor brushCursor;
 
     @FXML
     private Canvas deskCanvas = new Canvas();
@@ -55,7 +55,7 @@ public class PaintController {
     private TextField widthSetter = new TextField();
 
     @FXML
-    private Button agentButton = new Button();
+    private Button editButton = new Button();
     @FXML
     private Button brushButton = new Button();
     @FXML
@@ -89,27 +89,22 @@ public class PaintController {
      */
     private void initInstruments(){
         try{
-            //Агент
-            Image agentIcon = new Image("/icons/agentIcon.png");
-            ImageCursor agentCursor = new ImageCursor(new Image("/cursors/agentCursor.png"),
-                    2, 2);
-            agent = new Agent(agentIcon, agentCursor);
-            setButtonIcon(agentButton, agentIcon);
+            //Режим редактирования
+            editIcon = new Image("/icons/editIcon.png");
+            setButtonIcon(editButton, editIcon);
 
             //Кисть
             Image brushIcon = new Image("/icons/brushIcon.png");
-            ImageCursor brushCursor = new ImageCursor(new Image("/cursors/brushCursor.png"),
-                    15, 15);
-            brush = new Brush(brushIcon, brushCursor);
+            brush = new Brush(brushIcon);
             setButtonIcon(brushButton, brushIcon);
 
             //TODO
             //Линия
-
-
             //Прямоугольник
+
+
         } catch (IllegalArgumentException e){
-            System.err.println(this + ": " + e);
+            System.err.println("PaintController.initInstruments(): " + e);
         }
 
         //Инструмент по умолчанию
@@ -126,6 +121,7 @@ public class PaintController {
     }
 
     public void initInfo() {
+        deskGC.setFill(activeColor);
         activeWidth = Integer.parseInt(widthSetter.getText());
         coordsLabel.setText(desk.getSizeString());
         sizeLabel.setText(desk.getSizeString());
@@ -140,9 +136,9 @@ public class PaintController {
      * Обработка нажатия кнопок и изменения ширины линии
      */
     public void onSettingsChanged(){
-        agentButton.setOnAction(event -> {
+        editButton.setOnAction(event -> {
             editing = true;
-            instrumentImage.setImage((Image) agent.getIcon());
+            instrumentImage.setImage(editIcon);
         });
 
         brushButton.setOnAction(event -> {
@@ -164,7 +160,10 @@ public class PaintController {
 
         deskCanvas.addEventHandler(MouseEvent.MOUSE_EXITED, event -> setCoordsLabelText(null));
 
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, event -> setCoordsLabelText(event));
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
+            curPoint = new Point(event.getX(), event.getY());
+            setCoordsLabelText(event);
+        });
 
         deskCanvas.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             getActiveWidth();
@@ -183,20 +182,33 @@ public class PaintController {
             onMouseDragged(event);
             setCoordsLabelText(event);
         });
+
+        //TODO
+        deskCanvas.setOnKeyTyped(event -> {
+            if (event.getCode() == KeyCode.DELETE) {
+
+                desk.findPainted(curPoint);
+                repaint();
+            }
+            System.err.println("TYPED");
+        });
     }
 
+    //Нажатие кнопки мыши
     private void onMousePressed(MouseEvent event){
+        //Точка отсчета для действий в режиме редактирования
         refPoint = new Point(event.getX() , event.getY());
 
         if(editing){
             elementToEdit = desk.findPainted(refPoint);
 
         } else {
-            paintAtom(refPoint, activeWidth);
             activeInstrument.onPressed(refPoint, activeWidth);
+            paintElement(activeInstrument.getPE());
         }
     }
 
+    //Перемещение с зажатой кнопкой мыши
     private void onMouseDragged(MouseEvent event){
         double x = event.getX();
         double y = event.getY();
@@ -219,10 +231,12 @@ public class PaintController {
 
             //Правая кнопка мыши: масштабирование
             else if (event.getButton() == MouseButton.SECONDARY) {
-                double kx = (x - elementToEdit.getCenter().getX()) /
-                            (refPoint.getX() - elementToEdit.getCenter().getX());
-                double ky = (y - elementToEdit.getCenter().getY()) /
-                            (refPoint.getY() - elementToEdit.getCenter().getY());
+                double cx = elementToEdit.getCenter().getX();
+                double cy = elementToEdit.getCenter().getY();
+
+                double kx = Math.abs(x - cx) / Math.abs(refPoint.getX() - cx);
+                double ky = Math.abs(y - cy) / Math.abs(refPoint.getY() - cy);
+
                 elementToEdit.scale(kx, ky);
                 repaint();
                 refPoint = new Point(x ,y);
@@ -230,23 +244,35 @@ public class PaintController {
 
         //В режиме рисования
         } else if(!editing) {
-            paintAtom(new Point(x ,y), activeWidth);
             activeInstrument.onDragged(new Point(x, y));
+            paintElement(activeInstrument.getPE());
         }
     }
 
+    //Отпускание кнопки мыши
     private void onMouseReleased(){
+        //В режиме редактирования: завершить действие и вернуть измененный объект в список
         if(editing && elementToEdit != null){
             desk.addElement(elementToEdit);
             elementToEdit = null;
 
+        //В режиме рисования: добавить объект в список
         } else if(!editing){
-            desk.addElement(activeInstrument.onReleased());
+            activeInstrument.onReleased();
+            desk.addElement(activeInstrument.getPE());
         }
     }
 
     private void onMouseMoved(MouseEvent event){
+        double x = event.getX();
+        double y = event.getY();
 
+    }
+
+    private void paintElement(PaintedElement element){
+        for(Point p : element.getPoints()){
+            deskGC.fillOval(p.getX(), p.getY(), element.getWidth(), element.getWidth());
+        }
     }
 
     private void repaint(){
@@ -254,28 +280,24 @@ public class PaintController {
 
         if(desk.getPE().size() > 0){
             for(PaintedElement e : desk.getPE()){
-                for(Point p : e.getPoints()) paintAtom(p, e.getWidth());
+                for(Point p : e.getPoints()){
+                    deskGC.fillOval(p.getX(), p.getY(), e.getWidth(), e.getWidth());
+                }
             }
         }
 
-        for(Point p : elementToEdit.getPoints()){
-            paintAtom(p, elementToEdit.getWidth());
-        }
-    }
-
-    private void paintAtom(Point point, double width){
-        deskGC.setFill(activeColor);
-        deskGC.fillOval(point.getX(), point.getY(), width, width);
-    }
-
-    public double getActiveWidth(){
-        activeWidth = Integer.parseInt(widthSetter.getText());
-        return activeWidth;
+        paintElement(elementToEdit);
     }
 
     private void repaintBackground(){
         deskGC.setFill((Color) desk.getBackgroundColor());
         deskGC.fillRect(0, 0, desk.getWidth(), desk.getHeight());
+        deskGC.setFill(activeColor);
+    }
+
+    public double getActiveWidth(){
+        activeWidth = Integer.parseInt(widthSetter.getText());
+        return activeWidth;
     }
 
     public void setActiveWidth(Integer width){

@@ -19,13 +19,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.spbstu.icc.kspt.graphicEditor.app.PaintController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.spbstu.icc.kspt.graphicEditor.app.control.PaintController">
     <children>
         <BorderPane layoutX="43.0" layoutY="48.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
                 <Pane maxHeight="10000.0" maxWidth="32.0" minHeight="350.0" minWidth="0.0" prefHeight="350.0" prefWidth="32.0" BorderPane.alignment="TOP_LEFT">
                     <children>
-                        <Button fx:id="agentButton" layoutX="4.0" layoutY="4.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
+                        <Button fx:id="editButton" layoutX="4.0" layoutY="4.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
