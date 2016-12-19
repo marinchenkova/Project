@@ -29,9 +29,7 @@ public class BrushElement implements PaintedElement {
      * @param point добавляемая точка
      */
     @Override
-    public void addPoint(Point point){
-        if(!isClosed) points.add(point);
-    }
+    public void addPoint(Point point){ if(!isClosed) points.add(point); }
 
     /**
      * Запрет добавления точек методом {@link BrushElement#addPoint(Point)}.
@@ -69,6 +67,20 @@ public class BrushElement implements PaintedElement {
         double mx = center.getX();
         double my = center.getY();
         ArrayList<Point> scaledPoints = new ArrayList<>();
+
+        if(((Double) kx).isInfinite() || ((Double) kx).isNaN() || kx == 0){
+            for (Point point : points) {
+                double y = (point.getY() - my) * ky + my;
+                scaledPoints.add(new Point(point.getX(), y));
+            }
+        } else
+
+        if(((Double) ky).isInfinite() || ((Double) ky).isNaN() || ky == 0){
+            for (Point point : points) {
+                double x = (point.getX() - mx) * kx + mx;
+                scaledPoints.add(new Point(x, point.getY()));
+            }
+        } else
 
         for (Point point : points) {
             double x = (point.getX() - mx) * kx + mx;
@@ -145,5 +157,11 @@ public class BrushElement implements PaintedElement {
         }
 
         center = new Point((xmax + xmin) / 2, (ymax + ymin) / 2);
+    }
+
+    @Override
+    public String toString(){
+        //TODO
+        return BrushElement.class.toString();
     }
 }

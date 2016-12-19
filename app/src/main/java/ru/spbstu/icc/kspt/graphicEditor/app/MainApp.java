@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt.graphicEditor.app.view;
+package ru.spbstu.icc.kspt.graphicEditor.app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +27,7 @@ public class MainApp extends Application {
         initRootLayout();
         initPaintLayout();
 
-        painting();
+        pController.paint();
     }
 
     /**
@@ -47,7 +47,7 @@ public class MainApp extends Application {
             primaryStage.setTitle("New picture : Graphic Editor Java 8");
 
         } catch (Exception e) {
-            System.err.println(this + ": " + e);
+            e.printStackTrace();
         }
     }
 
@@ -68,13 +68,8 @@ public class MainApp extends Application {
             pController.setApplication(this);
 
         } catch (Exception e) {
-            System.err.println(this + ": " + e);
+            e.printStackTrace();
         }
-    }
-
-    public void painting(){
-        pController.onSettingsChanged();
-        pController.paint();
     }
 
     public static void main(String[] args) { launch(args); }

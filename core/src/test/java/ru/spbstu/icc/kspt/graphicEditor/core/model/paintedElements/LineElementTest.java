@@ -29,9 +29,9 @@ public class LineElementTest {
         le.addPoint(new Point(200, 200));
 
         le.scale(2, 2);
-        double newX = le.getEnd().getX();
+        double newX = le.getPoints().get(1).getX();
 
-        assertEquals(300, newX, 0);
+        assertEquals(250, newX, 0);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class LineElementTest {
         le.addPoint(new Point(200, 200));
 
         le.translate(50, 50);
-        double newX = le.getEnd().getX();
+        double newX = le.getPoints().get(1).getX();
 
         assertEquals(250, newX, 0);
     }
@@ -51,7 +51,7 @@ public class LineElementTest {
         le.addPoint(new Point(200, 200));
 
         le.rotate(Math.PI / 2);
-        double newX = le.getEnd().getX();
+        double newX = le.getPoints().get(1).getX();
 
         assertEquals(100, newX, 0);
     }

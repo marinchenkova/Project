@@ -1,48 +1,38 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model.instruments;
 
+import ru.spbstu.icc.kspt.graphicEditor.core.model.Instrument;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.RectElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
+
 /**
  * Прямоугольник
  */
-public class Rectangle{//extends Figure {
-/*
-    private PaintController controller;
-    private Rectangle rectangle;
+public class Rectangle extends Instrument{
 
-
-    private Button rectangleButton;
-    private Image rectangleIcon = new Image("/images/buttons/rectangleIcon.png");
-
-
-
-    public Rectangle(PaintController controller) {
-        this.controller = controller;
-        rectangle = this;
-        initialize();
+    public Rectangle(Object buttonIcon){
+        icon = buttonIcon;
     }
 
-
-    private void initialize(){
-        rectangleButton = controller.getRectangleButton();
-        setIcon(rectangleButton, rectangleIcon);
-        run();
-    }
-
-
-    private void run(){
-        //Нажатие мыши
-        rectangleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                setActiveInstrument(rectangle);
-                setDeskCursor(deskCanvas, figureCursor);
-                setActiveInstrumentIcon(rectangleIcon);
-            }
-        });
-    }
-
-
+    /**
+     * Применение линии: при вызове метода создается объект {@link RectElement}.
+     * @param point добавляемая точка {@link Point}
+     * @param width диаметр точки {@link Point}
+     */
     @Override
-    public void onPressed(MouseEvent event, GraphicsContext graphicsContext){
-
+    public void onPressed(Point point, double width){
+        pe = new RectElement(point, width);
     }
-    */
+
+    /**
+     * Применение линии: при вызове метода в существующем объекте {@link RectElement} изменяется конечная точка
+     * @param point новая конечная точка
+     * @throws NullPointerException нельзя редактировать {@link PaintedElement}, т.к.
+     * он еще не создан
+     */
+    @Override
+    public void onDragged(Point point) throws NullPointerException{
+        if(pe == null) throw new NullPointerException("PaintedElement does not exist");
+        pe.addPoint(point);
+    }
 }

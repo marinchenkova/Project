@@ -6,9 +6,9 @@ import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 import java.util.ArrayList;
 
 /**
- * Объект, нарисованный одним действием инструмента Линия
+ * @author Marinchenko V. A.
  */
-public class LineElement implements PaintedElement {
+public class RectElement implements PaintedElement{
 
     private Point start;
     private Point end;
@@ -18,7 +18,7 @@ public class LineElement implements PaintedElement {
     private boolean isClosed = false;
     private ArrayList<Point> points = new ArrayList<>();
 
-    public LineElement(Point point, double w){
+    public RectElement(Point point, double w){
         width = w;
         start = point;
         points.add(point);
@@ -33,12 +33,14 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void addPoint(Point point){
-        if(!isClosed){
+ /*       if(!isClosed){
             points.remove(end);
             end = point;
             points.add(end);
             setCenter();
+
         }
+        */
     }
 
     /**
@@ -60,8 +62,9 @@ public class LineElement implements PaintedElement {
      * Поиск геометрического центра для применения в методах преобразования координат.
      */
     private void setCenter(){
-        center = new Point(((start.getX() + end.getX()) / 2),
-                           ((start.getY() + end.getY()) / 2));
+ /*       center = new Point(((start.getX() + end.getX()) / 2),
+                ((start.getY() + end.getY()) / 2));
+                */
     }
 
     /**
@@ -78,7 +81,7 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public boolean findElement(Point p){
-        double x = p.getX();
+ /*       double x = p.getX();
         double y = p.getY();
 
         double k = (end.getY() - start.getY()) / (end.getX() - start.getX());
@@ -86,17 +89,20 @@ public class LineElement implements PaintedElement {
         double r = w / Math.cos(Math.atan(k));
 
         return ((x >= Math.min(end.getX(), start.getX()) - w)       &&
-               (x <= Math.max(end.getX(), start.getX()) + w)        &&
-               (y >= Math.min(end.getY(), start.getY()) - w)        &&
-               (y <= Math.max(end.getY(), start.getY()) + w)        &&
-               (y <= k * (x - start.getX()) + start.getY() + r) &&
-               (y >= k * (x - start.getX()) + start.getY() - r));
+                (x <= Math.max(end.getX(), start.getX()) + w)        &&
+                (y >= Math.min(end.getY(), start.getY()) - w)        &&
+                (y <= Math.max(end.getY(), start.getY()) + w)        &&
+                (y <= k * (x - start.getX()) + start.getY() + r) &&
+                (y >= k * (x - start.getX()) + start.getY() - r));
+                */
+        return false;
     }
 
     private void updatePoints(){
-        points = new ArrayList<>();
+/*        points = new ArrayList<>();
         points.add(start);
         points.add(end);
+        */
     }
 
     /**
@@ -106,7 +112,7 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void scale(double kx, double ky){
-        double sx = start.getX();
+/*       double sx = start.getX();
         double sy = start.getY();
         double ex = end.getX();
         double ey = end.getY();
@@ -116,8 +122,8 @@ public class LineElement implements PaintedElement {
             end = new Point(ex,(ey - center.getY()) * ky + center.getY());
         }
         else if(((Double) ky).isInfinite() || ((Double) ky).isNaN() || ky == 0){
-                start = new Point((sx - center.getX()) * kx + center.getX(), sy);
-                end = new Point((ex - center.getX()) * kx + center.getX(), ey);
+            start = new Point((sx - center.getX()) * kx + center.getX(), sy);
+            end = new Point((ex - center.getX()) * kx + center.getX(), ey);
 
         } else {
             start = new Point((sx - center.getX()) * kx + center.getX(),
@@ -127,6 +133,7 @@ public class LineElement implements PaintedElement {
         }
 
         updatePoints();
+        */
     }
 
     /**
@@ -136,10 +143,11 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void translate(double dx, double dy){
-        start = new Point(start.getX() + dx, start.getY() + dy);
+/*        start = new Point(start.getX() + dx, start.getY() + dy);
         end = new Point(end.getX() + dx, end.getY() + dy);
         setCenter();
         updatePoints();
+        */
     }
 
     /**
@@ -148,7 +156,7 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void rotate(double a){
-        double mx = center.getX();
+/*        double mx = center.getX();
         double my = center.getY();
 
         double x = (start.getX() - mx) * Math.cos(a) - (start.getY() - my) * Math.sin(a) + mx;
@@ -160,5 +168,6 @@ public class LineElement implements PaintedElement {
         end = new Point(x, y);
 
         updatePoints();
+        */
     }
 }
