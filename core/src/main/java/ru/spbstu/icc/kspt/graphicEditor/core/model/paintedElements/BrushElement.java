@@ -1,50 +1,37 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements;
 
 import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.Brush;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 import java.util.ArrayList;
 
 /**
- * Объект, нарисованный одним действием инструмента Кисть
+ * Объект, нарисованный одним действием инструмента {@link Brush}.
  */
-public class BrushElement implements PaintedElement {
+public class BrushElement extends PaintedElement {
 
-    private ArrayList<Point> points = new ArrayList<>();
-    private double width;
-
-    private Point center;
-    private boolean isClosed = false;
-
+    /**
+     * Конструктор задает ширину линии {@link BrushElement#width} и первую точку в списке
+     * {@link BrushElement#points}.
+     * @param point начальная точка
+     * @param w ширина линии
+     */
     public BrushElement(Point point, double w){
         width = w;
         addPoint(point);
     }
 
     /**
-     * Добавление точек {@link Point} к списку {@link BrushElement#points}.
-     * В первый раз вызывается из конструктора {@link BrushElement#BrushElement(Point, double)},
-     * затем должен вызываться при перетаскивании мыши
-     * {@link javafx.scene.input.MouseEvent#MOUSE_DRAGGED}.
-     * @param point добавляемая точка
+     * Добавление новой точки в список {@link BrushElement#points}.
      */
     @Override
     public void addPoint(Point point){ if(!isClosed) points.add(point); }
 
     /**
-     * Запрет добавления точек методом {@link BrushElement#addPoint(Point)}.
-     */
-    @Override
-    public void close(){
-        isClosed = true;
-        setCenter();
-    }
-
-    /**
-     * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
-     * каждого инструмента.
-     * @param p точка {@link Point}
-     * @return true - если точка {@link Point} найдена.
+     * Поиск элемента {@link BrushElement} в заданной точке.
+     * @param p заданная точка
+     * @return true, если элемент {@link BrushElement} найден
      */
     @Override
     public boolean findElement(Point p){
@@ -64,28 +51,10 @@ public class BrushElement implements PaintedElement {
      */
     @Override
     public void scale(double kx, double ky){
-        double mx = center.getX();
-        double my = center.getY();
         ArrayList<Point> scaledPoints = new ArrayList<>();
 
-        if(((Double) kx).isInfinite() || ((Double) kx).isNaN() || kx == 0){
-            for (Point point : points) {
-                double y = (point.getY() - my) * ky + my;
-                scaledPoints.add(new Point(point.getX(), y));
-            }
-        } else
-
-        if(((Double) ky).isInfinite() || ((Double) ky).isNaN() || ky == 0){
-            for (Point point : points) {
-                double x = (point.getX() - mx) * kx + mx;
-                scaledPoints.add(new Point(x, point.getY()));
-            }
-        } else
-
         for (Point point : points) {
-            double x = (point.getX() - mx) * kx + mx;
-            double y = (point.getY() - my) * ky + my;
-            scaledPoints.add(new Point(x, y));
+            scaledPoints.add(getScaledPoint(point, kx, ky));
         }
 
         points = scaledPoints;
@@ -101,49 +70,35 @@ public class BrushElement implements PaintedElement {
         ArrayList<Point> translatedPoints = new ArrayList<>();
 
         for (Point p : points) {
-            translatedPoints.add(new Point(p.getX() + dx,p.getY() + dy));
+            translatedPoints.add(getTranslatedPoint(p, dx, dy));
         }
 
         points = translatedPoints;
+
         setCenter();
     }
 
     /**
-     * Вращение объекта {@link BrushElement} вокруг его геометрического центра.
+     * Вращение объекта {@link BrushElement} вокруг его геометрического центра {@link BrushElement#center}.
      * @param a угол поворота в радианах
      */
     @Override
     public void rotate(double a){
         ArrayList<Point> rotatedPoints = new ArrayList<>();
-        double mx = center.getX();
-        double my = center.getY();
 
         for (Point p : points) {
-            double x = (p.getX() - mx) * Math.cos(a) - (p.getY() - my) * Math.sin(a) + mx;
-            double y = (p.getX() - mx) * Math.sin(a) + (p.getY() - my) * Math.cos(a) + my;
-            rotatedPoints.add(new Point(x, y));
+            rotatedPoints.add(getRotatedPoint(p, a));
         }
 
         points = rotatedPoints;
     }
 
     /**
-     * Возврат списка {@link BrushElement#points}: используеся при отрисовке этого элемента
-     * и при удалении одного из элементов {@link BrushElement}.
+     * Обновление геометрического центра {@link BrushElement#center}: применяется в методах
+     * преобразования координат.
      */
-    public ArrayList<Point> getPoints(){ return points; }
-
     @Override
-    public Point getCenter(){ return center; }
-
-    @Override
-    public double getWidth(){ return width; }
-
-    /**
-     * Поиск геометрического центра для применения в методах преобразования координат.
-     * Вызывается всегда после методов изменения {@link BrushElement}.
-     */
-    private void setCenter(){
+    public void setCenter(){
         double xmax = 0;
         double ymax = 0;
         double xmin = 10000;
@@ -157,11 +112,5 @@ public class BrushElement implements PaintedElement {
         }
 
         center = new Point((xmax + xmin) / 2, (ymax + ymin) / 2);
-    }
-
-    @Override
-    public String toString(){
-        //TODO
-        return BrushElement.class.toString();
     }
 }

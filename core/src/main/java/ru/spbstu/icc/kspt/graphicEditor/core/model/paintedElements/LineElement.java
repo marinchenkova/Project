@@ -1,23 +1,22 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements;
 
+import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.Line;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 import java.util.ArrayList;
 
 /**
- * Объект, нарисованный одним действием инструмента Линия
+ * Объект, нарисованный одним действием инструмента {@link Line}.
  */
-public class LineElement implements PaintedElement {
+public class LineElement extends PaintedElement {
 
-    private Point start;
-    private Point end;
-    private double width;
-
-    private Point center;
-    private boolean isClosed = false;
-    private ArrayList<Point> points = new ArrayList<>();
-
+    /**
+     * Конструктор задает ширину линии {@link LineElement#width} и первую точку
+     * {@link LineElement#start}.
+     * @param point начальная точка
+     * @param w ширина линии
+     */
     public LineElement(Point point, double w){
         width = w;
         start = point;
@@ -25,11 +24,7 @@ public class LineElement implements PaintedElement {
     }
 
     /**
-     * Добавление точек {@link Point} к списку {@link BrushElement#points}.
-     * В первый раз вызывается из конструктора {@link BrushElement#BrushElement(Point, double)},
-     * затем должен вызываться при перетаскивании мыши
-     * {@link javafx.scene.input.MouseEvent#MOUSE_DRAGGED}.
-     * @param point добавляемая точка
+     * Добавление новой точки в список {@link LineElement#points}.
      */
     @Override
     public void addPoint(Point point){
@@ -42,39 +37,20 @@ public class LineElement implements PaintedElement {
     }
 
     /**
-     * Запрет добавления точек методом {@link LineElement#addPoint(Point)}.
+     * Обновить список точек {@link LineElement#points}: вызывается после операций преобразования
+     * координат.
      */
     @Override
-    public void close(){
-        isClosed = true;
-        setCenter();
-    }
-
-    @Override
-    public Point getCenter(){ return center; }
-
-    @Override
-    public double getWidth(){ return  width; }
-
-    /**
-     * Поиск геометрического центра для применения в методах преобразования координат.
-     */
-    private void setCenter(){
-        center = new Point(((start.getX() + end.getX()) / 2),
-                           ((start.getY() + end.getY()) / 2));
+    public void updatePoints(){
+        points = new ArrayList<>();
+        points.add(start);
+        points.add(end);
     }
 
     /**
-     * Возврат списка {@link LineElement#points}: используеся при отрисовке этого элемента
-     * и при удалении одного из элементов {@link LineElement}.
-     */
-    public ArrayList<Point> getPoints(){ return points; }
-
-    /**
-     * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
-     * каждого инструмента.
-     * @param p точка {@link Point}
-     * @return true - если точка {@link Point} найдена.
+     * Поиск элемента {@link LineElement} в заданной точке.
+     * @param p заданная точка
+     * @return true, если элемент {@link LineElement} найден
      */
     @Override
     public boolean findElement(Point p){
@@ -93,12 +69,6 @@ public class LineElement implements PaintedElement {
                (y >= k * (x - start.getX()) + start.getY() - r));
     }
 
-    private void updatePoints(){
-        points = new ArrayList<>();
-        points.add(start);
-        points.add(end);
-    }
-
     /**
      * Масштабирование объекта {@link LineElement}.
      * @param kx коэффициент масштабирования по оси X
@@ -106,25 +76,8 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void scale(double kx, double ky){
-        double sx = start.getX();
-        double sy = start.getY();
-        double ex = end.getX();
-        double ey = end.getY();
-
-        if(((Double) kx).isInfinite() || ((Double) kx).isNaN() || kx == 0){
-            start = new Point(sx,(sy - center.getY()) * ky + center.getY());
-            end = new Point(ex,(ey - center.getY()) * ky + center.getY());
-        }
-        else if(((Double) ky).isInfinite() || ((Double) ky).isNaN() || ky == 0){
-                start = new Point((sx - center.getX()) * kx + center.getX(), sy);
-                end = new Point((ex - center.getX()) * kx + center.getX(), ey);
-
-        } else {
-            start = new Point((sx - center.getX()) * kx + center.getX(),
-                    (sy - center.getY()) * ky + center.getY());
-            end = new Point((ex - center.getX()) * kx + center.getX(),
-                    (ey - center.getY()) * ky + center.getY());
-        }
+        start = getScaledPoint(start, kx , ky);
+        end = getScaledPoint(end, kx , ky);
 
         updatePoints();
     }
@@ -136,28 +89,22 @@ public class LineElement implements PaintedElement {
      */
     @Override
     public void translate(double dx, double dy){
-        start = new Point(start.getX() + dx, start.getY() + dy);
-        end = new Point(end.getX() + dx, end.getY() + dy);
+        start = getTranslatedPoint(start, dx, dy);
+        end = getTranslatedPoint(end, dx, dy);
+
         setCenter();
+
         updatePoints();
     }
 
     /**
-     * Вращение объекта {@link LineElement} вокруг его геометрического центра.
+     * Вращение объекта {@link LineElement} вокруг его геометрического центра {@link LineElement#center}.
      * @param a угол поворота в радианах
      */
     @Override
     public void rotate(double a){
-        double mx = center.getX();
-        double my = center.getY();
-
-        double x = (start.getX() - mx) * Math.cos(a) - (start.getY() - my) * Math.sin(a) + mx;
-        double y = (start.getX() - mx) * Math.sin(a) + (start.getY() - my) * Math.cos(a) + my;
-        start = new Point(x, y);
-
-        x = (end.getX() - mx) * Math.cos(a) - (end.getY() - my) * Math.sin(a) + mx;
-        y = (end.getX() - mx) * Math.sin(a) + (end.getY() - my) * Math.cos(a) + my;
-        end = new Point(x, y);
+        start = getRotatedPoint(start, a);
+        end = getRotatedPoint(end, a);
 
         updatePoints();
     }

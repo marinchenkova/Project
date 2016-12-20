@@ -60,7 +60,7 @@ public class Painter extends PaintController{
 
             //Средняя кнопка мыши: вращение
             else if (event.getButton() == MouseButton.MIDDLE) {
-                elementToEdit.rotate(0.031415 * (refPoint.getX() - x));
+                elementToEdit.rotate(Math.PI / 100 * (refPoint.getX() - x));
                 repaint();
                 paintElement(elementToEdit);
                 refPoint = new Point(x ,y);
@@ -107,11 +107,14 @@ public class Painter extends PaintController{
     }
 
     public void paintElement(PaintedElement element){
+        deskGC.setLineWidth(element.getWidth());
         ArrayList<Point> p = element.getPoints();
-        if(p.size() == 1) deskGC.fillRect(p.get(0).getX(), p.get(0).getY(), activeWidth, activeWidth);
+        if(p.size() == 1) deskGC.fillRect(p.get(0).getX(), p.get(0).getY(),
+                                          element.getWidth(), element.getWidth());
         for(int i = 1; i < p.size(); i++){
             deskGC.strokeLine(p.get(i-1).getX(), p.get(i-1).getY(), p.get(i).getX(), p.get(i).getY());
         }
+        deskGC.setLineWidth(activeWidth);
     }
 
     public void repaint(){

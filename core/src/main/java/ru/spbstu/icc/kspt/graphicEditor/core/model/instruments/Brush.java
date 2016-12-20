@@ -1,20 +1,15 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model.instruments;
 
-import ru.spbstu.icc.kspt.graphicEditor.core.model.Instrument;
-import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.*;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.BrushElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
-
-import java.util.ArrayList;
 
 /**
  * Кисть
  */
 public class Brush extends Instrument {
 
-    public Brush(Object buttonIcon){
-        icon = buttonIcon;
-    }
+    public Brush(Object buttonIcon){ icon = buttonIcon; }
 
     /**
      * Применение кисти: при вызове метода создается объект {@link BrushElement}.
@@ -22,9 +17,7 @@ public class Brush extends Instrument {
      * @param width диаметр точки {@link Point}
      */
     @Override
-    public void onPressed(Point point, double width){
-        pe = new BrushElement(point, width);
-    }
+    public void onPressed(Point point, double width){ pe = new BrushElement(point, width); }
 
     /**
      * Применение кисти: при вызове метода в существующий объект {@link BrushElement}

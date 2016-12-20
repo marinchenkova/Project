@@ -9,7 +9,7 @@ dependencies {
 jar { 
 	manifest { 
 		attributes( 
-			"Main-Class": "ru.spbstu.icc.kspt.graphicEditor.app.view.MainApp" 
+			"Main-Class": "ru.spbstu.icc.kspt.graphicEditor.app.MainApp"
 		) 
 	} 
 

@@ -10,9 +10,7 @@ import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
  */
 public class Rectangle extends Instrument{
 
-    public Rectangle(Object buttonIcon){
-        icon = buttonIcon;
-    }
+    public Rectangle(Object buttonIcon){ icon = buttonIcon; }
 
     /**
      * Применение линии: при вызове метода создается объект {@link RectElement}.
@@ -20,9 +18,7 @@ public class Rectangle extends Instrument{
      * @param width диаметр точки {@link Point}
      */
     @Override
-    public void onPressed(Point point, double width){
-        pe = new RectElement(point, width);
-    }
+    public void onPressed(Point point, double width){ pe = new RectElement(point, width); }
 
     /**
      * Применение линии: при вызове метода в существующем объекте {@link RectElement} изменяется конечная точка

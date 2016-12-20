@@ -1,173 +1,151 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements;
 
 import ru.spbstu.icc.kspt.graphicEditor.core.model.PaintedElement;
+import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.Rectangle;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 import java.util.ArrayList;
 
 /**
- * @author Marinchenko V. A.
+ * Объект, нарисованный одним действием инструмента {@link Rectangle}.
  */
-public class RectElement implements PaintedElement{
+public class RectElement extends PaintedElement{
 
-    private Point start;
-    private Point end;
-    private double width;
+    //Угол поворота в радианах
+    private double angle = 0;
 
-    private Point center;
-    private boolean isClosed = false;
-    private ArrayList<Point> points = new ArrayList<>();
+    private Point pa;
+    private Point pb;
 
+    /**
+     * Конструктор задает ширину линии {@link RectElement#width} и первую точку
+     * {@link RectElement#start}.
+     * @param point начальная точка
+     * @param w ширина линии
+     */
     public RectElement(Point point, double w){
         width = w;
         start = point;
-        points.add(point);
+        points.add(start);
     }
 
     /**
-     * Добавление точек {@link Point} к списку {@link BrushElement#points}.
-     * В первый раз вызывается из конструктора {@link BrushElement#BrushElement(Point, double)},
-     * затем должен вызываться при перетаскивании мыши
-     * {@link javafx.scene.input.MouseEvent#MOUSE_DRAGGED}.
-     * @param point добавляемая точка
+     * Добавление новой точки в список {@link RectElement#points}.
      */
     @Override
     public void addPoint(Point point){
- /*       if(!isClosed){
-            points.remove(end);
+        if(!isClosed){
             end = point;
-            points.add(end);
+            pa = new Point(start.getX(), end.getY());
+            pb = new Point(end.getX(), start.getY());
+
             setCenter();
-
+            updatePoints();
         }
-        */
     }
 
     /**
-     * Запрет добавления точек методом {@link LineElement#addPoint(Point)}.
+     * Обновить список точек {@link RectElement#points}: вызывается после операций преобразования
+     * координат.
      */
     @Override
-    public void close(){
-        isClosed = true;
-        setCenter();
-    }
-
-    @Override
-    public Point getCenter(){ return center; }
-
-    @Override
-    public double getWidth(){ return  width; }
-
-    /**
-     * Поиск геометрического центра для применения в методах преобразования координат.
-     */
-    private void setCenter(){
- /*       center = new Point(((start.getX() + end.getX()) / 2),
-                ((start.getY() + end.getY()) / 2));
-                */
+    public void updatePoints(){
+        points = new ArrayList<>();
+        points.add(start);
+        points.add(pa);
+        points.add(end);
+        points.add(pb);
+        points.add(start);
     }
 
     /**
-     * Возврат списка {@link LineElement#points}: используеся при отрисовке этого элемента
-     * и при удалении одного из элементов {@link LineElement}.
-     */
-    public ArrayList<Point> getPoints(){ return points; }
-
-    /**
-     * Поиск точек {@link Point} в заданных координатах. Метод должен быть переопределен для
-     * каждого инструмента.
-     * @param p точка {@link Point}
-     * @return true - если точка {@link Point} найдена.
+     * Поиск элемента {@link RectElement} в заданной точке.
+     * @param p заданная точка
+     * @return true, если элемент {@link RectElement} найден
      */
     @Override
     public boolean findElement(Point p){
- /*       double x = p.getX();
+        //Перенесение точки в систему координат, где прямоугольник не повернут
+        p = getRotatedPoint(p, -angle);
+        double x = p.getX();
         double y = p.getY();
 
-        double k = (end.getY() - start.getY()) / (end.getX() - start.getX());
+        //Перенесение прямоугольника в систему координат, где прямоугольник не повернут
+        Point s = getRotatedPoint(start, -angle);
+        Point e = getRotatedPoint(end, -angle);
+
+        double sx = s.getX();
+        double sy = s.getY();
+
+        double ex = e.getX();
+        double ey = e.getY();
+
+
+
         double w = width / 2;
-        double r = w / Math.cos(Math.atan(k));
 
-        return ((x >= Math.min(end.getX(), start.getX()) - w)       &&
-                (x <= Math.max(end.getX(), start.getX()) + w)        &&
-                (y >= Math.min(end.getY(), start.getY()) - w)        &&
-                (y <= Math.max(end.getY(), start.getY()) + w)        &&
-                (y <= k * (x - start.getX()) + start.getY() + r) &&
-                (y >= k * (x - start.getX()) + start.getY() - r));
-                */
-        return false;
-    }
+        //Условия нахождения точки на сторонах прямоугольника с учетом ширины линии
+        boolean outBorder = (x >= Math.min(ex, sx) - w) &&
+                            (x <= Math.max(ex, sx) + w) &&
+                            (y >= Math.min(ey, sy) - w) &&
+                            (y <= Math.max(ey, sy) + w);
 
-    private void updatePoints(){
-/*        points = new ArrayList<>();
-        points.add(start);
-        points.add(end);
-        */
+        boolean inBorder = (x <= Math.min(ex, sx) + w) ||
+                           (x >= Math.max(ex, sx) - w) ||
+                           (y <= Math.min(ey, sy) + w) ||
+                           (y >= Math.max(ey, sy) - w);
+
+        return inBorder && outBorder;
     }
 
     /**
-     * Масштабирование объекта {@link LineElement}.
+     * Масштабирование объекта {@link RectElement}.
      * @param kx коэффициент масштабирования по оси X
      * @param ky коэффициент масштабирования по оси Y
      */
     @Override
     public void scale(double kx, double ky){
-/*       double sx = start.getX();
-        double sy = start.getY();
-        double ex = end.getX();
-        double ey = end.getY();
+        start = getScaledPoint(start, kx , ky);
+        end = getScaledPoint(end, kx , ky);
 
-        if(((Double) kx).isInfinite() || ((Double) kx).isNaN() || kx == 0){
-            start = new Point(sx,(sy - center.getY()) * ky + center.getY());
-            end = new Point(ex,(ey - center.getY()) * ky + center.getY());
-        }
-        else if(((Double) ky).isInfinite() || ((Double) ky).isNaN() || ky == 0){
-            start = new Point((sx - center.getX()) * kx + center.getX(), sy);
-            end = new Point((ex - center.getX()) * kx + center.getX(), ey);
-
-        } else {
-            start = new Point((sx - center.getX()) * kx + center.getX(),
-                    (sy - center.getY()) * ky + center.getY());
-            end = new Point((ex - center.getX()) * kx + center.getX(),
-                    (ey - center.getY()) * ky + center.getY());
-        }
+        pa = getScaledPoint(pa, kx , ky);
+        pb = getScaledPoint(pb, kx , ky);
 
         updatePoints();
-        */
     }
 
     /**
-     * Перемещение объекта {@link LineElement}.
+     * Перемещение объекта {@link RectElement}.
      * @param dx сдвиг по x
      * @param dy сдвиг по y
      */
     @Override
     public void translate(double dx, double dy){
-/*        start = new Point(start.getX() + dx, start.getY() + dy);
-        end = new Point(end.getX() + dx, end.getY() + dy);
+        start = getTranslatedPoint(start, dx, dy);
+        end = getTranslatedPoint(end, dx, dy);
+
+        pa = getTranslatedPoint(pa, dx, dy);
+        pb = getTranslatedPoint(pb, dx, dy);
+
         setCenter();
+
         updatePoints();
-        */
     }
 
     /**
-     * Вращение объекта {@link LineElement} вокруг его геометрического центра.
+     * Вращение объекта {@link RectElement} вокруг его геометрического центра {@link RectElement#center}.
      * @param a угол поворота в радианах
      */
     @Override
     public void rotate(double a){
-/*        double mx = center.getX();
-        double my = center.getY();
+        start = getRotatedPoint(start, a);
+        end = getRotatedPoint(end, a);
 
-        double x = (start.getX() - mx) * Math.cos(a) - (start.getY() - my) * Math.sin(a) + mx;
-        double y = (start.getX() - mx) * Math.sin(a) + (start.getY() - my) * Math.cos(a) + my;
-        start = new Point(x, y);
+        pa = getRotatedPoint(pa, a);
+        pb = getRotatedPoint(pb, a);
 
-        x = (end.getX() - mx) * Math.cos(a) - (end.getY() - my) * Math.sin(a) + mx;
-        y = (end.getX() - mx) * Math.sin(a) + (end.getY() - my) * Math.cos(a) + my;
-        end = new Point(x, y);
+        angle += a;
 
         updatePoints();
-        */
     }
 }
