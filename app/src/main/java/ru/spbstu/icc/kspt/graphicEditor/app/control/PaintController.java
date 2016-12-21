@@ -104,7 +104,7 @@ public class PaintController{
 
         //Удаление элемента
         app.getPrimaryStage().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (editing && event.getCode() == KeyCode.DELETE) {
+            if (event.getCode() == KeyCode.DELETE) {
                 painter.deleteElement();
             }
         });

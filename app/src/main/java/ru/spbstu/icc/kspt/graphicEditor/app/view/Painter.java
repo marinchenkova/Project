@@ -121,13 +121,13 @@ public class Painter extends PaintController{
     public void undo(){
         desk.setElements(cloned(cache.getPrevState()));
         repaint();
-
-        System.out.println("Desk: " + desk.getElements().size());
-        System.out.println("Cache: " + cache.getSize());
     }
 
     public void deleteElement(){
+        //Поиск и удаление элемента
         desk.findPainted(curPoint);
+
+        repaint();
 
         //Запись в кэш
         cache.add(cloned(desk.getElements()));
