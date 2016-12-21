@@ -3,15 +3,14 @@ package ru.spbstu.icc.kspt.graphicEditor.app;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import ru.spbstu.icc.kspt.graphicEditor.app.control.PaintController;
 
 import java.io.IOException;
 
 /**
- * Графический редактор
+ * Графический редактор. Используется векторная графика: нарисованные элементы можно редактировать.
  * @author Маринченко В. А.
  */
 public class MainApp extends Application {
@@ -72,7 +71,15 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Возврат главной сцены.
+     * @return главная сцена
+     */
     public Stage getPrimaryStage(){ return primaryStage; }
 
+    /**
+     * Точка входа в приложение.
+     * @param args аргументы командной строки
+     */
     public static void main(String[] args) { launch(args); }
 }

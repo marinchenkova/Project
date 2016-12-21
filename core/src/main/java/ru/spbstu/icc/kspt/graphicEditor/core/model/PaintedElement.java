@@ -1,6 +1,5 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model;
 
-import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.BrushElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 import java.util.ArrayList;
 

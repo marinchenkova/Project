@@ -1,7 +1,7 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.util;
 
 /**
- * Точка
+ * Точка на плоскости.
  */
 public class Point {
 
@@ -17,7 +17,5 @@ public class Point {
     public double getY() { return y; }
 
     @Override
-    public String toString(){
-        return (int) x + " ; " + (int) y;
-    }
+    public String toString(){ return (int) x + " ; " + (int) y; }
 }

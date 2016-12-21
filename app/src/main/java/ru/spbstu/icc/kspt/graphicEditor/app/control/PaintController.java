@@ -14,7 +14,7 @@ import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.*;
 
 
 /**
- * Класс {@link PaintController} реализует взаимодействие объектов рисования: доски и инструментов
+ * Класс управляет процессом рисования и информацией о нем. Для GUI используется FXML файл.
  */
 public class PaintController{
 
@@ -29,7 +29,7 @@ public class PaintController{
     protected static Instrument line = new Line("/icons/lineIcon.png");
     protected static Instrument rect = new Rectangle("/icons/rectangleIcon.png");
 
-    private static Initializer initializer;
+    private static PaintInfo paintInfo;
     protected static Painter painter;
 
     protected static Desk desk;
@@ -37,6 +37,7 @@ public class PaintController{
     @FXML
     private Canvas deskCanvas = new Canvas();
 
+    //Иконка активного инструмента и ширина линии
     @FXML
     private ImageView instrumentImage = new ImageView();
     @FXML
@@ -52,6 +53,7 @@ public class PaintController{
     @FXML
     private Button rectButton = new Button();
 
+    //Информация о размерах и положении курсора на доске
     @FXML
     private Label coordsLabel = new Label();
     @FXML
@@ -64,7 +66,7 @@ public class PaintController{
     public PaintController() {}
 
     /**
-     * Инициализация средств рисования
+     * Инициализация средств рисования и управления информацией рисования.
      */
     @FXML
     public void initialize() throws Exception {
@@ -72,24 +74,24 @@ public class PaintController{
         activeInstrument = brush;
 
         painter = new Painter(this);
-        initializer = new Initializer(this);
+        paintInfo = new PaintInfo(this);
     }
 
     /**
      * Обработка событий мыши и нажатия клавиш.
      */
     public void paint(){
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> initializer.setCoordsLabelText(event));
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> paintInfo.setCoordsLabelText(event));
 
-        deskCanvas.addEventHandler(MouseEvent.MOUSE_EXITED, event -> initializer.setCoordsLabelText(null));
+        deskCanvas.addEventHandler(MouseEvent.MOUSE_EXITED, event -> paintInfo.setCoordsLabelText(null));
 
         deskCanvas.addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
             painter.onMouseMoved(event);
-            initializer.setCoordsLabelText(event);
+            paintInfo.setCoordsLabelText(event);
         });
 
         deskCanvas.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            initializer.setActiveWidth();
+            paintInfo.setActiveWidth();
             painter.onMousePressed(event);
         });
 
@@ -99,7 +101,7 @@ public class PaintController{
 
         deskCanvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             painter.onMouseDragged(event);
-            initializer.setCoordsLabelText(event);
+            paintInfo.setCoordsLabelText(event);
         });
 
         //Удаление элемента
@@ -121,6 +123,10 @@ public class PaintController{
         });
     }
 
+    /**
+     * Установка приложения.
+     * @param mainApp приложение
+     */
     public void setApplication(MainApp mainApp){ app = mainApp; }
 
     public Button getEditButton(){ return editButton; }

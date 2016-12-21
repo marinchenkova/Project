@@ -10,9 +10,10 @@ import ru.spbstu.icc.kspt.graphicEditor.app.control.PaintController;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.Desk;
 
 /**
- * @author Marinchenko V. A.
+ * Класс реализует управление информацией о рисовании: иконки инструментов, размеры доски,
+ * положение курсора на доске, обработка нажатия кнопок и изменения ширины линии.
  */
-public class Initializer extends PaintController{
+public class PaintInfo extends PaintController{
 
     private PaintController controller;
 
@@ -35,7 +36,12 @@ public class Initializer extends PaintController{
     private Image lineIcon = new Image("/icons/lineIcon.png");
     private Image rectIcon = new Image("/icons/rectangleIcon.png");
 
-    public Initializer(PaintController controller){
+    /**
+     * Конструктор вызывает методы инициализации и входит в метод управления настройками
+     * {@link PaintInfo#onSettingsChanged()}.
+     * @param controller контроллер рисования
+     */
+    public PaintInfo(PaintController controller){
         this.controller = controller;
         initLinks();
         initDesk();
@@ -43,6 +49,9 @@ public class Initializer extends PaintController{
         onSettingsChanged();
     }
 
+    /**
+     * Инициализация ссылок и иконок.
+     */
     public void initLinks(){
         deskCanvas = controller.getDeskCanvas();
 
@@ -67,11 +76,17 @@ public class Initializer extends PaintController{
         controller.getSizeImage().setImage(new Image("/icons/sizeIcon.png"));
     }
 
+    /**
+     * Инициализация доски: установка размеров и цвета фона.
+     */
     public void initDesk(){
         desk = new Desk((int) deskCanvas.getWidth(), (int) deskCanvas.getHeight(), Color.WHITE);
         painter.clearBackground();
     }
 
+    /**
+     * Инициализация информации об активных значениях: инструмент, ширина линии, цвет, положение курсора.
+     */
     public void initInfo() {
         deskCanvas.getGraphicsContext2D().setFill(activeColor);
         activeWidth = Integer.parseInt(widthSetter.getText());
@@ -82,48 +97,63 @@ public class Initializer extends PaintController{
     }
 
     /**
-     * Обработка нажатия кнопок и изменения ширины линии
+     * Обработка нажатия кнопок и изменения ширины линии.
      */
     public void onSettingsChanged(){
+        //Войти в режим редактирования
         editButton.setOnAction(event -> {
             editing = true;
             instrumentImage.setImage(editIcon);
         });
 
+        //Выбрать инструмент Кисть
         brushButton.setOnAction(event -> {
             activeInstrument = brush;
             editing = false;
             instrumentImage.setImage(new Image((String) activeInstrument.getIcon()));
         });
 
+        //Выбрать инструмент Линия
         lineButton.setOnAction(event -> {
             activeInstrument = line;
             editing = false;
             instrumentImage.setImage(new Image((String) activeInstrument.getIcon()));
         });
 
+        //Выбрать инструмент Прямоугольник
         rectButton.setOnAction(event -> {
             activeInstrument = rect;
             editing = false;
             instrumentImage.setImage(new Image((String) activeInstrument.getIcon()));
         });
 
+        //Считать новую ширину линии из поля ввода
         widthSetter.setOnAction(event -> setActiveWidth());
     }
 
+    /**
+     * Получение и запись текущих координат в поле {@link PaintInfo#coordsLabel}.
+     * @param event событие мыши
+     */
     public void setCoordsLabelText(MouseEvent event){
         if(event != null){
             coordsLabel.setText((int) event.getX() + ", " + (int) event.getY());
         } else coordsLabel.setText("");
     }
 
-
+    /**
+     * Установка новой ширины линии.
+     */
     public void setActiveWidth(){
         activeWidth = Integer.parseInt(widthSetter.getText());
         deskCanvas.getGraphicsContext2D().setLineWidth(activeWidth);
     }
 
-
+    /**
+     * Установка новых размеров доски.
+     * @param w ширина
+     * @param h высота
+     */
     public void setSize(int w, int h){
         desk.setSize(w, h);
 
@@ -133,6 +163,11 @@ public class Initializer extends PaintController{
         sizeLabel.setText(desk.getSizeString());
     }
 
+    /**
+     * Установка иконки на кнопку
+     * @param button кнопка
+     * @param image иконка
+     */
     public static void setButtonIcon(Button button, Image image){
         button.setPadding(new Insets(0, 0, 0, 0));
         button.setGraphic(new ImageView(image));
