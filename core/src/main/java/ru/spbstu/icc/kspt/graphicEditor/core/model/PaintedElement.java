@@ -1,5 +1,6 @@
 package ru.spbstu.icc.kspt.graphicEditor.core.model;
 
+import ru.spbstu.icc.kspt.graphicEditor.core.model.paintedElements.BrushElement;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * {@link PaintedElement#points}, геометрический центр {@link PaintedElement#center}, ширину линии
  * {@link PaintedElement#width}.
  */
-public abstract class PaintedElement{
+public abstract class PaintedElement implements Cloneable{
 
     protected ArrayList<Point> points = new ArrayList<>();
 
@@ -20,7 +21,6 @@ public abstract class PaintedElement{
 
     protected double width;
     protected boolean isClosed = false;
-
 
     /**
      * Добавление новой точки в список {@link PaintedElement#points}.
@@ -145,5 +145,15 @@ public abstract class PaintedElement{
     public void setCenter(){
         center = new Point(((start.getX() + end.getX()) / 2),
                            ((start.getY() + end.getY()) / 2));
+    }
+
+    /**
+     * Клонирование объекта необходимо при использовании кэша объектов {@link PaintedElement}.
+     * @return копия
+     * @throws CloneNotSupportedException клонирование не поддерживается
+     */
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
     }
 }

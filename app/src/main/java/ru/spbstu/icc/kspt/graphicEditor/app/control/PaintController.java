@@ -9,7 +9,6 @@ import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import ru.spbstu.icc.kspt.graphicEditor.app.MainApp;
 import ru.spbstu.icc.kspt.graphicEditor.app.view.*;
-import ru.spbstu.icc.kspt.graphicEditor.core.util.*;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.*;
 import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.*;
 
@@ -17,7 +16,7 @@ import ru.spbstu.icc.kspt.graphicEditor.core.model.instruments.*;
 /**
  * Класс {@link PaintController} реализует взаимодействие объектов рисования: доски и инструментов
  */
-public class PaintController {
+public class PaintController{
 
     private MainApp app;
 
@@ -34,7 +33,6 @@ public class PaintController {
     protected static Painter painter;
 
     protected static Desk desk;
-    protected static Cache cache = new Cache();
 
     @FXML
     private Canvas deskCanvas = new Canvas();
@@ -104,16 +102,22 @@ public class PaintController {
             initializer.setCoordsLabelText(event);
         });
 
-        //TODO
-        deskCanvas.setOnKeyTyped(event -> {
-            /*
-            if (event.getCode() == KeyCode.DELETE) {
-
-                desk.findPainted(curPoint);
-                painter.repaint();
+        //Удаление элемента
+        app.getPrimaryStage().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            if (editing && event.getCode() == KeyCode.DELETE) {
+                painter.deleteElement();
             }
-            System.err.println("TYPED");
-            */
+        });
+
+        //Обработка отмены действия (CTRL + Z)
+        app.getPrimaryStage().addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.CONTROL) {
+                app.getPrimaryStage().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                    if (e.getCode() == KeyCode.Z) {
+                        painter.undo();
+                    }
+                });
+            }
         });
     }
 

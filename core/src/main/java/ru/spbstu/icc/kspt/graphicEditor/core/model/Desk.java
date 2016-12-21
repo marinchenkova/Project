@@ -11,8 +11,10 @@ public class Desk {
 
     private int width;
     private int height;
+
     private Object backgroundColor;
-    private ArrayList<PaintedElement> pEls = new ArrayList<>();
+
+    private ArrayList<PaintedElement> elements = new ArrayList<>();
 
     public Desk (int w, int h, Object backCol){
         width = w;
@@ -23,21 +25,22 @@ public class Desk {
     /**
      * Поиск номера нарисованного элемента позаданным координатам
      */
-    public PaintedElement findPainted(Point point){
-        try{
-            if(pEls.size() > 0){
-                for (PaintedElement element: pEls){
-                    if (element.findElement(point)){
-                        pEls.remove(element);
-                        return element;
-                    }
+    public PaintedElement findPainted(Point point) throws NullPointerException{
+        if(elements.size() > 0){
+            for (PaintedElement e : elements){
+                if (e.findElement(point)){
+                    elements.remove(e);
+                    return e;
                 }
             }
-        } catch (NullPointerException e){
-            System.err.println("Desk.findPainted() catch " + e);
         }
+
         return null;
     }
+
+    public void addElement(PaintedElement element){ elements.add(element); }
+
+    public ArrayList<PaintedElement> getElements() throws NullPointerException{ return elements; }
 
     public Object getBackgroundColor(){ return backgroundColor; }
 
@@ -47,7 +50,7 @@ public class Desk {
 
     public String getSizeString(){ return width + ", " + height; }
 
-    public ArrayList<PaintedElement> getPE() throws NullPointerException{ return pEls; }
+    public void setElements(ArrayList<PaintedElement> e){ elements = e; }
 
     public void setBackgroundColor(Object backCol){ backgroundColor = backCol; }
 
@@ -59,7 +62,5 @@ public class Desk {
         setWidth(w);
         setHeight(h);
     }
-
-    public void addElement(PaintedElement element){ pEls.add(element); }
 }
 

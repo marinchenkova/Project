@@ -69,7 +69,7 @@ public class Initializer extends PaintController{
 
     public void initDesk(){
         desk = new Desk((int) deskCanvas.getWidth(), (int) deskCanvas.getHeight(), Color.WHITE);
-        painter.repaintBackground();
+        painter.clearBackground();
     }
 
     public void initInfo() {
