@@ -18,17 +18,4 @@ public class Brush extends Instrument{
      */
     @Override
     public void onPressed(Point point, double width){ pe = new BrushElement(point, width); }
-
-    /**
-     * Применение кисти: при вызове метода в существующий объект {@link BrushElement}
-     * добавляется точка
-     * @param point добавляемая точка
-     * @throws NullPointerException нельзя редактировать {@link PaintedElement}, т.к.
-     * он еще не создан
-     */
-    @Override
-    public void onDragged(Point point) throws NullPointerException{
-        if(pe == null) throw new NullPointerException("PaintedElement does not exist");
-        pe.addPoint(point);
-    }
 }

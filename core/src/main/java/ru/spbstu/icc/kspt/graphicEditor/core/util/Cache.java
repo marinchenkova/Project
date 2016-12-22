@@ -38,7 +38,7 @@ public class Cache {
     /**
      * Удаление последнего состояния в кэше, при этом нулевое состояние не может быть удалено.
      */
-    public void removeLast(){
+    private void removeLast(){
         if(state.size() > 1){
             state.remove(state.size() - 1);
         } else clear();

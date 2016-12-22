@@ -43,9 +43,11 @@ public class PaintInfo extends PaintController{
      */
     public PaintInfo(PaintController controller){
         this.controller = controller;
+
         initLinks();
         initDesk();
         initInfo();
+
         onSettingsChanged();
     }
 
@@ -172,5 +174,4 @@ public class PaintInfo extends PaintController{
         button.setPadding(new Insets(0, 0, 0, 0));
         button.setGraphic(new ImageView(image));
     }
-
 }

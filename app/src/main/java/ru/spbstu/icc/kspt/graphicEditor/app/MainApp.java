@@ -17,7 +17,7 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private PaintController pController;
+    private PaintController paintController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -26,7 +26,7 @@ public class MainApp extends Application {
         initRootLayout();
         initPaintLayout();
 
-        pController.paint();
+        paintController.paint();
     }
 
     /**
@@ -63,8 +63,8 @@ public class MainApp extends Application {
             AnchorPane paintLayout = loader.load();
             rootLayout.setCenter(paintLayout);
 
-            pController = loader.getController();
-            pController.setApplication(this);
+            paintController = loader.getController();
+            paintController.setApplication(this);
 
         } catch (Exception e) {
             e.printStackTrace();

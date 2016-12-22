@@ -21,6 +21,7 @@ public class PaintController{
     private MainApp app;
 
     protected static Color activeColor = Color.BLACK;
+
     protected static Instrument activeInstrument;
     protected static double activeWidth;
     protected static boolean editing = false;

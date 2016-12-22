@@ -3,8 +3,8 @@ package ru.spbstu.icc.kspt.graphicEditor.core.model;
 import ru.spbstu.icc.kspt.graphicEditor.core.util.Point;
 
 /**
- * Абстрактный класс для реализации инструментов рисования. Инструент содержит объекты {@link Instrument#icon}
- * (иконка) и {@link PaintedElement}.
+ * Абстрактный класс для реализации инструментов рисования. Инструмент содержит объекты {@link Instrument#icon}
+ * и {@link PaintedElement}.
  */
 public abstract class Instrument {
 
@@ -25,7 +25,10 @@ public abstract class Instrument {
      * @param point новая точка
      * @throws NullPointerException если объекта {@link Instrument#pe} не существует
      */
-    public abstract void onDragged (Point point) throws NullPointerException;
+    public void onDragged(Point point) throws NullPointerException{
+        if(pe == null) throw new NullPointerException("PaintedElement does not exist");
+        pe.addPoint(point);
+    }
 
     /**
      * Этот метод завершает редактирование объекта {@link Instrument#pe}.

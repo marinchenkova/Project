@@ -55,5 +55,4 @@ public class BrushElementTest {
 
         assertEquals(100, newX, 0);
     }
-
 }
